@@ -11,12 +11,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         public DatabaseHelper(@Nullable Context context) {
         super(context, "Login.db",null, 1);
     }
-// he dicho 
+
     @Override
     public void onCreate(SQLiteDatabase db) {
             db.execSQL("Create table user(email text primary key, password text)");
 
     }
+
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
