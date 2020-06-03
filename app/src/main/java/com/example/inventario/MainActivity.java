@@ -49,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
                 login();
             }
         });
-
-
     }
     private void login(){
 
