@@ -2,12 +2,16 @@ package com.example.inventario;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.WallpaperManager;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,15 +28,15 @@ public class MainActivity extends AppCompatActivity {
 
         Usuario = (EditText)findViewById(R.id.etName);
         Password = (EditText)findViewById(R.id.etPassword);
-        Info = (TextView) findViewById(R.id.tvInfo);
         Login = (Button)findViewById(R.id.btnLogin);
-        Info.setText("Intentos Restantes: 5");
+
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 validate(Usuario.getText().toString(), Password.getText().toString());
             }
         });
+
 
     }
 
