@@ -2,6 +2,7 @@ package com.example.inventario;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
@@ -56,7 +57,7 @@ public class Home extends AppCompatActivity implements  View.OnClickListener{
             name = findViewById(R.id.textViewname);
             users = findViewById(R.id.textViewUsername);
             email = findViewById(R.id.textViewEmail);
-            btnLogout = findViewById(R.id.buttonLogout);
+
             User user = SharedPrefManager.getInstance(this).getUser();
 
             id.setText(String.valueOf(user.getId()));
@@ -64,7 +65,6 @@ public class Home extends AppCompatActivity implements  View.OnClickListener{
             users.setText(user.getUser());
             email.setText(user.getEmail());
 
-            btnLogout.setOnClickListener((View.OnClickListener) this);
         }
         else{
             Intent  intent = new Intent(Home.this,MainActivity.class);
@@ -87,9 +87,24 @@ public class Home extends AppCompatActivity implements  View.OnClickListener{
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-    public void onClick(View view){
-        if(view.equals(btnLogout)){
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.buttonLogout) {
             SharedPrefManager.getInstance(getApplicationContext()).logout();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
         }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+   public void onClick(View view){
+
     }
 }
