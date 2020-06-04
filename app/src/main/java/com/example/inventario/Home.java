@@ -1,8 +1,11 @@
 package com.example.inventario;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -16,10 +19,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements  View.OnClickListener{
 
     private AppBarConfiguration mAppBarConfiguration;
-
+    TextView id,users,name,email;
+    Button btnLogout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +49,30 @@ public class Home extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
+       if(SharedPrefManager.getInstance(this).isLoggedIn()){
+            id = findViewById(R.id.textViewId);
+            name = findViewById(R.id.textViewname);
+            users = findViewById(R.id.textViewUsername);
+            email = findViewById(R.id.textViewEmail);
+            btnLogout = findViewById(R.id.buttonLogout);
+            User user = SharedPrefManager.getInstance(this).getUser();
+
+            id.setText(String.valueOf(user.getId()));
+            name.setText(user.getName());
+            users.setText(user.getUser());
+            email.setText(user.getEmail());
+
+            btnLogout.setOnClickListener((View.OnClickListener) this);
+        }
+        else{
+            Intent  intent = new Intent(Home.this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -59,5 +86,10 @@ public class Home extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+    public void onClick(View view){
+        if(view.equals(btnLogout)){
+            SharedPrefManager.getInstance(getApplicationContext()).logout();
+        }
     }
 }
