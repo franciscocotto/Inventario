@@ -3,7 +3,7 @@ package com.example.inventario;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-
+//Documentos
 public class Documentos extends AppCompatActivity {
 
     @Override
