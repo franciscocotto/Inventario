@@ -13,9 +13,18 @@
         android:gravity="center"
         tools:ignore="MissingConstraints">
 
-
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        >
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="50dp"
+        >
         <ImageButton
-            android:id="@+id/imageButton5"
+            android:id="@+id/btn_doc"
             android:layout_width="158dp"
             android:layout_height="160dp"
             android:layout_alignParentBottom="true"
@@ -41,7 +50,7 @@
             android:textStyle="bold" />
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/btn_equi"
             android:layout_width="156dp"
             android:layout_height="155dp"
             android:layout_alignParentBottom="true"
@@ -65,6 +74,9 @@
             android:gravity="center"
             android:text="Equipos"
             android:textStyle="bold" />
+    </LinearLayout>
 
+
+    </ScrollView>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

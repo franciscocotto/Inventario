@@ -12,7 +12,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -51,6 +54,19 @@ public class Home extends AppCompatActivity implements  View.OnClickListener{
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+    navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+           @Override
+           public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+               int menuId = destination.getId();
+               switch (menuId){
+                   case R.id.btn_doc:
+
+                       break;
+                   default:
+                       break;
+               }
+           }
+       });
 
 
     }
