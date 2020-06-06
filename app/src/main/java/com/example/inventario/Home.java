@@ -52,25 +52,7 @@ public class Home extends AppCompatActivity implements  View.OnClickListener{
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
-       if(SharedPrefManager.getInstance(this).isLoggedIn()){
-            id = findViewById(R.id.textViewId);
-            name = findViewById(R.id.textViewname);
-            users = findViewById(R.id.textViewUsername);
-            email = findViewById(R.id.textViewEmail);
 
-            User user = SharedPrefManager.getInstance(this).getUser();
-
-            id.setText(String.valueOf(user.getId()));
-            name.setText(user.getName());
-            users.setText(user.getUser());
-            email.setText(user.getEmail());
-
-        }
-        else{
-            Intent  intent = new Intent(Home.this,MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
     }
 
 
@@ -84,6 +66,22 @@ public class Home extends AppCompatActivity implements  View.OnClickListener{
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        if(SharedPrefManager.getInstance(this).isLoggedIn()){
+            name = findViewById(R.id.user_name);
+            email = findViewById(R.id.user_email);
+
+            User user = SharedPrefManager.getInstance(this).getUser();
+
+            name.setText(user.getUser());
+            email.setText(user.getName());
+
+        }
+        else{
+            Intent  intent = new Intent(Home.this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
