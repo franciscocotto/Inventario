@@ -54,21 +54,6 @@ public class Home extends AppCompatActivity implements  View.OnClickListener{
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-    navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-           @Override
-           public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-               int menuId = destination.getId();
-               switch (menuId){
-                   case R.id.btn_doc:
-
-                       break;
-                   default:
-                       break;
-               }
-           }
-       });
-
-
     }
 
 
