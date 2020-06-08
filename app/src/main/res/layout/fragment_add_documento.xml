@@ -43,6 +43,14 @@
                 android:id="@+id/input_layout_categoria"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txt32"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Seleccionar Categoria"
+                    android:textColor="#757575"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="5dp"/>
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,11 +59,34 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true" />
             </com.google.android.material.textfield.TextInputLayout>
+            <!--get idiomas-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_idioma"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txt33"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Seleccionar Idioma"
+                    android:textColor="#757575"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"/>
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sp_idioma"
+                    android:layout_marginTop="20dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true" />
+            </com.google.android.material.textfield.TextInputLayout>
             <!--get Fecha Ingreso-->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_layout_fecha"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
                 <EditText
                     android:id="@+id/etDate"
                     android:hint="@string/hint_fecha"

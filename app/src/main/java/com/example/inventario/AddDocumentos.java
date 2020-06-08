@@ -57,24 +57,33 @@ public class AddDocumentos extends Fragment implements AdapterView.OnItemSelecte
         // Required empty public constructor
     }
     private EditText etPlannedDate;
-    private Spinner spinnerFood;
+    private Spinner spinnerCat, spinnerIdio;
     // array list for spinner adapter
     private ArrayList<Categorias> categoriesList;
+    private ArrayList<Idiomas> idiomaList;
     // Url to get all categories
     ProgressDialog pDialog;
     private String URL_CATEGORIES = "https://inventario-pdm115.000webhostapp.com/getcategorias.php";
+    private String URL_IDIOMAS = "https://inventario-pdm115.000webhostapp.com/getIdiomas.php";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
          View view =  inflater.inflate(R.layout.fragment_add_documento, container, false);
-        //Initializing Spinner
-        spinnerFood = (Spinner) view.findViewById(R.id.sp_categorias);
+
+         //Initializing Spinner
+        spinnerCat = (Spinner) view.findViewById(R.id.sp_categorias);
+        spinnerIdio = (Spinner) view.findViewById(R.id.sp_idioma);
+
+
         //Initializing the ArrayList
         categoriesList = new ArrayList<Categorias>();
-        spinnerFood.setOnItemSelectedListener(this);
-       new GetCategories().execute();
+        idiomaList = new ArrayList<Idiomas>();
 
+        spinnerIdio.setOnItemSelectedListener(this);
+         new GetIdiomas().execute();
+        spinnerCat.setOnItemSelectedListener(this);
+        new GetCategories().execute();
         etPlannedDate = (EditText) view.findViewById(R.id.etDate);
         etPlannedDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +123,7 @@ public class AddDocumentos extends Fragment implements AdapterView.OnItemSelecte
    /**
      * Añadiendo datos a spinner categorias
      * */
-    private void populateSpinner() {
+    private void populateSpinnerCategoria() {
         List<String> lables = new ArrayList<String>();
 
 
@@ -132,7 +141,30 @@ public class AddDocumentos extends Fragment implements AdapterView.OnItemSelecte
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
-        spinnerFood.setAdapter(spinnerAdapter);
+        spinnerCat.setAdapter(spinnerAdapter);
+    }
+    /**
+     * Añadiendo datos a spinner Idioma
+     * */
+    private void populateSpinnerIdioma() {
+        List<String> idiomas = new ArrayList<String>();
+
+
+
+        for (int i = 0; i < idiomaList.size(); i++) {
+            idiomas.add(idiomaList.get(i).getIdioma());
+        }
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
+                android.R.layout.simple_spinner_item, idiomas);
+
+        // Drop down layout style - list view with radio button
+        spinnerAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinnerIdio.setAdapter(spinnerAdapter);
     }
 
 
@@ -145,7 +177,7 @@ public class AddDocumentos extends Fragment implements AdapterView.OnItemSelecte
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(getContext());
-            pDialog.setMessage("Cargando Categorias");
+            pDialog.setMessage("Cargando Datos");
             pDialog.setCancelable(false);
             pDialog.show();
 
@@ -189,7 +221,52 @@ public class AddDocumentos extends Fragment implements AdapterView.OnItemSelecte
             super.onPostExecute(result);
             if (pDialog.isShowing())
                 pDialog.dismiss();
-               populateSpinner();
+               populateSpinnerCategoria();
+        }
+
+    }
+    /**
+     * Async task to get all idiomas
+     * */
+    private class GetIdiomas extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            ServiceHandler jsonParser = new ServiceHandler();
+            String json = jsonParser.makeServiceCall(URL_IDIOMAS, ServiceHandler.GET);
+
+            Log.e("Response: ", "> " + json);
+
+            if (json != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(json);
+                    if (jsonObj != null) {
+                        JSONArray language = jsonObj
+                                .getJSONArray("idiomas");
+
+                        for (int i = 0; i < language.length(); i++) {
+                            JSONObject idiObj = (JSONObject) language.get(i);
+                            Idiomas idi = new Idiomas(idiObj.getInt("id"),
+                                    idiObj.getString("name"));
+                            idiomaList.add(idi);
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+                Log.e("JSON Data", "No se recibe datos del servidor!");
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            populateSpinnerIdioma();
         }
 
     }
@@ -197,10 +274,10 @@ public class AddDocumentos extends Fragment implements AdapterView.OnItemSelecte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(
+       /* Toast.makeText(
                 getActivity().getApplicationContext(),
                 "Categoria " + parent.getItemAtPosition(position).toString() ,
-                Toast.LENGTH_LONG).show();
+                Toast.LENGTH_LONG).show();*/
     }
 
     @Override
