@@ -20,101 +20,168 @@
             android:orientation="vertical"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:paddingTop="10dp">
+            android:paddingTop="0dp">
+ <!--           <android.widget.TextClock
+                android:id="@+id/datumprikaz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:format12Hour="dd.MM.yyyy"
+                android:format24Hour="@null"
+                />-->
+
+            <!--get categoria-->
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nuevo Documento"
+                android:textColor="#000"
+                android:fontFamily="@font/billabong"
+                android:textSize="36sp"
+                android:layout_marginBottom="10dp"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_categoria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/sp_categorias"
-                android:layout_marginTop="65dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--get Fecha Ingreso-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_fecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/etDate"
+                    android:hint="@string/hint_fecha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--get autores-->
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout_principal"
+                android:id="@+id/input_layout_autor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/principal"
+                    android:id="@+id/autor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:inputType="number"
-                    android:digits="0123456789."
-                    android:hint="@string/hint_principal" />
-
+                    android:digits=",.-()·@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                    android:inputType="textCapCharacters"
+                    android:hint="@string/hint_autores" />
             </com.google.android.material.textfield.TextInputLayout>
+            <!--get titulo-->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout_interest"
+                android:id="@+id/input_layout_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/interest"
+                    android:id="@+id/titulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:inputType="number"
-                    android:digits="0123456789."
-                    android:hint="@string/hint_interest" />
-
+                    android:digits=",.-()·@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                    android:inputType="textCapCharacters"
+                    android:hint="@string/hint_titulo" />
             </com.google.android.material.textfield.TextInputLayout>
-
+            <!--get subtitulo-->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout_tenure"
+                android:id="@+id/input_layout_subtitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/years"
+                    android:id="@+id/subtitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:digits="0123456789."
-                    android:hint="@string/hint_years" />
+                    android:singleLine="true"
+                    android:digits=",.-()·@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                    android:inputType="textCapCharacters"
+                    android:hint="@string/hint_subtitulo" />
             </com.google.android.material.textfield.TextInputLayout>
+            <!--palabras clave-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_palabras_clave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/palabras_clave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:digits=",.-()·@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                    android:inputType="textCapCharacters"
+                    android:hint="@string/hint_palabras" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--get editorial-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_editorial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <EditText
+                    android:id="@+id/editorial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:digits=",.-()·@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                    android:inputType="textCapCharacters"
+                    android:hint="@string/hint_editorial" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--get isbm-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_isbm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/isbm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:digits=",.-()·@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                    android:inputType="textCapCharacters"
+                    android:hint="@string/hint_isbm" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--palabras clave-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_descripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/descripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:digits=",.-()·@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                    android:hint="@string/hint_descripcion"
+                    android:inputType="textMultiLine"
+                    android:maxLength="180"
+                    android:lines="5"
+                    android:maxLines="5" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button android:id="@+id/btn_calculate2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Calculate"
+                android:text="Agregar Documento"
                 android:background="@color/colorPrimary"
                 android:layout_marginTop="40dp"
                 android:textColor="@android:color/white"/>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout_emi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp">
-
-                <EditText
-                    android:id="@+id/emi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxEms="0"
-                    android:inputType="number"
-                    android:hint="@string/hint_emi" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout_total_Interest"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-                <EditText
-                    android:id="@+id/interest_total"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:inputType="number"
-                    android:hint="@string/hint_interest_total" />
-            </com.google.android.material.textfield.TextInputLayout>
-
 
         </LinearLayout>
 

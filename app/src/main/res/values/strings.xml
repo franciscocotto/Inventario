@@ -20,8 +20,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="hint_principal">Principal Amount ₹</string>
-    <string name="hint_interest">Interest rate per Year %</string>
+    <string name="hint_fecha">Fecha Ingreso</string>
+    <string name="hint_autores">Autor/Autores</string>
+    <string name="hint_titulo">Titulo</string>
+    <string name="hint_subtitulo">Subtitulo</string>
+    <string name="hint_editorial">Editorial</string>
+    <string name="hint_isbm">ISBM</string>
+    <string name="hint_palabras">Palabras Clave</string>
+    <string name="hint_descripcion">Descripción</string>
     <string name="hint_years">How Many Years</string>
     <string name="hint_emi">EMI ₹</string>
     <string name="hint_interest_total">Total Interest for Loan ₹</string>

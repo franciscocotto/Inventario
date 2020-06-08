@@ -40,7 +40,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:29.0.0'
     implementation 'com.android.support:recyclerview-v7:29.0.0'
     implementation 'com.android.support:design:29.0.0'
-
+    implementation 'com.loopj.android:android-async-http:1.4.9'
 
 
 }
