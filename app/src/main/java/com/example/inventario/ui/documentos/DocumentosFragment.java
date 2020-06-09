@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.inventario.AddDocumentos;
+import com.example.inventario.ConDocumentos;
 import com.example.inventario.R;
 
 public class DocumentosFragment extends Fragment {
@@ -38,6 +39,17 @@ public class DocumentosFragment extends Fragment {
                 fr.replace(R.id.nav_host_fragment, new AddDocumentos());
                 fr.commit();
               /*startActivity(new Intent(getContext(), YourClass.class));*/
+            }
+        });
+        consult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ConDocumentos conDocumentos = new ConDocumentos();
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.nav_host_fragment, new ConDocumentos());
+                fr.commit();
+                /*startActivity(new Intent(getContext(), YourClass.class));*/
             }
         });
         return view;

@@ -210,8 +210,6 @@ public class AddDocumentos extends Fragment implements AdapterView.OnItemSelecte
         }
         @Override
         protected String doInBackground(String... strings) {
-
-
             if(datos()){
                 contexto.runOnUiThread(new Runnable() {
                     @Override
@@ -256,14 +254,14 @@ public class AddDocumentos extends Fragment implements AdapterView.OnItemSelecte
         final String setdescripcion =  eddescripcion.getText().toString().trim();
         final String setfecha =  etPlannedDate.getText().toString().trim();
         final String seteditorial =  ededitorial.getText().toString().trim();
-        final int id_cat =  spinnerCat.getSelectedItemPosition();
-        final int id_idi =  spinnerIdio.getSelectedItemPosition();
+        final String id_cat =  spinnerCat.getSelectedItem().toString().trim();
+        final String id_idi =  spinnerIdio.getSelectedItem().toString().trim();
 
         cliente = new DefaultHttpClient();
         post = new HttpPost(URL_GUARDAR);
         lista = new  ArrayList<NameValuePair>(11);
-        lista.add(new BasicNameValuePair("id_categoria", new Integer(id_cat).toString()));
-        lista.add(new BasicNameValuePair("id_idioma", new Integer(id_idi).toString()));
+        lista.add(new BasicNameValuePair("id_categoria", id_cat));
+        lista.add(new BasicNameValuePair("id_idioma", id_idi));
         lista.add(new BasicNameValuePair("titulo", settitulo));
         lista.add(new BasicNameValuePair("subtitulo", setsubtitulo));
         lista.add(new BasicNameValuePair("tema", settema));
