@@ -3,15 +3,13 @@ package com.example.inventario;
 import java.util.Date;
 
 public class Documentos {
-    private int id_documento, id_categoria, id_idioma;
-    private String titulo, isbn, tema, subtitulo, autor, editorial,descripcion;
-    private Date fecha_ingreso;
+    private int  id_categoria, id_idioma;
+    private String titulo, isbn, tema, subtitulo, autor, editorial, descripcion, fecha_ingreso, palabras;
 
     public Documentos() {
     }
 
-    public Documentos(int id_documento, int id_categoria, int id_idioma, String titulo, String isbn, String tema, String subtitulo, String autor, String editorial, String descripcion, Date fecha_ingreso) {
-        this.id_documento = id_documento;
+    public Documentos(int id_categoria, int id_idioma, String titulo, String isbn, String tema, String subtitulo, String autor, String editorial, String descripcion, String fecha_ingreso, String palabras) {
         this.id_categoria = id_categoria;
         this.id_idioma = id_idioma;
         this.titulo = titulo;
@@ -22,14 +20,7 @@ public class Documentos {
         this.editorial = editorial;
         this.descripcion = descripcion;
         this.fecha_ingreso = fecha_ingreso;
-    }
-
-    public int getId_documento() {
-        return id_documento;
-    }
-
-    public void setId_documento(int id_documento) {
-        this.id_documento = id_documento;
+        this.palabras = palabras;
     }
 
     public int getId_categoria() {
@@ -104,12 +95,20 @@ public class Documentos {
         this.descripcion = descripcion;
     }
 
-    public Date getFecha_ingreso() {
+    public String getFecha_ingreso() {
         return fecha_ingreso;
     }
 
-    public void setFecha_ingreso(Date fecha_ingreso) {
+    public void setFecha_ingreso(String fecha_ingreso) {
         this.fecha_ingreso = fecha_ingreso;
+    }
+
+    public String getPalabras() {
+        return palabras;
+    }
+
+    public void setPalabras(String palabras) {
+        this.palabras = palabras;
     }
 }
 

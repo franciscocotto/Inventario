@@ -105,13 +105,29 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/autor"
+                    android:id="@+id/edautor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:digits=",.-()·@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
                     android:inputType="textCapCharacters"
                     android:hint="@string/hint_autores" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--get tema-->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_tema"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edtema"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:digits=",.-()·@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                    android:inputType="textCapCharacters"
+                    android:hint="@string/hint_tema" />
             </com.google.android.material.textfield.TextInputLayout>
             <!--get titulo-->
             <com.google.android.material.textfield.TextInputLayout
@@ -120,7 +136,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/titulo"
+                    android:id="@+id/edtitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -135,7 +151,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/subtitulo"
+                    android:id="@+id/edsubtitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -149,7 +165,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
-                    android:id="@+id/palabras_clave"
+                    android:id="@+id/edpalabras_clave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -164,7 +180,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/editorial"
+                    android:id="@+id/ededitorial"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -179,7 +195,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/isbm"
+                    android:id="@+id/edisbm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -193,7 +209,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
-                    android:id="@+id/descripcion"
+                    android:id="@+id/eddescripcion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -206,11 +222,12 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button android:id="@+id/btn_calculate2"
+            <Button
+                android:id="@+id/btnDocumento"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Agregar Documento"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/gradient_1"
                 android:layout_marginTop="40dp"
                 android:textColor="@android:color/white"/>
 

@@ -1,6 +1,5 @@
 package com.example.inventario.ui.documentos;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.inventario.AddDocumentos;
-import com.example.inventario.Home;
 import com.example.inventario.R;
 
 public class DocumentosFragment extends Fragment {
@@ -39,7 +37,7 @@ public class DocumentosFragment extends Fragment {
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
                 fr.replace(R.id.nav_host_fragment, new AddDocumentos());
                 fr.commit();
-             /* startActivity(new Intent(getContext(), AddDocumentos.class));*/
+              /*startActivity(new Intent(getContext(), YourClass.class));*/
             }
         });
         return view;
