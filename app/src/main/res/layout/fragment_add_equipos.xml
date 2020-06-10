@@ -154,7 +154,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:digits=" .$0123456789"
+                    android:digits=" .0123456789"
+                    android:drawableLeft="@drawable/ic_attach_money_black_24dp"
                     android:inputType="numberDecimal"
                     android:hint="@string/hint_precio" />
             </com.google.android.material.textfield.TextInputLayout>
