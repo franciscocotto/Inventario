@@ -84,7 +84,7 @@ public class AddDocumentos extends Fragment implements AdapterView.OnItemSelecte
         edautor = (EditText) view.findViewById(R.id.edautor);
         edisbn = (EditText) view.findViewById(R.id.edisbm);
         edpalabras_clave = (EditText) view.findViewById(R.id.edpalabras_clave);
-        eddescripcion = (EditText) view.findViewById(R.id.edescripcion);
+        eddescripcion = (EditText) view.findViewById(R.id.eddescripcion);
         ededitorial = (EditText) view.findViewById(R.id.ededitorial);
         etPlannedDate = (EditText) view.findViewById(R.id.etDate);
 

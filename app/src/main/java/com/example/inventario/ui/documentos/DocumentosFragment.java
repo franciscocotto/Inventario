@@ -58,7 +58,7 @@ public class DocumentosFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                PreDocumentos preDocumentos = new PreDocumentos();
+                BuscarDocumento buscarDocumentos = new BuscarDocumento();
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
                 fr.replace(R.id.nav_host_fragment, new BuscarDocumento());
                 fr.commit();
