@@ -88,7 +88,7 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
         edprecio = (EditText) view.findViewById(R.id.edprecio);
         edserie = (EditText) view.findViewById(R.id.edserie);
         edcantidad = (EditText) view.findViewById(R.id.edcantidad);
-        eddescripcion = (EditText) view.findViewById(R.id.eddescripcion);
+        eddescripcion = (EditText) view.findViewById(R.id.etBuscar);
         etCompraDate = (EditText) view.findViewById(R.id.etDateCompra);
         etPlannedDate = (EditText) view.findViewById(R.id.etDate);
 

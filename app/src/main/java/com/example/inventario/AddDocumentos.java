@@ -3,7 +3,6 @@ package com.example.inventario;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -22,12 +21,6 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,12 +28,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.example.inventario.dialog.DatePickerFragment;
-import com.loopj.android.http.AsyncHttpClient;
 
 import cz.msebera.android.httpclient.NameValuePair;
 import cz.msebera.android.httpclient.client.ClientProtocolException;
@@ -94,7 +84,7 @@ public class AddDocumentos extends Fragment implements AdapterView.OnItemSelecte
         edautor = (EditText) view.findViewById(R.id.edautor);
         edisbn = (EditText) view.findViewById(R.id.edisbm);
         edpalabras_clave = (EditText) view.findViewById(R.id.edpalabras_clave);
-        eddescripcion = (EditText) view.findViewById(R.id.eddescripcion);
+        eddescripcion = (EditText) view.findViewById(R.id.etBuscar);
         ededitorial = (EditText) view.findViewById(R.id.ededitorial);
         etPlannedDate = (EditText) view.findViewById(R.id.etDate);
 
@@ -126,7 +116,7 @@ public class AddDocumentos extends Fragment implements AdapterView.OnItemSelecte
         /**
          * Button Guardado de Datos
          * */
-        view.findViewById(R.id.btnDocumento).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btnBuscar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String titulo = edtitulo.getText().toString().trim();

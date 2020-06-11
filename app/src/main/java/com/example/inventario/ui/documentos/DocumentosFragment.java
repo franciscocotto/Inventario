@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.inventario.AddDocumentos;
+import com.example.inventario.BuscarDocumento;
 import com.example.inventario.ConDocumentos;
 import com.example.inventario.PreDocumentos;
 import com.example.inventario.R;
@@ -59,7 +60,7 @@ public class DocumentosFragment extends Fragment {
 
                 PreDocumentos preDocumentos = new PreDocumentos();
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.nav_host_fragment, new PreDocumentos());
+                fr.replace(R.id.nav_host_fragment, new BuscarDocumento());
                 fr.commit();
                 /*startActivity(new Intent(getContext(), YourClass.class));*/
             }
