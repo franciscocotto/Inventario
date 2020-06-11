@@ -75,7 +75,7 @@
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/sp_idioma"
+                    android:id="@+id/pre_idioma"
                     android:layout_marginTop="20dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp">
                 <EditText
-                    android:id="@+id/etDate"
+                    android:id="@+id/etPreDate"
                     android:hint="@string/hint_fecha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/edautor"
+                    android:id="@+id/preautor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/edtema"
+                    android:id="@+id/pretema"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/edtitulo"
+                    android:id="@+id/pretitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -151,7 +151,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/edsubtitulo"
+                    android:id="@+id/presubtitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -165,7 +165,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
-                    android:id="@+id/edpalabras_clave"
+                    android:id="@+id/prepalabras_clave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -180,7 +180,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/ededitorial"
+                    android:id="@+id/preeditorial"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -195,7 +195,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/edisbm"
+                    android:id="@+id/preisbm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -203,9 +203,9 @@
                     android:inputType="number"
                     android:hint="@string/hint_isbm" />
             </com.google.android.material.textfield.TextInputLayout>
-            <!--palabras clave-->
+            <!--descripcion-->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout_descripcion"
+                android:id="@+id/input_layout_other"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
@@ -223,7 +223,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btnDocumento"
+                android:id="@+id/preDocumento"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Agregar Documento"
