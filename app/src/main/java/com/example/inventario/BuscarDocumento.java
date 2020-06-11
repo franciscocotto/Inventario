@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 public class BuscarDocumento extends Fragment {
 
@@ -30,5 +32,24 @@ public class BuscarDocumento extends Fragment {
         etBuscar = (EditText)view.findViewById(R.id.etBuscar);
         btnBuscar = (Button)view.findViewById(R.id.btnBuscar);
         tlLista = (TableLayout)view.findViewById(R.id.tlLista);
+
+        btnBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cargarTabla();
+            }
+        });
+
+        return view;
+
+    }
+
+    public void cargarTabla(){
+        String[] cadena = {"Algebra", "matematicas"};
+        TableRow row = new TableRow(getContext());
+        TextView textView;
+        for(int i=0;i<2;i++){
+
+        }
     }
 }

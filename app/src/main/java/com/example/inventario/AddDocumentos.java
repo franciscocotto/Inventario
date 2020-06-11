@@ -84,7 +84,7 @@ public class AddDocumentos extends Fragment implements AdapterView.OnItemSelecte
         edautor = (EditText) view.findViewById(R.id.edautor);
         edisbn = (EditText) view.findViewById(R.id.edisbm);
         edpalabras_clave = (EditText) view.findViewById(R.id.edpalabras_clave);
-        eddescripcion = (EditText) view.findViewById(R.id.etBuscar);
+        eddescripcion = (EditText) view.findViewById(R.id.edescripcion);
         ededitorial = (EditText) view.findViewById(R.id.ededitorial);
         etPlannedDate = (EditText) view.findViewById(R.id.etDate);
 
@@ -116,7 +116,7 @@ public class AddDocumentos extends Fragment implements AdapterView.OnItemSelecte
         /**
          * Button Guardado de Datos
          * */
-        view.findViewById(R.id.btnBuscar).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btnDocumento).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String titulo = edtitulo.getText().toString().trim();
