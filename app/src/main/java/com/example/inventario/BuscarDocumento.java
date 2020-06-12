@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -37,7 +38,10 @@ public class BuscarDocumento extends Fragment {
 
     EditText etBuscar;
     Button btnBuscar;
-    TableLayout tlLista;
+    //TableLayout tlLista;
+    ListView lista;
+
+    private ArrayList<Documentos> documentos = new ArrayList<Documentos>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,12 +51,17 @@ public class BuscarDocumento extends Fragment {
 
         etBuscar = (EditText)view.findViewById(R.id.edtBuscar);
         btnBuscar = (Button)view.findViewById(R.id.btnBuscar);
-        tlLista = (TableLayout)view.findViewById(R.id.tlLista);
+        lista = (ListView)view.findViewById(R.id.lvLibros);
+        //tlLista = (TableLayout)view.findViewById(R.id.tlLista);
+
+        //Cargar datos
+
 
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cargarTabla("https://inventario-pdm115.000webhostapp.com/ws_consulta_documentos.php");
+                obtenerLibros("https://inventario-pdm115.000webhostapp.com/ws_consulta_documentos.php");
+                cargarTabla();
             }
         });
 
@@ -60,37 +69,7 @@ public class BuscarDocumento extends Fragment {
 
     }
 
-    public void cargarTabla(String URL){
-        /*String cadena = "Algebra";
-        String cadena2 = "Ciencias";
-        String cadena3 = "Ingles";
-
-        TableRow row = new TableRow(getContext());
-        TextView textView, textView2, textView3;
-        for(int i=0;i<2;i++){
-            textView = new TextView(getContext());
-            textView.setGravity(Gravity.CENTER_VERTICAL);
-            textView.setPadding(15,15,15,15);
-            textView.setText(cadena);
-
-            textView3 = new TextView(getContext());
-            textView3.setGravity(Gravity.CENTER_VERTICAL);
-            textView3.setPadding(15,15,15,15);
-            textView3.setText(cadena2);
-
-            textView2 = new TextView(getContext());
-            textView2.setGravity(Gravity.CENTER_VERTICAL);
-            textView2.setPadding(15,15,15,15);
-            textView2.setText(cadena3);
-
-            row.addView(textView);
-            row.addView(textView2);
-            row.addView(textView3);
-
-        }
-        tlLista.addView(row);*/
-
-        //String URL = "";
+    public void obtenerLibros(String URL){
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
@@ -102,17 +81,25 @@ public class BuscarDocumento extends Fragment {
                         JSONArray doc = new JSONArray(response);
                         Log.i("sizejson",""+doc.length());
 
-                        ArrayList<String> docu = new ArrayList<>();
-
                         for(int i = 0;i<doc.length(); i+=13){
                             try{
-                                docu.add(doc.getString(i)+" "+doc.getString(i+1)+" "+doc.getString(i+2)+" "+doc.getString(i+3)+" "+doc.getString(i+4)+" "+doc.getString(i+5)+" "+doc.getString(i+6)+" "+doc.getString(i+7)+" "+doc.getString(i+8)+" "+doc.getString(i+9)+" "+doc.getString(i+10)+" "+doc.getString(i+11)+" "+doc.getString(i+12));
+                                documentos.add(new Documentos(
+                                        doc.getInt(i+1),
+                                        doc.getInt(i+7),
+                                        doc.getInt(i+12),
+                                        doc.getString(i+2),
+                                        doc.getString(i+3),
+                                        doc.getString(i+4),
+                                        doc.getString(i+5),
+                                        doc.getString(i+6),
+                                        doc.getString(i+8),
+                                        doc.getString(i+10),
+                                        doc.getString(i+11),
+                                        doc.getString(i+9)));
                             }catch (JSONException e){
                                 e.printStackTrace();
                             }
                         }
-                        String nombre, autor;
-                        nombre = docu.get()
 
                     }catch (JSONException e){
                         e.printStackTrace();
@@ -125,8 +112,44 @@ public class BuscarDocumento extends Fragment {
 
             }
         });
-
         queue.add(stringRequest);
 
+    }
+
+    public void cargarTabla(){
+        /*TableRow row = new TableRow(getContext());
+        TextView txtTitulo, txtISBN, txtAutor;
+
+
+        for(int i=0;i<1;i++){
+            txtTitulo = new TextView(getContext());
+            txtTitulo.setGravity(Gravity.CENTER_VERTICAL);
+            txtTitulo.setPadding(15,15,15,15);
+            txtTitulo.setText(documentos.get(i).getTitulo().toString());
+
+            txtISBN = new TextView(getContext());
+            txtISBN.setGravity(Gravity.CENTER_VERTICAL);
+            txtISBN.setPadding(15,15,15,15);
+            txtISBN.setText(documentos.get(i).getIsbn().toString());
+
+            txtAutor = new TextView(getContext());
+            txtAutor.setGravity(Gravity.CENTER_VERTICAL);
+            txtAutor.setPadding(15,15,15,15);
+            txtAutor.setText(documentos.get(i).getAutor().toString());
+
+            row.addView(txtTitulo);
+            row.addView(txtISBN);
+            row.addView(txtAutor);
+            tlLista.addView(row);
+        }*/
+        lista.setAdapter(null);
+        String[] titulos = new String[documentos.size()];
+
+        for (int i=0; i<documentos.size();i++){
+            titulos[i] = documentos.get(i).getTitulo().toString();
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, titulos);
+        lista.setAdapter(adapter);
     }
 }

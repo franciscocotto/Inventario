@@ -9,7 +9,20 @@ public class Documentos {
     public Documentos() {
     }
 
-    public Documentos(int id_categoria, int id_idioma, int id_estado, String titulo, String isbn, String tema, String subtitulo, String autor, String editorial, String descripcion, String fecha_ingreso, String palabras) {
+    public Documentos(
+            int id_categoria,
+            int id_idioma,
+            int id_estado,
+            String titulo,
+            String isbn,
+            String tema,
+            String subtitulo,
+            String autor,
+            String editorial,
+            String descripcion,
+            String fecha_ingreso,
+            String palabras) {
+
         this.id_categoria = id_categoria;
         this.id_idioma = id_idioma;
         this.id_estado = id_estado;
