@@ -209,7 +209,7 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
                 contexto.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(contexto, "Datos Enviados Exitosamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(contexto, "Equipo Guardado Exitosamente", Toast.LENGTH_SHORT).show();
                         edmodelo.setText("");
                         edserie.setText("");
                         edinventario.setText("");

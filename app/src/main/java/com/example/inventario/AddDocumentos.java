@@ -214,7 +214,7 @@ public class AddDocumentos extends Fragment implements AdapterView.OnItemSelecte
                 contexto.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(contexto, "Datos Enviados Exitosamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(contexto, "Documento Guardado Exitosamente", Toast.LENGTH_SHORT).show();
                         edtitulo.setText("");
                         edautor.setText("");
                         edsubtitulo.setText("");
