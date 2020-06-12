@@ -40,8 +40,12 @@ public class BuscarDocumento extends Fragment {
     Button btnBuscar;
     //TableLayout tlLista;
     ListView lista;
+    ArrayAdapter adapter = null;
+    String[] titulos = new String[0];
 
     private ArrayList<Documentos> documentos = new ArrayList<Documentos>();
+
+    int contador = 5;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +56,7 @@ public class BuscarDocumento extends Fragment {
         etBuscar = (EditText)view.findViewById(R.id.edtBuscar);
         btnBuscar = (Button)view.findViewById(R.id.btnBuscar);
         lista = (ListView)view.findViewById(R.id.lvLibros);
-        //tlLista = (TableLayout)view.findViewById(R.id.tlLista);
+        obtenerLibros("https://inventario-pdm115.000webhostapp.com/ws_consulta_documentos.php");
 
         //Cargar datos
 
@@ -60,8 +64,8 @@ public class BuscarDocumento extends Fragment {
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                obtenerLibros("https://inventario-pdm115.000webhostapp.com/ws_consulta_documentos.php");
-                cargarTabla();
+
+                //cargarTabla();
             }
         });
 
@@ -69,43 +73,47 @@ public class BuscarDocumento extends Fragment {
 
     }
 
-    public void obtenerLibros(String URL){
+    public void obtenerLibros(final String URL){
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                response = response.replace("][",",");
-                if(response.length()>0){
-                    try{
-                        JSONArray doc = new JSONArray(response);
-                        Log.i("sizejson",""+doc.length());
+                    response = response.replace("][",",");
+                    if(response.length()>0){
+                        try{
+                            JSONArray doc = new JSONArray(response);
+                            Log.i("sizejson",""+doc.length());
 
-                        for(int i = 0;i<doc.length(); i+=13){
-                            try{
-                                documentos.add(new Documentos(
-                                        doc.getInt(i+1),
-                                        doc.getInt(i+7),
-                                        doc.getInt(i+12),
-                                        doc.getString(i+2),
-                                        doc.getString(i+3),
-                                        doc.getString(i+4),
-                                        doc.getString(i+5),
-                                        doc.getString(i+6),
-                                        doc.getString(i+8),
-                                        doc.getString(i+10),
-                                        doc.getString(i+11),
-                                        doc.getString(i+9)));
-                            }catch (JSONException e){
-                                e.printStackTrace();
+                            documentos.clear();
+                            for(int i = 0;i<doc.length(); i+=13){
+                                try{
+                                    documentos.add(new Documentos(
+                                            doc.getInt(i+1),
+                                            doc.getInt(i+7),
+                                            doc.getInt(i+12),
+                                            doc.getString(i+2),
+                                            doc.getString(i+3),
+                                            doc.getString(i+4),
+                                            doc.getString(i+5),
+                                            doc.getString(i+6),
+                                            doc.getString(i+8),
+                                            doc.getString(i+10),
+                                            doc.getString(i+11),
+                                            doc.getString(i+9)));
+                                }catch (JSONException e){
+                                    e.printStackTrace();
+                                }
+
                             }
-                        }
+                            cargarTabla();
 
-                    }catch (JSONException e){
-                        e.printStackTrace();
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
                     }
                 }
-            }
+
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -142,14 +150,23 @@ public class BuscarDocumento extends Fragment {
             row.addView(txtAutor);
             tlLista.addView(row);
         }*/
-        lista.setAdapter(null);
-        String[] titulos = new String[documentos.size()];
+
+        if(titulos.length>0) {
+            lista.setAdapter(null);
+        }
+        titulos = new String[documentos.size()];
 
         for (int i=0; i<documentos.size();i++){
             titulos[i] = documentos.get(i).getTitulo().toString();
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, titulos);
+        adapter= new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, titulos);
+        lista.setAdapter(adapter);
+
+    }
+    public void limpiarList(){
+        titulos = null;
+        adapter.notifyDataSetChanged();
         lista.setAdapter(adapter);
     }
 }
