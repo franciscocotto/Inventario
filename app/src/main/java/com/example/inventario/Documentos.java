@@ -3,15 +3,16 @@ package com.example.inventario;
 import java.util.Date;
 
 public class Documentos {
-    private int  id_categoria, id_idioma;
+    private int  id_categoria, id_idioma, id_estado;
     private String titulo, isbn, tema, subtitulo, autor, editorial, descripcion, fecha_ingreso, palabras;
 
     public Documentos() {
     }
 
-    public Documentos(int id_categoria, int id_idioma, String titulo, String isbn, String tema, String subtitulo, String autor, String editorial, String descripcion, String fecha_ingreso, String palabras) {
+    public Documentos(int id_categoria, int id_idioma, int id_estado, String titulo, String isbn, String tema, String subtitulo, String autor, String editorial, String descripcion, String fecha_ingreso, String palabras) {
         this.id_categoria = id_categoria;
         this.id_idioma = id_idioma;
+        this.id_estado = id_estado;
         this.titulo = titulo;
         this.isbn = isbn;
         this.tema = tema;
@@ -37,6 +38,14 @@ public class Documentos {
 
     public void setId_idioma(int id_idioma) {
         this.id_idioma = id_idioma;
+    }
+
+    public int getId_estado() {
+        return id_estado;
+    }
+
+    public void setId_estado(int id_estado) {
+        this.id_estado = id_estado;
     }
 
     public String getTitulo() {
