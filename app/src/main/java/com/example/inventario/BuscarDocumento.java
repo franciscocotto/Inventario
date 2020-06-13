@@ -14,10 +14,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,6 +32,8 @@ import org.json.JSONException;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BuscarDocumento extends Fragment {
 
@@ -43,10 +47,11 @@ public class BuscarDocumento extends Fragment {
     ListView lista;
     ArrayAdapter adapter = null;
     String[] titulos = new String[0];
+    String[] isbn = new String[0];
+    String busqueda = null;
 
     private ArrayList<Documentos> documentos = new ArrayList<Documentos>();
-
-    int contador = 5;
+    private ArrayList<Documentos> docBuscados = new ArrayList<Documentos>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +62,7 @@ public class BuscarDocumento extends Fragment {
         etBuscar = (EditText)view.findViewById(R.id.edtBuscar);
         btnBuscar = (Button)view.findViewById(R.id.btnBuscar);
         lista = (ListView)view.findViewById(R.id.lvLibros);
-        obtenerLibros("https://inventario-pdm115.000webhostapp.com/ws_consulta_documentos.php");
+        obtenerLibros();
 
         //Cargar datos
 
@@ -65,8 +70,7 @@ public class BuscarDocumento extends Fragment {
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //cargarTabla();
+                buscarLibro("https://inventario-pdm115.000webhostapp.com/ws_buscar_documentos.php");
             }
         });
 
@@ -74,7 +78,8 @@ public class BuscarDocumento extends Fragment {
 
     }
 
-    public void obtenerLibros(final String URL){
+    public void obtenerLibros(){
+        String URL = "https://inventario-pdm115.000webhostapp.com/ws_consulta_documentos.php";
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
@@ -125,18 +130,83 @@ public class BuscarDocumento extends Fragment {
 
     }
 
+    public void buscarLibro(final String URLB){
+        busqueda = etBuscar.getText().toString();
+        if(!busqueda.isEmpty()){
+            lista.setAdapter(null);
+            RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, URLB, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    response = response.replace("][",",");
+                    if(response.length()>0){
+                        try{
+                            JSONArray doc = new JSONArray(response);
+                            Log.i("sizejson",""+doc.length());
+
+                            for(int i = 0;i<doc.length(); i+=13){
+                                try{
+                                    documentos.clear();
+                                    documentos.add(new Documentos(
+                                            doc.getInt(i+1),
+                                            doc.getInt(i+7),
+                                            doc.getInt(i+12),
+                                            doc.getString(i+2),
+                                            doc.getString(i+3),
+                                            doc.getString(i+4),
+                                            doc.getString(i+5),
+                                            doc.getString(i+6),
+                                            doc.getString(i+8),
+                                            doc.getString(i+10),
+                                            doc.getString(i+11),
+                                            doc.getString(i+9)));
+                                }catch (JSONException e){
+                                    e.printStackTrace();
+                                }
+
+                            }
+                            cargarTabla();
+
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String,String> parametros = new HashMap<String, String>();
+                    parametros.put("campo",busqueda);
+                    return parametros;
+                }
+            };
+            queue.add(stringRequest);
+        }
+        else {
+            obtenerLibros();
+        }
+
+    }
+
     public void cargarTabla(){
 
         titulos = new String[documentos.size()];
+        isbn = new String[documentos.size()];
 
         for (int i=0; i<documentos.size();i++){
             titulos[i] = documentos.get(i).getTitulo().toString();
+            isbn[i] = documentos.get(i).getIsbn().toString();
         }
 
         adapter= new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, titulos);
         lista.setAdapter(adapter);
         updateListViewHeight(lista);
-
     }
 
     public static void updateListViewHeight(ListView lista) {
