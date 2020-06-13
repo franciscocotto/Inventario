@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="88dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="0dp"
+            android:paddingRight="20dp">
+            <!--           <android.widget.TextClock
+                android:id="@+id/datumprikaz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:format12Hour="dd.MM.yyyy"
+                android:format24Hour="@null"
+                />-->
+
+            <!--get categoria-->
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/billabong"
+                android:text="Asignación"
+                android:textColor="#000"
+                android:textSize="36sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_categoria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txt32"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Seleccione Categoria"
+                    android:textColor="#757575"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/sp_categorias"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--get idiomas-->
+
+            <!--get Fecha Ingreso-->
+            <TextView
+                android:id="@+id/txt"
+                android:layout_width="match_parent"
+                android:layout_height="31dp"
+                android:layout_marginBottom="5dp"
+                android:text="Seleccione Alumno"
+                android:textColor="#757575"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/sp_categorias2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true" />
+
+            <TextView
+                android:id="@+id/txt2"
+                android:layout_width="match_parent"
+                android:layout_height="31dp"
+                android:layout_marginBottom="5dp"
+                android:text="Seleccione Ubicación"
+                android:textColor="#757575"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/sp_categorias3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true" />
+
+            <!--get autores-->
+
+            <!--get tema-->
+
+            <!--get titulo-->
+            <!--get subtitulo-->
+
+            <!--palabras clave-->
+            <!--get editorial-->
+            <!--get isbm-->
+            <!--palabras clave-->
+
+            <Button
+                android:id="@+id/btnDocumento"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/gradient_1"
+                android:text="Realizar Asignación"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
