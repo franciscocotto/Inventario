@@ -125,35 +125,7 @@ public class BuscarDocumento extends Fragment {
     }
 
     public void cargarTabla(){
-        /*TableRow row = new TableRow(getContext());
-        TextView txtTitulo, txtISBN, txtAutor;
 
-
-        for(int i=0;i<1;i++){
-            txtTitulo = new TextView(getContext());
-            txtTitulo.setGravity(Gravity.CENTER_VERTICAL);
-            txtTitulo.setPadding(15,15,15,15);
-            txtTitulo.setText(documentos.get(i).getTitulo().toString());
-
-            txtISBN = new TextView(getContext());
-            txtISBN.setGravity(Gravity.CENTER_VERTICAL);
-            txtISBN.setPadding(15,15,15,15);
-            txtISBN.setText(documentos.get(i).getIsbn().toString());
-
-            txtAutor = new TextView(getContext());
-            txtAutor.setGravity(Gravity.CENTER_VERTICAL);
-            txtAutor.setPadding(15,15,15,15);
-            txtAutor.setText(documentos.get(i).getAutor().toString());
-
-            row.addView(txtTitulo);
-            row.addView(txtISBN);
-            row.addView(txtAutor);
-            tlLista.addView(row);
-        }*/
-
-        if(titulos.length>0) {
-            lista.setAdapter(null);
-        }
         titulos = new String[documentos.size()];
 
         for (int i=0; i<documentos.size();i++){
@@ -164,9 +136,5 @@ public class BuscarDocumento extends Fragment {
         lista.setAdapter(adapter);
 
     }
-    public void limpiarList(){
-        titulos = null;
-        adapter.notifyDataSetChanged();
-        lista.setAdapter(adapter);
-    }
+
 }

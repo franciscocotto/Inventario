@@ -108,10 +108,11 @@
                     android:id="@+id/edautor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
                     android:digits=" ,.-()·@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                    android:hint="@string/hint_autores"
                     android:inputType="text"
-                    android:hint="@string/hint_autores" />
+                    android:maxLength="150"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
             <!--get tema-->
 
@@ -124,10 +125,11 @@
                     android:id="@+id/edtema"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
                     android:digits=" ,.-()·@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                    android:hint="@string/hint_tema"
                     android:inputType="text"
-                    android:hint="@string/hint_tema" />
+                    android:maxLength="50"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
             <!--get titulo-->
             <com.google.android.material.textfield.TextInputLayout
@@ -139,10 +141,11 @@
                     android:id="@+id/edtitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
                     android:digits=" ,.-()·@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                    android:hint="@string/hint_titulo"
                     android:inputType="text"
-                    android:hint="@string/hint_titulo" />
+                    android:maxLength="50"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
             <!--get subtitulo-->
             <com.google.android.material.textfield.TextInputLayout
@@ -154,24 +157,27 @@
                     android:id="@+id/edsubtitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
                     android:digits=" ,.-()·@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                    android:hint="@string/hint_subtitulo"
                     android:inputType="text"
-                    android:hint="@string/hint_subtitulo" />
+                    android:maxLength="50"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
             <!--palabras clave-->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_layout_palabras_clave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <EditText
                     android:id="@+id/edpalabras_clave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
                     android:digits=" ,.-()·@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                    android:hint="@string/hint_palabras"
                     android:inputType="text"
-                    android:hint="@string/hint_palabras" />
+                    android:maxLength="50"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
             <!--get editorial-->
             <com.google.android.material.textfield.TextInputLayout
@@ -183,10 +189,11 @@
                     android:id="@+id/ededitorial"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
                     android:digits=" ,.-()·@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                    android:hint="@string/hint_editorial"
                     android:inputType="text"
-                    android:hint="@string/hint_editorial" />
+                    android:maxLength="50"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
             <!--get isbm-->
             <com.google.android.material.textfield.TextInputLayout
@@ -198,27 +205,29 @@
                     android:id="@+id/edisbm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
                     android:digits="0123456789-.() "
+                    android:hint="@string/hint_isbm"
                     android:inputType="number"
-                    android:hint="@string/hint_isbm" />
+                    android:maxLength="13"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
             <!--palabras clave-->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_layout_descripcion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <EditText
                     android:id="@+id/eddescripcion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
                     android:digits=" ,.-()·@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
                     android:hint="@string/hint_descripcion"
                     android:inputType="textMultiLine"
-                    android:maxLength="180"
                     android:lines="5"
-                    android:maxLines="5" />
+                    android:maxLength="250"
+                    android:maxLines="5"
+                    android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
