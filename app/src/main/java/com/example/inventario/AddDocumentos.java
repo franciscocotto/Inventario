@@ -274,7 +274,7 @@ public class AddDocumentos extends Fragment implements AdapterView.OnItemSelecte
 
 
         try{
-            post.setEntity(new UrlEncodedFormEntity(lista));
+            post.setEntity(new UrlEncodedFormEntity(lista, "utf-8"));
             cliente.execute(post);
             return true;
 
