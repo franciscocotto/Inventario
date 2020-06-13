@@ -41,6 +41,6 @@
     <string name="hint_interest_total">Total Interest for Loan ₹</string>
     <string name="buscar_documentos">Buscar Documentos</string>
     <string name="ingrese_el_nombre_o_el_id_del_documento">Ingrese el nombre o el ID del documento</string>
-    <string name="buscar_docuemnto">Buscar Docuemnto</string>
+    <string name="buscar_documento">Buscar Documento</string>
     <string name="ingrese_el_nombre_o_el_isbn_del_documento">Ingrese el nombre o el ISBN del documento</string>
 </resources>

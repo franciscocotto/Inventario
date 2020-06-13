@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -134,7 +135,28 @@ public class BuscarDocumento extends Fragment {
 
         adapter= new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, titulos);
         lista.setAdapter(adapter);
+        updateListViewHeight(lista);
 
+    }
+
+    public static void updateListViewHeight(ListView lista) {
+        ListAdapter myListAdapter = lista.getAdapter();
+        if (myListAdapter == null) {
+            return;
+        }
+        // get listview height
+        int totalHeight = 0;
+        int adapterCount = myListAdapter.getCount();
+        for (int size = 0; size < adapterCount; size++) {
+            View listItem = myListAdapter.getView(size, null, lista);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        // Change Height of ListView
+        ViewGroup.LayoutParams params = lista.getLayoutParams();
+        params.height = (totalHeight
+                + (lista.getDividerHeight() * (adapterCount)));
+        lista.setLayoutParams(params);
     }
 
 }
