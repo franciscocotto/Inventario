@@ -18,6 +18,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -33,6 +34,7 @@ import org.json.JSONException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BuscarDocumento extends Fragment {
@@ -48,10 +50,9 @@ public class BuscarDocumento extends Fragment {
     ArrayAdapter adapter = null;
     String[] titulos = new String[0];
     String[] isbn = new String[0];
-    String busqueda = null;
 
-    private ArrayList<Documentos> documentos = new ArrayList<Documentos>();
-    private ArrayList<Documentos> docBuscados = new ArrayList<Documentos>();
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,7 +71,17 @@ public class BuscarDocumento extends Fragment {
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buscarLibro("https://inventario-pdm115.000webhostapp.com/ws_buscar_documentos.php");
+                if(etBuscar.getText().toString().isEmpty()){
+                    Toast.makeText(getActivity().getApplicationContext(), "Campo de busqueda vacio", Toast.LENGTH_LONG).show();
+                    obtenerLibros();
+                }
+                else{
+                    buscarLibro();
+                    if(lista.getCount()== 0){
+                        Toast.makeText(getActivity().getApplicationContext(), "Sin resultados", Toast.LENGTH_LONG).show();
+                    }
+                }
+
             }
         });
 
@@ -91,7 +102,7 @@ public class BuscarDocumento extends Fragment {
                             JSONArray doc = new JSONArray(response);
                             Log.i("sizejson",""+doc.length());
 
-                            documentos.clear();
+                            ArrayList<Documentos> documentos = new ArrayList<Documentos>();
                             for(int i = 0;i<doc.length(); i+=13){
                                 try{
                                     documentos.add(new Documentos(
@@ -112,7 +123,7 @@ public class BuscarDocumento extends Fragment {
                                 }
 
                             }
-                            cargarTabla();
+                            cargarTabla(documentos);
 
                         }catch (JSONException e){
                             e.printStackTrace();
@@ -130,44 +141,46 @@ public class BuscarDocumento extends Fragment {
 
     }
 
-    public void buscarLibro(final String URLB){
-        busqueda = etBuscar.getText().toString();
-        if(!busqueda.isEmpty()){
+    public void buscarLibro(){
+        final String URLB = "https://inventario-pdm115.000webhostapp.com/ws_buscar_documentos.php";
+
             lista.setAdapter(null);
-            RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, URLB, new Response.Listener<String>() {
+
+            RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URLB, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    response = response.replace("][",",");
-                    if(response.length()>0){
-                        try{
-                            JSONArray doc = new JSONArray(response);
-                            Log.i("sizejson",""+doc.length());
+                    response = response.replace("][", ",");
+                    if (response.length() > 0) {
+                        try {
+                            JSONArray bdoc = new JSONArray(response);
+                            Log.i("sizejson", "" + bdoc.length());
 
-                            for(int i = 0;i<doc.length(); i+=13){
-                                try{
-                                    documentos.clear();
-                                    documentos.add(new Documentos(
-                                            doc.getInt(i+1),
-                                            doc.getInt(i+7),
-                                            doc.getInt(i+12),
-                                            doc.getString(i+2),
-                                            doc.getString(i+3),
-                                            doc.getString(i+4),
-                                            doc.getString(i+5),
-                                            doc.getString(i+6),
-                                            doc.getString(i+8),
-                                            doc.getString(i+10),
-                                            doc.getString(i+11),
-                                            doc.getString(i+9)));
-                                }catch (JSONException e){
+                            ArrayList<Documentos> listB = new ArrayList<Documentos>();
+                            for (int i = 0; i < bdoc.length(); i += 13) {
+                                try {
+
+                                    listB.add(new Documentos(
+                                            bdoc.getInt(i + 1),
+                                            bdoc.getInt(i + 7),
+                                            bdoc.getInt(i + 12),
+                                            bdoc.getString(i + 2),
+                                            bdoc.getString(i + 3),
+                                            bdoc.getString(i + 4),
+                                            bdoc.getString(i + 5),
+                                            bdoc.getString(i + 6),
+                                            bdoc.getString(i + 8),
+                                            bdoc.getString(i + 10),
+                                            bdoc.getString(i + 11),
+                                            bdoc.getString(i + 9)));
+                                } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
 
                             }
-                            cargarTabla();
+                            cargarTabla(listB);
 
-                        }catch (JSONException e){
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
@@ -178,30 +191,30 @@ public class BuscarDocumento extends Fragment {
                 public void onErrorResponse(VolleyError error) {
 
                 }
-            }){
+            }) {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String,String> parametros = new HashMap<String, String>();
-                    parametros.put("campo",busqueda);
+
+                    Map<String, String> parametros = new HashMap<String, String>();
+                    String busqueda = etBuscar.getText().toString();
+                    parametros.put("campo", busqueda);
                     return parametros;
                 }
             };
-            queue.add(stringRequest);
-        }
-        else {
-            obtenerLibros();
-        }
+            requestQueue.add(stringRequest);
 
     }
 
-    public void cargarTabla(){
+    public void cargarTabla(ArrayList list){
 
-        titulos = new String[documentos.size()];
-        isbn = new String[documentos.size()];
+        titulos = new String[list.size()];
+        isbn = new String[list.size()];
 
-        for (int i=0; i<documentos.size();i++){
-            titulos[i] = documentos.get(i).getTitulo().toString();
-            isbn[i] = documentos.get(i).getIsbn().toString();
+        for (int i=0; i<list.size();i++){
+            ArrayList<Documentos> docu = new ArrayList<Documentos>();
+            docu = list;
+            titulos[i] = docu.get(i).getTitulo().toString();
+            isbn[i] = docu.get(i).getIsbn().toString();
         }
 
         adapter= new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, titulos);
