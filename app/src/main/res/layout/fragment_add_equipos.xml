@@ -174,21 +174,6 @@
                     android:clickable="true"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
-            <!--get cantidad-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout_cantidad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/edcantidad"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:digits=" 0123456789"
-                    android:inputType="number"
-                    android:hint="@string/hint_cantidad" />
-            </com.google.android.material.textfield.TextInputLayout>
             <!--descripcion-->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_layout_descripcion"

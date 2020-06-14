@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         final String username = etName.getText().toString().trim();
         final String password = etPassword.getText().toString().trim();
 
-        String url = "https://inventario-pdm115.000webhostapp.com/login.php";
+        String url = "https://inventario-pdm115.000webhostapp.com/ws_ca06025/login.php";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                             //converting response to json object
                             //JSONObject obj = new JSONObject(response);
 
-                            JSONObject obj = new JSONObject(response);
+                                JSONObject obj = new JSONObject(response);
 
                             //if no error in response
                             if (!obj.getBoolean("error")) {

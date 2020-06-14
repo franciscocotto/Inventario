@@ -48,7 +48,7 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
     }
 
 
-    private EditText edmodelo, edserie, edinventario,edprecio, edcantidad, eddescripcion;
+    private EditText edmodelo, edserie, edinventario,edprecio, eddescripcion;
     private int id_mar, id_cat;
 
     HttpClient cliente;
@@ -64,9 +64,9 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
     /**
      * webservices
      * */
-    private String URL_GUARDAR ="https://inventario-pdm115.000webhostapp.com/PostEquipo.php";
-    private String URL_CATEGORIES = "https://inventario-pdm115.000webhostapp.com/getcategoriasEquipos.php";
-    private String URL_MARCAS = "https://inventario-pdm115.000webhostapp.com/getMarcas.php";
+    private String URL_GUARDAR ="https://inventario-pdm115.000webhostapp.com/ws_ca06025/PostEquipo.php";
+    private String URL_CATEGORIES = "https://inventario-pdm115.000webhostapp.com/ws_ca06025/getcategoriasEquipos.php";
+    private String URL_MARCAS = "https://inventario-pdm115.000webhostapp.com/ws_ca06025/getMarcas.php";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,7 +87,6 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
         edinventario = (EditText) view.findViewById(R.id.edinventario);
         edprecio = (EditText) view.findViewById(R.id.edprecio);
         edserie = (EditText) view.findViewById(R.id.edserie);
-        edcantidad = (EditText) view.findViewById(R.id.edcantidad);
         eddescripcion = (EditText) view.findViewById(R.id.eddescripcion);
         etCompraDate = (EditText) view.findViewById(R.id.etDateCompra);
         etPlannedDate = (EditText) view.findViewById(R.id.etDate);
@@ -136,7 +135,6 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
                 final String serie =  edserie.getText().toString().trim();
                 final String inventario =  edinventario.getText().toString().trim();
                 final String precio =  edprecio.getText().toString().trim();
-                final String cantidad =  edcantidad.getText().toString().trim();
                 final String descripcion =  eddescripcion.getText().toString().trim();
                 final String fecha =  etPlannedDate.getText().toString().trim();
                 final String fechaCompra =  etCompraDate.getText().toString().trim();
@@ -172,11 +170,6 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
                 if (TextUtils.isEmpty(fechaCompra)) {
                     etCompraDate.setError("Favor Ingresar Fecha de Compra");
                     etCompraDate.requestFocus();
-                    return;
-                }
-                if (TextUtils.isEmpty(cantidad)) {
-                    edcantidad.setError("Favor Ingresar Cantidad");
-                    edcantidad.requestFocus();
                     return;
                 }
                 if (TextUtils.isEmpty(descripcion)) {
@@ -216,7 +209,6 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
                         edprecio.setText("");
                         etPlannedDate.setText("");
                         etCompraDate.setText("");
-                        edcantidad.setText("");
                         eddescripcion.setText("");
                     }
                 });
@@ -244,7 +236,6 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
         final String setinventario =  edinventario.getText().toString().trim();
         final String setprecio =  edprecio.getText().toString().trim();
         final String setcompra =  etCompraDate.getText().toString().trim();
-        final String setcantidad =  edcantidad.getText().toString().trim();
         final String setdescripcion =  eddescripcion.getText().toString().trim();
         final String setfecha =  etPlannedDate.getText().toString().trim();
         final String id_cat =  spinnerCat.getSelectedItem().toString().trim();
@@ -261,10 +252,9 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
         lista.add(new BasicNameValuePair("precio", setprecio));
         lista.add(new BasicNameValuePair("fecha_compra", setcompra));
         lista.add(new BasicNameValuePair("descripcion", setdescripcion));
-        lista.add(new BasicNameValuePair("cantidad_inicial", setcantidad));
         lista.add(new BasicNameValuePair("fecha_ingreso", setfecha));
         try{
-            post.setEntity(new UrlEncodedFormEntity(lista));
+            post.setEntity(new UrlEncodedFormEntity(lista, "utf-8"));
             cliente.execute(post);
             return true;
 
