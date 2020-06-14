@@ -1,5 +1,7 @@
 package com.example.inventario;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -63,17 +65,14 @@ public class BuscarDocumento extends Fragment {
         etBuscar = (EditText)view.findViewById(R.id.edtBuscar);
         btnBuscar = (Button)view.findViewById(R.id.btnBuscar);
         lista = (ListView)view.findViewById(R.id.lvLibros);
-        obtenerLibros();
-
-        //Cargar datos
+          //Cargar datos
 
 
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(etBuscar.getText().toString().isEmpty()){
-                    Toast.makeText(getActivity().getApplicationContext(), "Campo de busqueda vacio", Toast.LENGTH_LONG).show();
-                    obtenerLibros();
+                    EnviarForm();
                 }
                 else{
                     buscarLibro();
@@ -240,6 +239,33 @@ public class BuscarDocumento extends Fragment {
         params.height = (totalHeight
                 + (lista.getDividerHeight() * (adapterCount)));
         lista.setLayoutParams(params);
+    }
+
+    /**
+     * Alerta
+     * */
+    public void EnviarForm(){
+        AlertDialog.Builder myBuild = new AlertDialog.Builder(getContext());
+        myBuild.setTitle("Mensaje");
+        myBuild.setMessage("No ha Seleccionado un Documento Especifico, ¿Desea mostrar todos los Documentos en el Inventario" +
+                "de la EISI Disponibles?");
+        myBuild.setIcon(R.drawable.ic_error_outline_black_24dp);
+        myBuild.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Toast.makeText(getActivity().getApplicationContext(), "Campo de busqueda vacio", Toast.LENGTH_LONG).show();
+                obtenerLibros();
+            }
+        });
+        myBuild.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog dialog = myBuild.create();
+        dialog.show();
     }
 
 }
