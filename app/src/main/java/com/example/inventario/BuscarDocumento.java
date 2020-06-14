@@ -5,12 +5,14 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,6 +54,7 @@ public class BuscarDocumento extends Fragment {
     ArrayAdapter adapter = null;
     String[] titulos = new String[0];
     String[] isbn = new String[0];
+    String isbnParam = null;
 
 
 
@@ -65,7 +68,7 @@ public class BuscarDocumento extends Fragment {
         etBuscar = (EditText)view.findViewById(R.id.edtBuscar);
         btnBuscar = (Button)view.findViewById(R.id.btnBuscar);
         lista = (ListView)view.findViewById(R.id.lvLibros);
-          //Cargar datos
+        obtenerLibros();
 
 
         btnBuscar.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +84,20 @@ public class BuscarDocumento extends Fragment {
                     }
                 }
 
+            }
+        });
+
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Documentos.setIsbnS(isbn[position]);
+
+                PreDocumentos preDocumentos = new PreDocumentos();
+
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.nav_host_fragment, new PreDocumentos());
+                fr.commit();
             }
         });
 

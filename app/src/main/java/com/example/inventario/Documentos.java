@@ -5,6 +5,7 @@ import java.util.Date;
 public class Documentos {
     private int  id_categoria, id_idioma, id_estado;
     private String titulo, isbn, tema, subtitulo, autor, editorial, descripcion, fecha_ingreso, palabras;
+    private static String isbnS;
 
     public Documentos() {
     }
@@ -131,6 +132,14 @@ public class Documentos {
 
     public void setPalabras(String palabras) {
         this.palabras = palabras;
+    }
+
+
+    public static void setIsbnS(String isbn){
+        isbnS = isbn;
+    }
+    public static String getIsbnS(){
+        return isbnS;
     }
 }
 
