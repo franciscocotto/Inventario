@@ -265,7 +265,7 @@ public class BuscarDocumento extends Fragment {
         AlertDialog.Builder myBuild = new AlertDialog.Builder(getContext());
         myBuild.setTitle("Mensaje");
         myBuild.setMessage("No ha Seleccionado un Documento Especifico, ¿Desea mostrar todos los Documentos en el Inventario" +
-                "de la EISI Disponibles?");
+                " de la EISI Disponibles?");
         myBuild.setIcon(R.drawable.ic_error_outline_black_24dp);
         myBuild.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
