@@ -1,8 +1,10 @@
 package com.example.inventario;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -32,6 +34,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.NameValuePair;
 import cz.msebera.android.httpclient.client.ClientProtocolException;
 import cz.msebera.android.httpclient.client.HttpClient;
@@ -39,6 +42,7 @@ import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
 import cz.msebera.android.httpclient.client.methods.HttpPost;
 import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
+import cz.msebera.android.httpclient.util.EntityUtils;
 
 public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedListener {
 
@@ -180,11 +184,36 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
                 /**
                  * Metodo Guardado de Datos
                  * */
-                new EnviarDatos(getActivity()).execute();
+                EnviarForm();
+
             }
         });
 
         return view;
+    }
+    /**
+     *Alerta para guardado de datos
+     * */
+
+    public void EnviarForm(){
+        AlertDialog.Builder myBuild = new AlertDialog.Builder(getContext());
+        myBuild.setTitle("Mensaje");
+        myBuild.setMessage("¿Esta Seguro que desea Guardar el Equipo?");
+        myBuild.setIcon(R.drawable.ic_error_outline_black_24dp);
+        myBuild.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                new EnviarDatos(getActivity()).execute();
+            }
+        });
+        myBuild.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog dialog = myBuild.create();
+        dialog.show();
     }
 
     /**
@@ -198,30 +227,67 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
         }
         @Override
         protected String doInBackground(String... strings) {
-            if(datos()){
-                contexto.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(contexto, "Equipo Guardado Exitosamente", Toast.LENGTH_SHORT).show();
-                        edmodelo.setText("");
-                        edserie.setText("");
-                        edinventario.setText("");
-                        edprecio.setText("");
-                        etPlannedDate.setText("");
-                        etCompraDate.setText("");
-                        eddescripcion.setText("");
-                    }
-                });
-            }
-            else{
-                contexto.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(contexto, "Error en Envio de Datos", Toast.LENGTH_SHORT).show();
-                    }
-                });
+            final String setmodelo = edmodelo.getText().toString().trim();
+            final String setserie =  edserie.getText().toString().trim();
+            final String setinventario =  edinventario.getText().toString().trim();
+            final String setprecio =  edprecio.getText().toString().trim();
+            final String setcompra =  etCompraDate.getText().toString().trim();
+            final String setdescripcion =  eddescripcion.getText().toString().trim();
+            final String setfecha =  etPlannedDate.getText().toString().trim();
+            final String id_cat =  spinnerCat.getSelectedItem().toString().trim();
+            final String id_mar =  spinnerMar.getSelectedItem().toString().trim();
+
+            cliente = new DefaultHttpClient();
+            post = new HttpPost(URL_GUARDAR);
+            lista = new  ArrayList<NameValuePair>(11);
+            lista.add(new BasicNameValuePair("id_categoria", id_cat));
+            lista.add(new BasicNameValuePair("num_inventario", setinventario));
+            lista.add(new BasicNameValuePair("id_marca", id_mar));
+            lista.add(new BasicNameValuePair("modelo", setmodelo));
+            lista.add(new BasicNameValuePair("serie", setserie));
+            lista.add(new BasicNameValuePair("precio", setprecio));
+            lista.add(new BasicNameValuePair("fecha_compra", setcompra));
+            lista.add(new BasicNameValuePair("descripcion", setdescripcion));
+            lista.add(new BasicNameValuePair("fecha_ingreso", setfecha));
+
+            String responseStr =" ";
+            try{
+                post.setEntity(new UrlEncodedFormEntity(lista, "utf-8"));
+                HttpResponse response = cliente.execute(post);
+                responseStr = EntityUtils.toString(response.getEntity());
+                return responseStr;
+
+            }catch (UnsupportedEncodingException e){
+                responseStr ="Error";
+
+            }catch (ClientProtocolException e){
+                responseStr ="Error";
+                return responseStr;
+            }catch (IOException e){
+                responseStr ="Error";
+                return responseStr;
             }
             return null;
+        }
+        @Override
+        protected void onPostExecute(String responseStr) {
+            if(responseStr.equals("{\"error\":true,\"message\":\"Error en Guardar Equipo\"}")){
+                Toast.makeText(contexto,"Error en Guardar Documento", Toast.LENGTH_SHORT).show();
+            }
+            else if(responseStr.equals("{\"error\":true,\"message\":\"Equipo ya Existe\"}")){
+                Toast.makeText(contexto,"Nº Inventario y/o Nº de Serie ya estan registrados", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(contexto,"Datos de Equipo guardados exitosamente", Toast.LENGTH_SHORT).show();
+                edmodelo.setText("");
+                edserie.setText("");
+                edinventario.setText("");
+                edprecio.setText("");
+                etPlannedDate.setText("");
+                etCompraDate.setText("");
+                eddescripcion.setText("");
+            }
+
         }
 
 
@@ -231,40 +297,7 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
      * Guardado de Datos: preparando data en webservices
      * */
     private boolean datos() {
-        final String setmodelo = edmodelo.getText().toString().trim();
-        final String setserie =  edserie.getText().toString().trim();
-        final String setinventario =  edinventario.getText().toString().trim();
-        final String setprecio =  edprecio.getText().toString().trim();
-        final String setcompra =  etCompraDate.getText().toString().trim();
-        final String setdescripcion =  eddescripcion.getText().toString().trim();
-        final String setfecha =  etPlannedDate.getText().toString().trim();
-        final String id_cat =  spinnerCat.getSelectedItem().toString().trim();
-        final String id_mar =  spinnerMar.getSelectedItem().toString().trim();
 
-        cliente = new DefaultHttpClient();
-        post = new HttpPost(URL_GUARDAR);
-        lista = new  ArrayList<NameValuePair>(11);
-        lista.add(new BasicNameValuePair("id_categoria", id_cat));
-        lista.add(new BasicNameValuePair("num_inventario", setinventario));
-        lista.add(new BasicNameValuePair("id_marca", id_mar));
-        lista.add(new BasicNameValuePair("modelo", setmodelo));
-        lista.add(new BasicNameValuePair("serie", setserie));
-        lista.add(new BasicNameValuePair("precio", setprecio));
-        lista.add(new BasicNameValuePair("fecha_compra", setcompra));
-        lista.add(new BasicNameValuePair("descripcion", setdescripcion));
-        lista.add(new BasicNameValuePair("fecha_ingreso", setfecha));
-        try{
-            post.setEntity(new UrlEncodedFormEntity(lista, "utf-8"));
-            cliente.execute(post);
-            return true;
-
-        }catch (UnsupportedEncodingException e){
-            e.printStackTrace();
-        }catch (ClientProtocolException e){
-            e.printStackTrace();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
         return false;
 
     }
