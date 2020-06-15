@@ -141,6 +141,21 @@
                 android:inputType="textPersonName"
                 android:textSize="16sp"
                 android:text="" />
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Docente"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edDocente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textSize="16sp"
+                android:text="" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
