@@ -1,4 +1,4 @@
-package com.example.inventario.ui;
+package com.example.inventario;
 
 import com.example.inventario.Documentos;
 
@@ -13,6 +13,7 @@ public class Docentes {
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
         this.primerApellido = primerApellido;
+        this.segundoApellido = segundoApellido;
     }
 
     public int getId_docente() {
