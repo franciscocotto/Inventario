@@ -34,7 +34,7 @@
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nuevo Documento"
+                android:text="Modificar Documento"
                 android:textColor="#000"
                 android:fontFamily="@font/billabong"
                 android:textSize="36sp"
@@ -232,10 +232,10 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btnDocumento"
+                android:id="@+id/btnModificar"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Agregar Documento"
+                android:text="Modificar Documento"
                 android:background="@drawable/gradient_1"
                 android:layout_marginTop="40dp"
                 android:textColor="@android:color/white"/>
