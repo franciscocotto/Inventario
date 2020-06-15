@@ -113,6 +113,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
         eddescripcion = (EditText) view.findViewById(R.id.eddescripcion);
         ededitorial = (EditText) view.findViewById(R.id.ededitorial);
         etPlannedDate = (EditText) view.findViewById(R.id.etDate);
+        edisbn.setEnabled(false);
 
         //Initializing the ArrayList
         categoriesList = new ArrayList<Categorias>();
