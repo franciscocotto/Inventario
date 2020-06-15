@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.inventario.ui.Docentes;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +28,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 
 public class PreDocumentos extends Fragment {
@@ -33,63 +37,89 @@ public class PreDocumentos extends Fragment {
 
     }
 
+    ArrayList<Documentos> documentos = new ArrayList<Documentos>();
+    ArrayList<Docentes> docentes = new ArrayList<Docentes>();
+
+    String[] docentesV;
 
     String isbnEn = null;
 
     EditText edEstado, edTitulo, edTema, edCategoria, edIsbn, edAutor, edIdioma;
+    AutoCompleteTextView acDocentes;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pre_documentos, container, false);
 
-        edEstado = (EditText)view.findViewById(R.id.edEstado);
         edTitulo = (EditText)view.findViewById(R.id.edTitulo);
-        edTema = (EditText)view.findViewById(R.id.edTema);
-        edCategoria = (EditText)view.findViewById(R.id.edCategoria);
         edIsbn = (EditText)view.findViewById(R.id.edIsbn);
-        edAutor = (EditText)view.findViewById(R.id.edAutor);
-        edIdioma = (EditText)view.findViewById(R.id.edIdioma);
+        acDocentes = (AutoCompleteTextView)view.findViewById(R.id.acDocentes);
 
-        cargarDatos();
+        isbnEn = Documentos.getIsbnS();
+        cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_prestamo_documentos.php", 1, isbnEn);
+        cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_cargar_docentes.php", 2, " ");
 
         return view;
     }
 
-    private void cargarDatos(){
-        final String URL = "https://inventario-pdm115.000webhostapp.com/ws_prestamo_documentos.php";
+    private void cargarDatos(String URL, final int accion, final String id){
+
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.DEPRECATED_GET_OR_POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 response = response.replace("][", ",");
                 if (response.length() > 0) {
                     try {
 
-
                         JSONArray bdoc = new JSONArray(response);
                         Log.i("sizejson", "" + bdoc.length());
 
-                        ArrayList<InventarioDocumentos> listB = new ArrayList<InventarioDocumentos>();
-                        for (int i = 0; i < bdoc.length(); i += 13) {
-                            try {
+                        switch (accion){
 
-                                listB.add(new InventarioDocumentos(
-                                        bdoc.getInt(0),
-                                        bdoc.getInt(1),
-                                        bdoc.getInt(2),
-                                        bdoc.getInt(3),
-                                        bdoc.getString(4),
-                                        bdoc.getString(5),
-                                        bdoc.getString(6),
-                                        bdoc.getString(7)));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            case 1: //Carga campos del documento
+                                ArrayList<InventarioDocumentos> listB = new ArrayList<InventarioDocumentos>();
+                                for (int i = 0; i < bdoc.length(); i += 13) {
+                                    try {
+
+                                        listB.add(new InventarioDocumentos(
+                                                bdoc.getInt(0),
+                                                bdoc.getInt(1),
+                                                bdoc.getInt(2),
+                                                bdoc.getInt(3),
+                                                bdoc.getString(4),
+                                                bdoc.getString(5),
+                                                bdoc.getString(6),
+                                                bdoc.getString(7)));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                                cargarCampos(listB);
+                                break;
+
+                            case 2:
+                                ArrayList<Docentes> docentes = new ArrayList<Docentes>();
+                                for (int i = 0;i<bdoc.length();i+=5){
+                                    try {
+                                        docentes.add(new Docentes(
+                                                bdoc.getInt(i),
+                                                bdoc.getString(i+1),
+                                                bdoc.getString(i+2),
+                                                bdoc.getString(i+3),
+                                                bdoc.getString(i+4)));
+                                    }catch (JSONException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                cargarDocentes(docentes);
+                                break;
 
                         }
-                        cargarCampos();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -107,28 +137,33 @@ public class PreDocumentos extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> parametros = new HashMap<String, String>();
-                parametros.put("campo", Documentos.getIsbnS());
+                parametros.put("campo", id);
                 return parametros;
             }
         };
         requestQueue.add(stringRequest);
     }
 
-    public void cargarCampos(){
+    public void cargarCampos(ArrayList list) {
 
-        Documentos docu = new Documentos();
-        //docu =
+        this.documentos = list;
 
-/*
-        edEstado.setText(documentos.getId_estado());
-        edTitulo.setText(documentos.getTitulo());
-        edTema.setText(documentos.getTema());
-        edCategoria.setText(documentos.getId_categoria());
-        edIsbn.setText(documentos.getIsbn());
-        edAutor.setText(documentos.getAutor());
-        edIdioma.setText(documentos.getId_idioma());
+        edTitulo.setText(documentos.get(0).getTitulo());
+        edIsbn.setText(documentos.get(0).getIsbn());
 
- */
+    }
+
+    public void cargarDocentes(ArrayList list){
+        this.docentes = list;
+        docentesV = new String[docentes.size()];
+
+        for (int i = 0; i<docentes.size();i++){
+            docentesV[i] = docentes.get(i).getPrimerNombre()+" "+docentes.get(i).getSegundoNombre()+" "+
+                docentes.get(i).getPrimerApellido()+" "+docentes.get(i).getSegundoApellido();
+        }
+        ArrayAdapter adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, docentesV);
+        acDocentes.setAdapter(adapter);
+
     }
 
 }

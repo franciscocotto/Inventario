@@ -241,10 +241,9 @@ public class BuscarDocumento extends Fragment {
 
         titulos = new String[list.size()];
         isbn = new String[list.size()];
-
+        ArrayList<Documentos> docu = new ArrayList<Documentos>();
+        docu = list;
         for (int i=0; i<list.size();i++){
-            ArrayList<Documentos> docu = new ArrayList<Documentos>();
-            docu = list;
             titulos[i] = docu.get(i).getTitulo().toString();
             isbn[i] = docu.get(i).getIsbn().toString();
         }
