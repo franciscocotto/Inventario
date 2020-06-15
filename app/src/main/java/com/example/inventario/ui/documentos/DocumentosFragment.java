@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.inventario.AddDocumentos;
 import com.example.inventario.BuscarDocumento;
 import com.example.inventario.ConDocumentos;
+import com.example.inventario.Documentos;
 import com.example.inventario.PreDocumentos;
 import com.example.inventario.R;
 
@@ -46,10 +47,10 @@ public class DocumentosFragment extends Fragment {
         consult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                ConDocumentos conDocumentos = new ConDocumentos();
+                Documentos.setFragmento(1);
+                BuscarDocumento conDocumentos = new BuscarDocumento();
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.nav_host_fragment, new ConDocumentos());
+                fr.replace(R.id.nav_host_fragment, new BuscarDocumento());
                 fr.commit();
                 /*startActivity(new Intent(getContext(), YourClass.class));*/
             }
@@ -57,7 +58,7 @@ public class DocumentosFragment extends Fragment {
         prestamo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Documentos.setFragmento(2);
                 BuscarDocumento buscarDocumentos = new BuscarDocumento();
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
                 fr.replace(R.id.nav_host_fragment, new BuscarDocumento());

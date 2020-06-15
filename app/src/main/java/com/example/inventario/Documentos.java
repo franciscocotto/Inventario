@@ -3,9 +3,10 @@ package com.example.inventario;
 import java.util.Date;
 
 public class Documentos {
-    private int  id_categoria, id_idioma, id_estado;
-    private String titulo, isbn, tema, subtitulo, autor, editorial, descripcion, fecha_ingreso, palabras;
-    private static String isbnS;
+    protected int  id_documento, id_categoria, id_idioma, id_estado;
+    protected String titulo, isbn, tema, subtitulo, autor, editorial, descripcion, fecha_ingreso, palabras;
+    protected static String isbnS;
+    protected static Integer fragmento;
 
     public Documentos() {
     }
@@ -37,6 +38,10 @@ public class Documentos {
         this.fecha_ingreso = fecha_ingreso;
         this.palabras = palabras;
     }
+
+    public int getId_documento(){return id_documento;}
+
+    public void setId_documento(int id_documento){this.id_documento=id_documento; }
 
     public int getId_categoria() {
         return id_categoria;
@@ -140,6 +145,11 @@ public class Documentos {
     }
     public static String getIsbnS(){
         return isbnS;
+    }
+
+    public static void setFragmento(int frag){ fragmento = frag;}
+    public static int getFragmento(){
+        return fragmento;
     }
 }
 

@@ -15,7 +15,7 @@ public class ConDocumentos extends Fragment {
     public ConDocumentos() {
 
     }
-
+    EditText edTitulo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,6 +24,7 @@ public class ConDocumentos extends Fragment {
        View view = inflater.inflate(R.layout.fragment_con_documentos, container, false);
 
         //Tu contenido
+        edTitulo = (EditText)view.findViewById(R.id.edtitulo);
 
         return view;
     }

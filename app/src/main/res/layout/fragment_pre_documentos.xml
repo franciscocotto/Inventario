@@ -52,11 +52,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Titulo"
-                android:textColor="#000000"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/edtitulo"
+                android:id="@+id/edTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -70,7 +69,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tema"
-                android:textColor="#000000"
                 android:textSize="16sp" />
 
             <EditText
@@ -87,7 +85,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Categoria"
-                android:textColor="#000000"
                 android:textSize="16sp" />
 
             <EditText
@@ -104,11 +101,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ISBN"
-                android:textColor="#000000"
                 android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/edIsbn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textSize="16sp"
+                android:text="" />
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Autor"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edAutor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textSize="16sp"
+                android:text="" />
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Idioma"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edIdioma"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"

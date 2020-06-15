@@ -91,13 +91,27 @@ public class BuscarDocumento extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Documentos.setIsbnS(isbn[position]);
+                int i = Documentos.getFragmento();
 
-                PreDocumentos preDocumentos = new PreDocumentos();
+                if(i==1){
+                    Documentos.setIsbnS(isbn[position]);
 
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.nav_host_fragment, new PreDocumentos());
-                fr.commit();
+                    ConDocumentos conDocumentos = new ConDocumentos();
+
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.nav_host_fragment, new ConDocumentos());
+                    fr.commit();
+                }
+                if(i==2){
+                    Documentos.setIsbnS(isbn[position]);
+
+                    PreDocumentos preDocumentos = new PreDocumentos();
+
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.nav_host_fragment, new PreDocumentos());
+                    fr.commit();
+                }
+
             }
         });
 
@@ -112,13 +126,15 @@ public class BuscarDocumento extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                    response = response.replace("][",",");
+
+                response = response.replace("][",",");
                     if(response.length()>0){
                         try{
                             JSONArray doc = new JSONArray(response);
                             Log.i("sizejson",""+doc.length());
 
                             ArrayList<Documentos> documentos = new ArrayList<Documentos>();
+
                             for(int i = 0;i<doc.length(); i+=13){
                                 try{
                                     documentos.add(new Documentos(
