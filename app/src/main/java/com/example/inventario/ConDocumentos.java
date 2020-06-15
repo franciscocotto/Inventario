@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -58,7 +57,7 @@ import cz.msebera.android.httpclient.util.EntityUtils;
 public class ConDocumentos extends Fragment implements AdapterView.OnItemSelectedListener {
 
     public ConDocumentos() {
-        buscarLibro();
+
     }
     private EditText edautor, edtema, edtitulo,edsubtitulo, edpalabras_clave, ededitorial, edisbn, eddescripcion;
     private int id_idi, id_cat;
@@ -96,7 +95,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_add_documento, container, false);
+        View view =  inflater.inflate(R.layout.fragment_con_documentos, container, false);
         /**
          * Variables
          * */
@@ -143,7 +142,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
         /**
          * Button Guardado de Datos
          * */
-        view.findViewById(R.id.btnDocumento).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btnModificar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String titulo = edtitulo.getText().toString().trim();
@@ -212,6 +211,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
             }
         });
 
+        buscarLibro();
         return view;
 
     }
@@ -487,7 +487,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
                             }
 
                         }
-                        cargarTabla(listB);
+                        cargarCampos(listB);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -550,7 +550,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
                             }
 
                         }
-                        cargarTabla(documentos);
+                        cargarCampos(documentos);
 
                     }catch (JSONException e){
                         e.printStackTrace();
@@ -568,26 +568,20 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
 
     }
 
-    public void cargarTabla(ArrayList list){
-         vedautor = new String[list.size()];
-         vedtema = new String[list.size()];
-         vedtitulo = new String[list.size()];
-         vedsubtitulo = new String[list.size()];
-         vedpalabras_clave =new String[list.size()];
-         vededitorial = new String[list.size()];
-         vedisbn = new String[list.size()];
-         veddescripcion = new String[list.size()];
-         vid_idi = new String[list.size()];
-         vid_cat = new String[list.size()];
-
+    public void cargarCampos(ArrayList list){
         for (int i=0; i<list.size();i++){
             ArrayList<Documentos> docu = new ArrayList<Documentos>();
             docu = list;
             edautor.setText(docu.get(i).getAutor().toString());
             edtema.setText(docu.get(i).getTema().toString());
-
-           // vedtema[i] = docu.get(i).getTema().toString();
-
+            edtitulo.setText(docu.get(i).getTitulo().toString());
+            edsubtitulo.setText(docu.get(i).getSubtitulo().toString());
+            edpalabras_clave.setText(docu.get(i).getPalabras().toString());
+            ededitorial.setText(docu.get(i).getEditorial().toString());
+            eddescripcion.setText(docu.get(i).getDescripcion().toString());
+            etPlannedDate.setText(docu.get(i).getFecha_ingreso().toString());
+            edisbn.setText(docu.get(i).getIsbn().toString());
+           // pendientes categorias
         }
 
        // adapter= new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, titulos);
