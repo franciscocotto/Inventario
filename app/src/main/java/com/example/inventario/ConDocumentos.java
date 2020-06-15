@@ -88,7 +88,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
     /**
      * webservices
      * */
-    private String URL_GUARDAR ="https://inventario-pdm115.000webhostapp.com/ws_ca06025/PostDocument.php";
+    private String URL_EDITAR ="https://inventario-pdm115.000webhostapp.com/ws_vc17009/ws_editarDocumento.php";
     private String URL_CATEGORIES = "https://inventario-pdm115.000webhostapp.com/ws_ca06025/getcategorias.php";
     private String URL_IDIOMAS = "https://inventario-pdm115.000webhostapp.com/ws_ca06025/getIdiomas.php";
     @Override
@@ -221,7 +221,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
     public void EnviarForm(){
         AlertDialog.Builder myBuild = new AlertDialog.Builder(getContext());
         myBuild.setTitle("Mensaje");
-        myBuild.setMessage("¿Esta Seguro que desea Guardar el Documento?");
+        myBuild.setMessage("¿Esta Seguro que desea Editar el Documento?");
         myBuild.setIcon(R.drawable.ic_error_outline_black_24dp);
         myBuild.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
@@ -262,7 +262,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
             final String id_idi =  spinnerIdio.getSelectedItem().toString().trim();
 
             cliente = new DefaultHttpClient();
-            post = new HttpPost(URL_GUARDAR);
+            post = new HttpPost(URL_EDITAR);
             lista = new  ArrayList<NameValuePair>(11);
             lista.add(new BasicNameValuePair("id_categoria", id_cat));
             lista.add(new BasicNameValuePair("id_idioma", id_idi));
