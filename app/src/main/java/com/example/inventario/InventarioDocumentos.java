@@ -2,17 +2,23 @@ package com.example.inventario;
 
 public class InventarioDocumentos extends Documentos {
 
+    static String estado;
+
     public InventarioDocumentos(){}
 
-    public InventarioDocumentos(int id_documento, int id_categoria, int id_estado, int id_idioma, String titulo, String isbn, String tema, String autor){
+    public InventarioDocumentos(int id_documento, int id_estado, String titulo, String isbn){
         this.id_documento=id_documento;
-        this.id_categoria = id_categoria;
         this.id_estado = id_estado;
-        this.id_idioma = id_idioma;
         this.titulo = titulo;
         this.isbn = isbn;
-        this.tema = tema;
-        this.autor = autor;
+        InventarioDocumentos.estado = String.valueOf(this.id_estado);
     }
 
+    public static String getEstado() {
+        return estado;
+    }
+
+    public static void setEstado(String estado) {
+        InventarioDocumentos.estado = estado;
+    }
 }

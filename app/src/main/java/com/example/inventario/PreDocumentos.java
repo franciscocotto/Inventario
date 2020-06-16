@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -42,17 +44,25 @@ public class PreDocumentos extends Fragment {
 
     ArrayList<Documentos> documentos = new ArrayList<Documentos>();
     ArrayList<Docentes> docentes = new ArrayList<Docentes>();
+    ArrayList<Escuelas> escuelas = new ArrayList<Escuelas>();
+    ArrayList<Areas> areas = new ArrayList<Areas>();
+    ArrayList<Motivos> motivos = new ArrayList<Motivos>();
 
     String[] docentesV;
+    String[] escuelasV;
+    String[] areasV;
+    String[] motivosV;
 
     String isbnEn = null;
     String estado = null;
     EditText etFechaPrestamo, etFechaDevolucion;
     ProgressBar progressBar;
     ProgressDialog pDialog;
-    EditText edEstado, edTitulo, edTema, edCategoria, edIsbn, edAutor, edIdioma;
+    EditText edEstado, edTitulo, edTema, edIsbn;
     AutoCompleteTextView acDocentes;
     Button btnAccion;
+    TextView lblAccion;
+    Spinner spEscuelas, spAreas, spMotivos;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,10 +71,16 @@ public class PreDocumentos extends Fragment {
 
         edTitulo = (EditText)view.findViewById(R.id.edTitulo);
         edIsbn = (EditText)view.findViewById(R.id.edIsbn);
+        edEstado = (EditText)view.findViewById(R.id.edEstado);
         acDocentes = (AutoCompleteTextView)view.findViewById(R.id.acDocentes);
         etFechaPrestamo = (EditText) view.findViewById(R.id.etFechaPrestamo);
         etFechaDevolucion = (EditText)view.findViewById(R.id.etFechaDevolucion);
+        lblAccion = (TextView)view.findViewById(R.id.lblAccion);
         btnAccion = (Button)view.findViewById(R.id.btnAccion);
+
+        spEscuelas = (Spinner)view.findViewById(R.id.spEscuela);
+        spAreas = (Spinner)view.findViewById(R.id.spArea);
+        spMotivos = (Spinner)view.findViewById(R.id.spMotivo);
 
 
         isbnEn = Documentos.getIsbnS();
@@ -75,8 +91,9 @@ public class PreDocumentos extends Fragment {
         pDialog.show();
         cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_bg17016/ws_prestamo_documentos.php", 1, isbnEn);
         cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_bg17016/ws_cargar_docentes.php", 2, " ");
-        //estado = String.valueOf(documentos.get(0).getId_estado());
-
+        cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_bg17016/ws_spinners_prestamo.php", 4, "escuelas");
+        cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_bg17016/ws_spinners_prestamo.php", 5, "areas");
+        cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_bg17016/ws_spinners_prestamo.php", 6, "motivos");
 
         etFechaPrestamo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,18 +144,14 @@ public class PreDocumentos extends Fragment {
 
                             case 1: //Carga campos del documento
                                 ArrayList<InventarioDocumentos> listB = new ArrayList<InventarioDocumentos>();
-                                for (int i = 0; i < bdoc.length(); i += 13) {
+                                for (int i = 0; i < bdoc.length(); i+=4) {
                                     try {
 
                                         listB.add(new InventarioDocumentos(
                                                 bdoc.getInt(0),
                                                 bdoc.getInt(1),
-                                                bdoc.getInt(2),
-                                                bdoc.getInt(3),
-                                                bdoc.getString(4),
-                                                bdoc.getString(5),
-                                                bdoc.getString(6),
-                                                bdoc.getString(7)));
+                                                bdoc.getString(2),
+                                                bdoc.getString(3)));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -166,7 +179,46 @@ public class PreDocumentos extends Fragment {
                                 break;
 
                             case 3:
+                                edEstado.setText(bdoc.getString(0));
+                                break;
 
+                            case 4:
+                                ArrayList<Escuelas> escuelas = new ArrayList<Escuelas>();
+                                for (int i = 0;i<bdoc.length();i+=2){
+                                    try {
+                                        escuelas.add(new Escuelas(bdoc.getInt(i), bdoc.getString(i+1)));
+
+                                    }catch (JSONException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                                cargarSpinner(escuelas, accion);
+                                break;
+
+                            case 5:
+                                ArrayList<Areas> areas = new ArrayList<Areas>();
+                                for (int i = 0;i<bdoc.length();i+=2){
+                                    try {
+                                        areas.add(new Areas(bdoc.getInt(i), bdoc.getString(i+1)));
+
+                                    }catch (JSONException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                                cargarSpinner(areas, accion);
+                                break;
+
+                            case 6:
+                                ArrayList<Motivos> motivos = new ArrayList<Motivos>();
+                                for (int i = 0;i<bdoc.length();i+=2){
+                                    try {
+                                        motivos.add(new Motivos(bdoc.getInt(i), bdoc.getString(i+1)));
+
+                                    }catch (JSONException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                                cargarSpinner(motivos, accion);
                                 break;
                         }
 
@@ -196,9 +248,13 @@ public class PreDocumentos extends Fragment {
     public void cargarCampos(ArrayList list) {
 
         this.documentos = list;
-
         edTitulo.setText(documentos.get(0).getTitulo());
         edIsbn.setText(documentos.get(0).getIsbn());
+
+        estado = String.valueOf(documentos.get(0).getId_estado());
+
+        cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_bg17016/ws_estado_documento.php", 3, estado);
+
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
@@ -213,6 +269,44 @@ public class PreDocumentos extends Fragment {
         }
         ArrayAdapter adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, docentesV);
         acDocentes.setAdapter(adapter);
+
+    }
+
+    //Metodo que carga los datos de los Spinner
+    public void cargarSpinner(ArrayList list, int accion){
+
+        if(accion==4){
+            this.escuelas = list;
+            escuelasV = new String[escuelas.size()+1];
+            escuelasV[0]=" ";
+            for (int i=0;i<escuelas.size();i++){
+                escuelasV[i+1] = escuelas.get(i).getEscuela();
+            }
+            ArrayAdapter adapterEscuelas = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, escuelasV);
+            spEscuelas.setAdapter(adapterEscuelas);
+        }
+        else if(accion==5){
+            this.areas = list;
+            areasV = new String[areas.size()+1];
+            areasV[0]=" ";
+            for (int i=0;i<areas.size();i++){
+                areasV[i+1] = areas.get(i).getArea();
+            }
+            ArrayAdapter adapterAreas = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, areasV);
+            spAreas.setAdapter(adapterAreas);
+
+        }
+        else if(accion==6){
+            this.motivos = list;
+            motivosV = new String[motivos.size()+1];
+            motivosV[0]=" ";
+            for (int i=0;i<motivos.size();i++){
+                motivosV[i+1] = motivos.get(i).getMotivos();
+            }
+            ArrayAdapter adapterMotivos = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, motivosV);
+            spMotivos.setAdapter(adapterMotivos);
+
+        }
 
     }
 
