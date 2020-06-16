@@ -1,5 +1,7 @@
 package com.example.inventario;
 
+import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,7 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -19,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.inventario.dialog.DatePickerFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,9 +46,13 @@ public class PreDocumentos extends Fragment {
     String[] docentesV;
 
     String isbnEn = null;
-
+    String estado = null;
+    EditText etFechaPrestamo, etFechaDevolucion;
+    ProgressBar progressBar;
+    ProgressDialog pDialog;
     EditText edEstado, edTitulo, edTema, edCategoria, edIsbn, edAutor, edIdioma;
     AutoCompleteTextView acDocentes;
+    Button btnAccion;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,11 +62,50 @@ public class PreDocumentos extends Fragment {
         edTitulo = (EditText)view.findViewById(R.id.edTitulo);
         edIsbn = (EditText)view.findViewById(R.id.edIsbn);
         acDocentes = (AutoCompleteTextView)view.findViewById(R.id.acDocentes);
+        etFechaPrestamo = (EditText) view.findViewById(R.id.etFechaPrestamo);
+        etFechaDevolucion = (EditText)view.findViewById(R.id.etFechaDevolucion);
+        btnAccion = (Button)view.findViewById(R.id.btnAccion);
+
 
         isbnEn = Documentos.getIsbnS();
-        cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_prestamo_documentos.php", 1, isbnEn);
-        cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_cargar_docentes.php", 2, " ");
 
+        pDialog = new ProgressDialog(getContext());
+        pDialog.setMessage("Cargando Datos");
+        pDialog.setCancelable(false);
+        pDialog.show();
+        cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_bg17016/ws_prestamo_documentos.php", 1, isbnEn);
+        cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_bg17016/ws_cargar_docentes.php", 2, " ");
+        //estado = String.valueOf(documentos.get(0).getId_estado());
+
+
+        etFechaPrestamo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.etFechaPrestamo:
+                        showDatePickerDialog(1);
+                        break;
+                }
+            }
+        });
+
+        etFechaDevolucion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.etFechaDevolucion:
+                        showDatePickerDialog(2);
+                        break;
+                }
+            }
+        });
+
+        btnAccion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         return view;
     }
 
@@ -116,6 +165,9 @@ public class PreDocumentos extends Fragment {
                                 cargarDocentes(docentes);
                                 break;
 
+                            case 3:
+
+                                break;
                         }
 
                     } catch (JSONException e) {
@@ -147,9 +199,10 @@ public class PreDocumentos extends Fragment {
 
         edTitulo.setText(documentos.get(0).getTitulo());
         edIsbn.setText(documentos.get(0).getIsbn());
-
+        if (pDialog.isShowing())
+            pDialog.dismiss();
     }
-
+    //Carga los nombres de los docentes obtenidos
     public void cargarDocentes(ArrayList list){
         this.docentes = list;
         docentesV = new String[docentes.size()];
@@ -161,6 +214,31 @@ public class PreDocumentos extends Fragment {
         ArrayAdapter adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, docentesV);
         acDocentes.setAdapter(adapter);
 
+    }
+
+    private void showDatePickerDialog(final int id) {
+        DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // +1 because January is zero
+                final String selectedDate = year + "-" + twoDigits(month+1) + "-" +twoDigits(day)  ;
+                switch (id){
+                    case 1:
+                        etFechaPrestamo.setText(selectedDate);
+                        break;
+                    case 2:
+                        etFechaDevolucion.setText(selectedDate);
+                        break;
+                }
+
+            }
+
+            private String twoDigits(int n) {
+                return (n<=9) ? ("0"+n) : String.valueOf(n);
+            }
+        });
+
+        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
     }
 
 }

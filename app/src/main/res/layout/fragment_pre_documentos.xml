@@ -28,11 +28,21 @@
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Prestar Documento"
+                android:text="Prestamo Documento"
                 android:textColor="#000"
                 android:fontFamily="@font/billabong"
                 android:textSize="36sp"
                 android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/lblAccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18sp"
+                android:background="@drawable/style_borde_text"
+                android:layout_marginTop="15sp"
+                android:layout_marginBottom="15sp"/>
 
 
             <LinearLayout
@@ -137,6 +147,231 @@
                 </AutoCompleteTextView>
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginRight="40sp">
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Prestamo Ciclo"
+                        android:textSize="16sp" />
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rbCSi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Si"
+                            android:textSize="16sp"
+                            android:layout_marginRight="15sp"/>
+
+                        <RadioButton
+                            android:id="@+id/rbCNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="No"
+                            android:textSize="16sp"/>
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Asignacion definitiva"
+                        android:textSize="16sp"/>
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rbDSi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Si"
+                            android:textSize="16sp"
+                            android:layout_marginRight="15sp"/>
+
+                        <RadioButton
+                            android:id="@+id/rbDno"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="No"
+                            android:textSize="16sp"/>
+                    </RadioGroup>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="175sp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginRight="20sp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_layout_fecha"
+                        android:layout_width="160sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp">
+                        <EditText
+                            android:id="@+id/etFechaPrestamo"
+                            android:hint="Fecha de prestamo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="date"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:maxLines="1"
+                            android:textSize="16sp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_layout_fecha2"
+                        android:layout_width="160sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp">
+                        <EditText
+                            android:id="@+id/etFechaDevolucion"
+                            android:hint="Fecha de devolucion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="date"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:maxLines="1"
+                            android:textSize="16sp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="15sp">
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Observaciones"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/edObservaciones"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ems="10"
+                        android:background="@drawable/style_borde_text"
+                        android:enabled="true"
+                        android:textColor="#000"
+                        android:inputType="textMultiLine"
+                        android:textSize="16sp"
+                        android:text="" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20sp">
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Seleccionar Escuela"
+                    android:textSize="16sp"/>
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spEscuela"
+
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20sp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginRight="50sp">
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seleccionar area"
+                        android:textSize="16sp"/>
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spArea"
+
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seleccionar motivo"
+                        android:textSize="16sp"/>
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spMotivo"
+
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnAccion"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Realizar accion"
+                android:background="@drawable/gradient_1"
+                android:layout_marginTop="40dp"
+                android:textColor="@android:color/white"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

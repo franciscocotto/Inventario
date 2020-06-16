@@ -1,6 +1,7 @@
 package com.example.inventario;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -46,7 +48,8 @@ public class BuscarDocumento extends Fragment {
     public BuscarDocumento() {
         // Required empty public constructor
     }
-
+    ProgressBar progressBar;
+    ProgressDialog pDialog;
     EditText etBuscar;
     Button btnBuscar;
     //TableLayout tlLista;
@@ -68,6 +71,12 @@ public class BuscarDocumento extends Fragment {
         etBuscar = (EditText)view.findViewById(R.id.edtBuscar);
         btnBuscar = (Button)view.findViewById(R.id.btnBuscar);
         lista = (ListView)view.findViewById(R.id.lvLibros);
+        progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
+
+        pDialog = new ProgressDialog(getContext());
+        pDialog.setMessage("Cargando Datos");
+        pDialog.setCancelable(false);
+        pDialog.show();
         obtenerLibros();
 
 
@@ -78,6 +87,10 @@ public class BuscarDocumento extends Fragment {
                     EnviarForm();
                 }
                 else{
+                    pDialog = new ProgressDialog(getContext());
+                    pDialog.setMessage("Buscando...");
+                    pDialog.setCancelable(false);
+                    pDialog.show();
                     buscarLibro();
                     if(lista.getCount()== 0){
                         Toast.makeText(getActivity().getApplicationContext(), "Sin resultados", Toast.LENGTH_LONG).show();
@@ -120,7 +133,7 @@ public class BuscarDocumento extends Fragment {
     }
 
     public void obtenerLibros(){
-        String URL = "https://inventario-pdm115.000webhostapp.com/ws_consulta_documentos.php";
+        String URL = "https://inventario-pdm115.000webhostapp.com/ws_bg17016/ws_consulta_documentos.php";
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
@@ -174,7 +187,7 @@ public class BuscarDocumento extends Fragment {
     }
 
     public void buscarLibro(){
-        final String URLB = "https://inventario-pdm115.000webhostapp.com/ws_buscar_documentos.php";
+        final String URLB = "https://inventario-pdm115.000webhostapp.com/ws_bg17016/ws_buscar_documentos.php";
 
             lista.setAdapter(null);
 
@@ -251,6 +264,9 @@ public class BuscarDocumento extends Fragment {
         adapter= new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, titulos);
         lista.setAdapter(adapter);
         updateListViewHeight(lista);
+        if (pDialog.isShowing())
+            pDialog.dismiss();
+
     }
 
     public static void updateListViewHeight(ListView lista) {
