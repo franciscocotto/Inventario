@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -122,8 +125,16 @@ public class PreDocumentos extends Fragment {
             public void onClick(View v) {
 
             }
+
+
         });
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Toast.makeText(getActivity().getApplicationContext(), "Hola", Toast.LENGTH_SHORT).show();
     }
 
     private void cargarDatos(String URL, final int accion, final String id){
@@ -179,7 +190,8 @@ public class PreDocumentos extends Fragment {
                                 break;
 
                             case 3:
-                                edEstado.setText(bdoc.getString(0));
+                                String estado = bdoc.getString(0);
+                                generarAccion(estado);
                                 break;
 
                             case 4:
@@ -308,6 +320,33 @@ public class PreDocumentos extends Fragment {
 
         }
 
+    }
+    //Determina la accion del formulario
+    public void generarAccion(String estado){
+        edEstado.setText(estado);
+        if(estado.equals("DISPONIBLE")){
+            lblAccion.setText("ACCION: REALIZAR PRESTAMO");
+        }
+        else if(estado.equals("PRESTADO")){
+            lblAccion.setText("ACCION: DEVOLUCION DE DOCUMENTO");
+        }
+        else if(estado.equals("EXTRAVIADO")){
+            lblAccion.setText("ACCIONES NO DISPONIBLES");
+            acDocentes.setEnabled(false);
+            spEscuelas.setEnabled(false);
+            spMotivos.setEnabled(false);
+            spAreas.setEnabled(false);
+            btnAccion.setEnabled(false);
+
+        }
+        else if(estado.equals("ASIGNADO")){
+            lblAccion.setText("ACCIONES NO DISPONIBLES");
+            acDocentes.setEnabled(false);
+            spEscuelas.setEnabled(false);
+            spMotivos.setEnabled(false);
+            spAreas.setEnabled(false);
+            btnAccion.setEnabled(false);
+        }
     }
 
     private void showDatePickerDialog(final int id) {

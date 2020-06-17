@@ -38,11 +38,14 @@
                 android:id="@+id/lblAccion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textAlignment="center"
                 android:text=""
                 android:textSize="18sp"
                 android:background="@drawable/style_borde_text"
                 android:layout_marginTop="15sp"
-                android:layout_marginBottom="15sp"/>
+                android:layout_marginBottom="15sp"
+                android:gravity="center_horizontal" />
 
 
             <LinearLayout
@@ -78,7 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginLeft="30sp">
+                    android:layout_marginLeft="20sp">
 
                     <TextView
                         android:id="@+id/textView7"
