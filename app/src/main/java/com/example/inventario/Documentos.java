@@ -6,6 +6,8 @@ public class Documentos {
     protected int  id_documento, id_categoria, id_idioma, id_estado;
     protected String titulo, isbn, tema, subtitulo, autor, editorial, descripcion, fecha_ingreso, palabras;
     protected static String isbnS;
+    protected static String categoria;
+    protected static String idioma;
     protected static Integer fragmento;
 
     public Documentos() {
@@ -145,6 +147,20 @@ public class Documentos {
     }
     public static String getIsbnS(){
         return isbnS;
+    }
+
+    public static void setCategoria(String categoria1){
+        categoria = categoria1;
+    }
+    public static String getcategoria(){
+        return categoria;
+    }
+
+    public static void setidioma(String idioma1){
+        idioma = idioma1;
+    }
+    public static String getidioma(){
+        return idioma;
     }
 
     public static void setFragmento(int frag){ fragmento = frag;}

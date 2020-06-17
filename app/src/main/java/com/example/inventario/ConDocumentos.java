@@ -1,5 +1,6 @@
 package com.example.inventario;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -59,9 +60,10 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
     public ConDocumentos() {
 
     }
+    //Declaramos las variables para cada elemento que vamos a obtener desde nuestro fragment_con_documentos
     private EditText edautor, edtema, edtitulo,edsubtitulo, edpalabras_clave, ededitorial, edisbn, eddescripcion;
     private int id_idi, id_cat;
-
+    //Declaramos variables para el envío de datos al webService
     HttpClient cliente;
     HttpPost post;
     List<NameValuePair> lista;
@@ -73,34 +75,24 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
     ProgressBar progressBar;
     ProgressDialog pDialog;
 
-    ArrayAdapter adapter = null;
-    String[] vedautor = new String[0];
-    String[] vedtema = new String[0];
-    String[] vedtitulo = new String[0];
-    String[] vedsubtitulo = new String[0];
-    String[] vedpalabras_clave = new String[0];
-    String[] vededitorial = new String[0];
-    String[] vedisbn = new String[0];
-    String[] veddescripcion = new String[0];
-    String[] vid_idi = new String[0];
-    String[] vid_cat = new String[0];
-    String isbnParam = null;
-    /**
-     * webservices
-     * */
+    /** Servicios Web Consumidos **/
+    /*Declaramos variables para almacernar la dirección que apunta hacia el web service
+    En este caso declaramos una para editar alojada en WebHost000 apuntando a la carpeta VC17009 que contiene mi servicio
+    para editar documentos, conrespecto a categorias e idiomas, reutilizó las funciones creadas
+    por mi compañero CA06025*/
     private String URL_EDITAR ="https://inventario-pdm115.000webhostapp.com/ws_vc17009/ws_editarDocumento.php";
     private String URL_CATEGORIES = "https://inventario-pdm115.000webhostapp.com/ws_ca06025/getcategorias.php";
     private String URL_IDIOMAS = "https://inventario-pdm115.000webhostapp.com/ws_ca06025/getIdiomas.php";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        /*Asociamos la clase actual al layout fragment_con_documentos
+        Cabe destacar que se maneja como una vista, con el objetivo de realizar la carga del fragment
+        dentro del Contentedor principal Documentos */
         View view =  inflater.inflate(R.layout.fragment_con_documentos, container, false);
-        /**
-         * Variables
-         * */
+        /*----------------Inicializació de variables----------------------*/
         progressBar = view.findViewById(R.id.progressBar);
-        //Initializing Spinner
+        //Inicializamos los spinner que muestran las categorias y los idiomas
         spinnerCat = (Spinner) view.findViewById(R.id.sp_categorias);
         spinnerIdio = (Spinner) view.findViewById(R.id.sp_idioma);
         //get other data form
@@ -118,7 +110,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
         //Initializing the ArrayList
         categoriesList = new ArrayList<Categorias>();
         idiomaList = new ArrayList<Idiomas>();
-
+        /*----------------Inicializació de variables----------------------*/
 
         //Call Actions
         spinnerIdio.setOnItemSelectedListener(this);
@@ -126,9 +118,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
         spinnerCat.setOnItemSelectedListener(this);
         new ConDocumentos.GetCategories().execute();
 
-        /**
-         * Button Obteniendo Fecha
-         * */
+        /*Método para obtener la fecha mediante el setOnClickListener*/
         etPlannedDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,7 +131,12 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
         });
 
         /**
-         * Button Guardado de Datos
+         Con el siguiente método se obtienen los elementos del documento, mediante el OnClick al botón de Modificar
+         luego de almacenar cada valor obtenido y almacenado en las variables, procedemos a verificas que no se encuentre
+         vacío, con esta validación evitaremos ell envío de campos vacíos y obtener errores por NullPointException o errores en
+         nuestro webService al no recibir la variable esperada.
+         En caso de no cmplirse una validación el método retorna falso e impide avanzar al siguiente, si se cumple con todas
+         se llama al método EnviarForm()
          * */
         view.findViewById(R.id.btnModificar).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,7 +173,6 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
                     edtitulo.requestFocus();
                     return;
                 }
-
                 if (TextUtils.isEmpty(subtitulo)) {
                     edsubtitulo.setError("Favor Ingresar Subtitulo");
                     edsubtitulo.requestFocus();
@@ -199,26 +193,23 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
                     edisbn.requestFocus();
                     return;
                 }
-
                 if (TextUtils.isEmpty(descripcion)) {
                     eddescripcion.setError("Favor Ingresar Descripcion");
                     eddescripcion.requestFocus();
                     return;
                 }
-                /**
-                 * Metodo Guardado de Datos
-                 * */
+                /** Llamamos al Método que realiza la función de guardar datos.  **/
                 EnviarForm();
             }
         });
-
-        buscarLibro();
+        //este método se encarga de cargar los datos de acuerdo al ISBN buscado
+        cargarDocumentoConsultado();
         return view;
-
     }
-    /**
-     *Alerta para guardado de datos
-     * */
+
+    /*Método EnviarForm() se encaga de enviar al usuario una ventana de confirmación
+    para guardar los cambios realizados, al confirmar realizamos una instancia de la clase
+    EnviarDatos, esta clase contiene seteados todos los elementos del documento y los devuelve mediante el uso de una Lista*/
     public void EnviarForm(){
         AlertDialog.Builder myBuild = new AlertDialog.Builder(getContext());
         myBuild.setTitle("Mensaje");
@@ -239,11 +230,11 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
         AlertDialog dialog = myBuild.create();
         dialog.show();
     }
-    /**
-     * Guardado de Datos
-     * */
-    class EnviarDatos   extends AsyncTask<String, Integer, String >{
 
+    /*EnviarDatos, primero obtenemos los elementos y los asignamos a nuestras variables auxiliares
+    luego añadimos a nuestra lista de tipo ArrayList todos los campos obteneidos, luego devolvemos la lista cargada que es la que pasamos
+     al método EnviarForm */
+    class EnviarDatos extends AsyncTask<String, Integer, String >{
         private Activity contexto;
         EnviarDatos(Activity context){
             this.contexto = context;
@@ -279,12 +270,10 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
 
             String responseStr =" ";
             try{
-
                 post.setEntity(new UrlEncodedFormEntity(lista, "utf-8"));
                 HttpResponse response = cliente.execute(post);
                 responseStr = EntityUtils.toString(response.getEntity());
                 return responseStr;
-
             }catch (UnsupportedEncodingException e){
                 responseStr ="Error";
 
@@ -295,8 +284,6 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
                 responseStr ="Error";
                 return responseStr;
             }
-
-
             return null;
         }
         @Override
@@ -321,13 +308,9 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
             }
 
         }
-
-
     }
 
-    /**
-     * Seleccionar Fecha
-     * */
+    /**Seleccionar Fecha* */
     private void showDatePickerDialog() {
         DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -336,41 +319,30 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
                 final String selectedDate = year + "-" + twoDigits(month+1) + "-" +twoDigits(day)  ;
                 etPlannedDate.setText(selectedDate);
             }
-
             private String twoDigits(int n) {
                 return (n<=9) ? ("0"+n) : String.valueOf(n);
             }
         });
-
         newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
     }
 
-    /**
-     * Añadiendo datos a spinner categorias
-     * */
+    /*Método para cargar las categorías al spinner Categorias*/
     private void populateSpinnerCategoria() {
         List<String> lables = new ArrayList<String>();
-
-
-
         for (int i = 0; i < categoriesList.size(); i++) {
             lables.add(categoriesList.get(i).getCategoria());
         }
-
         // Creating adapter for spinner
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
                 android.R.layout.simple_spinner_item, lables);
-
         // Drop down layout style - list view with radio button
         spinnerAdapter
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         // attaching data adapter to spinner
         spinnerCat.setAdapter(spinnerAdapter);
     }
-    /**
-     * Añadiendo datos a spinner Idioma
-     * */
+
+    /*Método para cargar los idiomas al spinner idiomas*/
     private void populateSpinnerIdioma() {
         List<String> idiomas = new ArrayList<String>();
 
@@ -391,11 +363,9 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
         // attaching data adapter to spinner
         spinnerIdio.setAdapter(spinnerAdapter);
     }
-    /**
-     * Async task to get all categories
-     * */
-    private class GetCategories extends AsyncTask<Void, Void, Void> {
 
+    /*Cargar List de categorias mediante un hilo secundario AsyncTask*/
+    private class GetCategories extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -403,16 +373,12 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
             pDialog.setMessage("Cargando Datos");
             pDialog.setCancelable(false);
             pDialog.show();
-
         }
-
         @Override
         protected Void doInBackground(Void... arg0) {
             ServiceHandler jsonParser = new ServiceHandler();
             String json = jsonParser.makeServiceCall(URL_CATEGORIES, ServiceHandler.GET);
-
             Log.e("Response: ", "> " + json);
-
             if (json != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(json);
@@ -431,14 +397,11 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-            } else {
+            } else{
                 Log.e("JSON Data", "No se recibe datos del servidor!");
             }
-
             return null;
         }
-
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
@@ -446,150 +409,9 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
                 pDialog.dismiss();
             populateSpinnerCategoria();
         }
-
-    }
-    /**
-     * Async task to get all idiomas
-     * */
-    public void buscarLibro(){
-        final String URLB = "https://inventario-pdm115.000webhostapp.com/ws_buscar_documentos.php";
-
-        //lista.setAdapter(null);
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLB, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                response = response.replace("][", ",");
-                if (response.length() > 0) {
-                    try {
-                        JSONArray bdoc = new JSONArray(response);
-                        Log.i("sizejson", "" + bdoc.length());
-
-                        ArrayList<Documentos> listB = new ArrayList<Documentos>();
-                        for (int i = 0; i < bdoc.length(); i += 13) {
-                            try {
-
-                                listB.add(new Documentos(
-                                        bdoc.getInt(i + 1),
-                                        bdoc.getInt(i + 7),
-                                        bdoc.getInt(i + 12),
-                                        bdoc.getString(i + 2),
-                                        bdoc.getString(i + 3),
-                                        bdoc.getString(i + 4),
-                                        bdoc.getString(i + 5),
-                                        bdoc.getString(i + 6),
-                                        bdoc.getString(i + 8),
-                                        bdoc.getString(i + 10),
-                                        bdoc.getString(i + 11),
-                                        bdoc.getString(i + 9)));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                        cargarCampos(listB);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> parametros = new HashMap<String, String>();
-                String busqueda = Documentos.getIsbnS();
-                parametros.put("campo", busqueda);
-                return parametros;
-            }
-        };
-        requestQueue.add(stringRequest);
-
     }
 
-    public void obtenerLibros(){
-        String URL = "https://inventario-pdm115.000webhostapp.com/ws_consulta_documentos.php";
-
-        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                response = response.replace("][",",");
-                if(response.length()>0){
-                    try{
-                        JSONArray doc = new JSONArray(response);
-                        Log.i("sizejson",""+doc.length());
-
-                        ArrayList<Documentos> documentos = new ArrayList<Documentos>();
-
-                        for(int i = 0;i<doc.length(); i+=13){
-                            try{
-                                documentos.add(new Documentos(
-                                        doc.getInt(i+1),
-                                        doc.getInt(i+7),
-                                        doc.getInt(i+12),
-                                        doc.getString(i+2),
-                                        doc.getString(i+3),
-                                        doc.getString(i+4),
-                                        doc.getString(i+5),
-                                        doc.getString(i+6),
-                                        doc.getString(i+8),
-                                        doc.getString(i+10),
-                                        doc.getString(i+11),
-                                        doc.getString(i+9)));
-                            }catch (JSONException e){
-                                e.printStackTrace();
-                            }
-
-                        }
-                        cargarCampos(documentos);
-
-                    }catch (JSONException e){
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        queue.add(stringRequest);
-
-    }
-
-    public void cargarCampos(ArrayList list){
-        for (int i=0; i<list.size();i++){
-            ArrayList<Documentos> docu = new ArrayList<Documentos>();
-            docu = list;
-            edautor.setText(docu.get(i).getAutor().toString());
-            edtema.setText(docu.get(i).getTema().toString());
-            edtitulo.setText(docu.get(i).getTitulo().toString());
-            edsubtitulo.setText(docu.get(i).getSubtitulo().toString());
-            edpalabras_clave.setText(docu.get(i).getPalabras().toString());
-            ededitorial.setText(docu.get(i).getEditorial().toString());
-            eddescripcion.setText(docu.get(i).getDescripcion().toString());
-            etPlannedDate.setText(docu.get(i).getFecha_ingreso().toString());
-            edisbn.setText(docu.get(i).getIsbn().toString());
-           // pendientes categorias
-        }
-
-       // adapter= new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, titulos);
-       // lista.setAdapter(adapter);
-       // updateListViewHeight(lista);
-    }
-
+    /*Cargar List de idiomas mediante un hilo secundario AsyncTask*/
     public class GetIdiomas extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -632,6 +454,109 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
         }
 
     }
+
+    /*En el siguiente método nos conectamos al ws que realiza la consulta de los documentos
+    y los obtenemos recorriendo el json que trae todos los datos y luego los alojamos en un ArrayList del tipo
+    de la Clase Documentos que hará uso de todos sus atributos, para traer el solicitado hacemos uso de la variable contenida
+    en la Clase Documentos IsbnS*/
+    public void cargarDocumentoConsultado(){
+        final String URLB = "https://inventario-pdm115.000webhostapp.com/ws_vc17009/ws_CargarDatosDocBuscado.php";
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLB, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                response = response.replace("][", ",");
+                if (response.length() > 0) {
+                    try {
+                        JSONArray bdoc = new JSONArray(response);
+                        Log.i("sizejson", "" + bdoc.length());
+
+                        ArrayList<Documentos> listB = new ArrayList<Documentos>();
+                        for (int i = 0; i < bdoc.length(); i += 13) {
+                            try {
+
+                                listB.add(new Documentos(
+                                        bdoc.getInt(i + 1),
+                                        bdoc.getInt(i + 7),
+                                        bdoc.getInt(i + 12),
+                                        bdoc.getString(i + 2),
+                                        bdoc.getString(i + 3),
+                                        bdoc.getString(i + 4),
+                                        bdoc.getString(i + 5),
+                                        bdoc.getString(i + 6),
+                                        bdoc.getString(i + 8),
+                                        bdoc.getString(i + 10),
+                                        bdoc.getString(i + 11),
+                                        bdoc.getString(i + 9)));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                        cargarCampos(listB);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parametros = new HashMap<String, String>();
+                String busqueda = Documentos.getIsbnS();
+                parametros.put("campo", busqueda);
+                return parametros;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
+    /*Seteamos los valores obtenidos del ArrayList lleno obtenido del método obtenerDatosConsulta, lo recorremos y lo asignamos a la propiedad Text de cada EditText*/
+    public void cargarCampos(ArrayList list){
+        for (int i=0; i<list.size();i++){
+            ArrayList<Documentos> docu = new ArrayList<Documentos>();
+            docu = list;
+            edautor.setText(docu.get(i).getAutor().toString());
+            edtema.setText(docu.get(i).getTema().toString());
+            edtitulo.setText(docu.get(i).getTitulo().toString());
+            edsubtitulo.setText(docu.get(i).getSubtitulo().toString());
+            edpalabras_clave.setText(docu.get(i).getPalabras().toString());
+            ededitorial.setText(docu.get(i).getEditorial().toString());
+            eddescripcion.setText(docu.get(i).getDescripcion().toString());
+            etPlannedDate.setText(docu.get(i).getFecha_ingreso().toString());
+            edisbn.setText(docu.get(i).getIsbn().toString());
+          //  spinnerCat.setSelection(obtenerPosicionItem(spinnerCat, docu.get(i).getcategoria()));
+          //  spinnerIdio.setSelection(obtenerPosicionItem(spinnerIdio, docu.get(i).getidioma()));
+
+           // pendientes categorias
+        }
+       // adapter= new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, titulos);
+       // lista.setAdapter(adapter);
+       // updateListViewHeight(lista);
+    }
+
+    //Método para obtener la posición de un ítem del spinner
+    public static int obtenerPosicionItem(Spinner spinner, String obtenido) {
+        //Creamos la variable posicion y lo inicializamos en 0
+        int posicion = 0;
+        //Recorre el spinner en busca del ítem que coincida con el parametro String obtenido
+        //que lo pasaremos posteriormente
+        for (int i = 0; i < spinner.getCount(); i++) {
+            //Almacena la posición del ítem que coincida con la búsqueda
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(obtenido)) {
+                posicion = i;
+            }
+        }
+        //Devuelve un valor entero (si encontro una coincidencia devuelve la
+        // posición 0 o N, de lo contrario devuelve 0 = posición inicial)
+        return posicion;
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
        /* Toast.makeText(
@@ -644,6 +569,5 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-
 }
 
