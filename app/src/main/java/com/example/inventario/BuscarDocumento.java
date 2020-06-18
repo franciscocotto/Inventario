@@ -77,8 +77,7 @@ public class BuscarDocumento extends Fragment {
         pDialog.setMessage("Cargando Datos");
         pDialog.setCancelable(false);
         pDialog.show();
-        obtenerLibros();
-
+        buscarLibro(" ", 1);
 
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +90,8 @@ public class BuscarDocumento extends Fragment {
                     pDialog.setMessage("Buscando...");
                     pDialog.setCancelable(false);
                     pDialog.show();
-                    buscarLibro();
+                    String busqueda = etBuscar.getText().toString();
+                    buscarLibro(busqueda,2);
                     if(lista.getCount()== 0){
                         Toast.makeText(getActivity().getApplicationContext(), "Sin resultados", Toast.LENGTH_LONG).show();
                     }
@@ -132,7 +132,7 @@ public class BuscarDocumento extends Fragment {
 
     }
 
-    public void obtenerLibros(){
+    /*public void obtenerLibros(){
 
         String URL = null;
         if(Documentos.getFragmento()==1){
@@ -192,23 +192,39 @@ public class BuscarDocumento extends Fragment {
         });
         queue.add(stringRequest);
 
-    }
+    }*/
 
-    public void buscarLibro(){
+    public void buscarLibro(final String busqueda, int accion){
 
-        String URLB = null;
-        if(Documentos.getFragmento()==1){
-            URLB = "Direccion de Adiel";
+        String URL = null;
+
+        switch (accion){
+            case 1: //Consulta de docuemntos
+                if(Documentos.getFragmento()==1){
+                    URL = "Direccion de Adiel";
+                }
+                else if(Documentos.getFragmento()==2){
+                    URL = "http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_consulta_documentos.php";
+                }
+                break;
+
+            case 2:
+                if(Documentos.getFragmento()==1){
+                    URL = "Direccion de Adiel";
+                }
+                else if(Documentos.getFragmento()==2){
+                    URL = "http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_buscar_documentos.php";
+                }
+                break;
         }
-        else if(Documentos.getFragmento()==2){
-            URLB = "http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_consulta_documentos.php";
-        }
+
+
 
 
             lista.setAdapter(null);
 
             RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, URLB, new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.DEPRECATED_GET_OR_POST, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     response = response.replace("][", ",");
@@ -257,7 +273,6 @@ public class BuscarDocumento extends Fragment {
                 protected Map<String, String> getParams() throws AuthFailureError {
 
                     Map<String, String> parametros = new HashMap<String, String>();
-                    String busqueda = etBuscar.getText().toString();
                     parametros.put("campo", busqueda);
                     return parametros;
                 }
@@ -319,7 +334,7 @@ public class BuscarDocumento extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
 
                 Toast.makeText(getActivity().getApplicationContext(), "Campo de busqueda vacio", Toast.LENGTH_LONG).show();
-                obtenerLibros();
+                buscarLibro(" ",1);
             }
         });
         myBuild.setNegativeButton("No", new DialogInterface.OnClickListener() {
