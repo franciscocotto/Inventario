@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -63,6 +64,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
     //Declaramos las variables para cada elemento que vamos a obtener desde nuestro fragment_con_documentos
     private EditText edautor, edtema, edtitulo,edsubtitulo, edpalabras_clave, ededitorial, edisbn, eddescripcion;
     private int id_idi, id_cat;
+    Button btnEliminar;
     //Declaramos variables para el envío de datos al webService
     HttpClient cliente;
     HttpPost post;
@@ -106,6 +108,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
         ededitorial = (EditText) view.findViewById(R.id.ededitorial);
         etPlannedDate = (EditText) view.findViewById(R.id.etDate);
         edisbn.setEnabled(false);
+        btnEliminar = (Button) view.findViewById(R.id.btnEliminar);
 
         //Initializing the ArrayList
         categoriesList = new ArrayList<Categorias>();
@@ -204,8 +207,67 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
         });
         //este método se encarga de cargar los datos de acuerdo al ISBN buscado
         cargarDocumentoConsultado();
+
+        //Método que recibe la acción OnClick luego se llama al método de confirmación
+        view.findViewById(R.id.btnEliminar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ConfirmarEliminarDoc();
+            }
+        });
+
         return view;
     }
+
+
+    //Método que notifica al usuario si esta seguro de confirmar eliminar
+    public void ConfirmarEliminarDoc(){
+        AlertDialog.Builder myBuild = new AlertDialog.Builder(getContext());
+        myBuild.setTitle("Mensaje");
+        myBuild.setMessage("¿Esta Seguro que desea Eliminar el Documento?");
+        myBuild.setIcon(R.drawable.ic_error_outline_black_24dp);
+        myBuild.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                EliminarDocumento();
+            }
+        });
+        myBuild.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog dialog = myBuild.create();
+        dialog.show();
+    }
+
+    //Método que consume el servicio para eliminar
+    public void EliminarDocumento(){
+        final String URL = "http://www.ingenieriadesistemasinformaticos.com/ws_vc17009/ws_eliminarDocumento.php ";
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+       StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
+           @Override
+           public void onResponse(String response) {
+               Toast.makeText(getActivity().getApplicationContext(), "Documento eliminado satisfactoriamente", Toast.LENGTH_LONG).show();
+               LimpiarElementos();
+           }
+       }, new Response.ErrorListener() {
+           @Override
+           public void onErrorResponse(VolleyError error) {
+               Toast.makeText(getActivity().getApplicationContext(), "Ha ocurrido un error, no se ha podido eliminar el documento", Toast.LENGTH_LONG).show();
+           }
+       }) {
+           @Override
+           protected Map<String, String> getParams() throws AuthFailureError {
+               Map<String, String> parametros = new HashMap<String, String>();
+               parametros.put("isbn", edisbn.getText().toString());
+               return parametros;
+           }
+       };
+        requestQueue.add(stringRequest);
+    }
+
 
     /*Método EnviarForm() se encaga de enviar al usuario una ventana de confirmación
     para guardar los cambios realizados, al confirmar realizamos una instancia de la clase
@@ -296,18 +358,23 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
             }
             else{
                 Toast.makeText(contexto,"Datos de documento guardados exitosamente", Toast.LENGTH_SHORT).show();
-                edtitulo.setText("");
-                edautor.setText("");
-                edsubtitulo.setText("");
-                edtema.setText("");
-                etPlannedDate.setText("");
-                edpalabras_clave.setText("");
-                ededitorial.setText("");
-                edisbn.setText("");
-                eddescripcion.setText("");
+                LimpiarElementos();
             }
 
         }
+    }
+
+    //Método para limpiar después de cada acción realizada
+    public void LimpiarElementos(){
+        edtitulo.setText("");
+        edautor.setText("");
+        edsubtitulo.setText("");
+        edtema.setText("");
+        etPlannedDate.setText("");
+        edpalabras_clave.setText("");
+        ededitorial.setText("");
+        edisbn.setText("");
+        eddescripcion.setText("");
     }
 
     /**Seleccionar Fecha* */
@@ -345,21 +412,15 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
     /*Método para cargar los idiomas al spinner idiomas*/
     private void populateSpinnerIdioma() {
         List<String> idiomas = new ArrayList<String>();
-
-
-
         for (int i = 0; i < idiomaList.size(); i++) {
             idiomas.add(idiomaList.get(i).getIdioma());
         }
-
         // Creating adapter for spinner
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
                 android.R.layout.simple_spinner_item, idiomas);
-
         // Drop down layout style - list view with radio button
         spinnerAdapter
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         // attaching data adapter to spinner
         spinnerIdio.setAdapter(spinnerAdapter);
     }
@@ -460,7 +521,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
     de la Clase Documentos que hará uso de todos sus atributos, para traer el solicitado hacemos uso de la variable contenida
     en la Clase Documentos IsbnS*/
     public void cargarDocumentoConsultado(){
-        final String URLB = "http://www.ingenieriadesistemasinformaticos.com/ws_vc17009/ws_CargarDatosDocBuscado.php   ";
+        final String URLB = "http://www.ingenieriadesistemasinformaticos.com/ws_vc17009/ws_CargarDatosDocBuscado.php";
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLB, new Response.Listener<String>() {
             @Override
@@ -530,8 +591,8 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
             eddescripcion.setText(docu.get(i).getDescripcion().toString());
             etPlannedDate.setText(docu.get(i).getFecha_ingreso().toString());
             edisbn.setText(docu.get(i).getIsbn().toString());
-          //  spinnerCat.setSelection(obtenerPosicionItem(spinnerCat, docu.get(i).getcategoria()));
-          //  spinnerIdio.setSelection(obtenerPosicionItem(spinnerIdio, docu.get(i).getidioma()));
+            spinnerCat.setSelection(obtenerPosicionItem(spinnerCat, docu.get(i).getcategoria()));
+            spinnerIdio.setSelection(obtenerPosicionItem(spinnerIdio, docu.get(i).getidioma()));
 
            // pendientes categorias
         }
