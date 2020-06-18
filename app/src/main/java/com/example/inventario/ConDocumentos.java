@@ -532,13 +532,13 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
                         JSONArray bdoc = new JSONArray(response);
                         Log.i("sizejson", "" + bdoc.length());
 
-                        ArrayList<Documentos> listB = new ArrayList<Documentos>();
+                        ArrayList<Documentos_Consulta> listB = new ArrayList<Documentos_Consulta>();
                         for (int i = 0; i < bdoc.length(); i += 13) {
                             try {
 
-                                listB.add(new Documentos(
-                                        bdoc.getInt(i + 1),
-                                        bdoc.getInt(i + 7),
+                                listB.add(new Documentos_Consulta(
+                                        bdoc.getString(i + 1),
+                                        bdoc.getString(i + 7),
                                         bdoc.getInt(i + 12),
                                         bdoc.getString(i + 2),
                                         bdoc.getString(i + 3),
@@ -580,7 +580,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
     /*Seteamos los valores obtenidos del ArrayList lleno obtenido del método obtenerDatosConsulta, lo recorremos y lo asignamos a la propiedad Text de cada EditText*/
     public void cargarCampos(ArrayList list){
         for (int i=0; i<list.size();i++){
-            ArrayList<Documentos> docu = new ArrayList<Documentos>();
+            ArrayList<Documentos_Consulta> docu = new ArrayList<Documentos_Consulta>();
             docu = list;
             edautor.setText(docu.get(i).getAutor().toString());
             edtema.setText(docu.get(i).getTema().toString());
@@ -591,8 +591,8 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
             eddescripcion.setText(docu.get(i).getDescripcion().toString());
             etPlannedDate.setText(docu.get(i).getFecha_ingreso().toString());
             edisbn.setText(docu.get(i).getIsbn().toString());
-            spinnerCat.setSelection(obtenerPosicionItem(spinnerCat, docu.get(i).getcategoria()));
-            spinnerIdio.setSelection(obtenerPosicionItem(spinnerIdio, docu.get(i).getidioma()));
+            spinnerCat.setSelection(obtenerPosicionItem(spinnerCat, docu.get(i).getId_categoria().toString()));
+            spinnerIdio.setSelection(obtenerPosicionItem(spinnerIdio, docu.get(i).getId_idioma().toString()));
 
            // pendientes categorias
         }
@@ -605,6 +605,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
     public static int obtenerPosicionItem(Spinner spinner, String obtenido) {
         //Creamos la variable posicion y lo inicializamos en 0
         int posicion = 0;
+
         //Recorre el spinner en busca del ítem que coincida con el parametro String obtenido
         //que lo pasaremos posteriormente
         for (int i = 0; i < spinner.getCount(); i++) {
@@ -613,6 +614,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
                 posicion = i;
             }
         }
+        spinner.notify();
         //Devuelve un valor entero (si encontro una coincidencia devuelve la
         // posición 0 o N, de lo contrario devuelve 0 = posición inicial)
         return posicion;
