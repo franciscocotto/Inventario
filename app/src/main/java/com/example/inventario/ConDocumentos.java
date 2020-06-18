@@ -80,9 +80,9 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
     En este caso declaramos una para editar alojada en WebHost000 apuntando a la carpeta VC17009 que contiene mi servicio
     para editar documentos, conrespecto a categorias e idiomas, reutilizó las funciones creadas
     por mi compañero CA06025*/
-    private String URL_EDITAR ="https://inventario-pdm115.000webhostapp.com/ws_vc17009/ws_editarDocumento.php";
-    private String URL_CATEGORIES = "https://inventario-pdm115.000webhostapp.com/ws_ca06025/getcategorias.php";
-    private String URL_IDIOMAS = "https://inventario-pdm115.000webhostapp.com/ws_ca06025/getIdiomas.php";
+    private String URL_EDITAR ="http://www.ingenieriadesistemasinformaticos.com/ws_vc17009/ws_editarDocumento.php";
+    private String URL_CATEGORIES = "http://www.ingenieriadesistemasinformaticos.com/ws_ca06025/getcategorias.php";
+    private String URL_IDIOMAS = "http://www.ingenieriadesistemasinformaticos.com/ws_ca06025/getIdiomas.php";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -460,7 +460,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
     de la Clase Documentos que hará uso de todos sus atributos, para traer el solicitado hacemos uso de la variable contenida
     en la Clase Documentos IsbnS*/
     public void cargarDocumentoConsultado(){
-        final String URLB = "https://inventario-pdm115.000webhostapp.com/ws_vc17009/ws_CargarDatosDocBuscado.php";
+        final String URLB = "http://www.ingenieriadesistemasinformaticos.com/ws_vc17009/ws_CargarDatosDocBuscado.php   ";
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLB, new Response.Listener<String>() {
             @Override

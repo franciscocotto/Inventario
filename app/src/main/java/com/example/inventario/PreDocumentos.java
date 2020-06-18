@@ -92,11 +92,11 @@ public class PreDocumentos extends Fragment {
         pDialog.setMessage("Cargando Datos");
         pDialog.setCancelable(false);
         pDialog.show();
-        cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_bg17016/ws_prestamo_documentos.php", 1, isbnEn);
-        cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_bg17016/ws_cargar_docentes.php", 2, " ");
-        cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_bg17016/ws_spinners_prestamo.php", 4, "escuelas");
-        cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_bg17016/ws_spinners_prestamo.php", 5, "areas");
-        cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_bg17016/ws_spinners_prestamo.php", 6, "motivos");
+        cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_prestamo_documentos.php", 1, isbnEn);
+        cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_cargar_docentes.php", 2, " ");
+        cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_spinners_prestamo.php", 4, "escuelas");
+        cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_spinners_prestamo.php", 5, "areas");
+        cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_spinners_prestamo.php", 6, "motivos");
 
         etFechaPrestamo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -265,7 +265,7 @@ public class PreDocumentos extends Fragment {
 
         estado = String.valueOf(documentos.get(0).getId_estado());
 
-        cargarDatos("https://inventario-pdm115.000webhostapp.com/ws_bg17016/ws_estado_documento.php", 3, estado);
+        cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_estado_documento.php", 3, estado);
 
         if (pDialog.isShowing())
             pDialog.dismiss();

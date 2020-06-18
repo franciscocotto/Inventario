@@ -76,9 +76,9 @@ public class AddDocumentos extends Fragment implements AdapterView.OnItemSelecte
     /**
      * webservices
      * */
-    private String URL_GUARDAR ="https://inventario-pdm115.000webhostapp.com/ws_ca06025/PostDocument.php";
-    private String URL_CATEGORIES = "https://inventario-pdm115.000webhostapp.com/ws_ca06025/getcategorias.php";
-    private String URL_IDIOMAS = "https://inventario-pdm115.000webhostapp.com/ws_ca06025/getIdiomas.php";
+    private String URL_GUARDAR ="http://www.ingenieriadesistemasinformaticos.com/ws_ca06025/PostDocument.php";
+    private String URL_CATEGORIES = "http://www.ingenieriadesistemasinformaticos.com/ws_ca06025/getcategorias.php";
+    private String URL_IDIOMAS = "http://www.ingenieriadesistemasinformaticos.com/ws_ca06025/getIdiomas.php";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

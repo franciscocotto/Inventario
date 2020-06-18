@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         final String username = etName.getText().toString().trim();
         final String password = etPassword.getText().toString().trim();
 
-        String url = "https://inventario-pdm115.000webhostapp.com/ws_ca06025/login.php";
+        String url = "http://www.ingenieriadesistemasinformaticos.com/ws_ca06025/login.php";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -137,10 +137,10 @@ public class MainActivity extends AppCompatActivity {
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
-
+//login no usado actualmente
     private void login(){
 
-        String url = "https://invetariopdm115.000webhostapp.com//login.php";
+        String url = "";
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
