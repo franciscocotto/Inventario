@@ -131,68 +131,7 @@ public class BuscarDocumento extends Fragment {
         return view;
 
     }
-
-    /*public void obtenerLibros(){
-
-        String URL = null;
-        if(Documentos.getFragmento()==1){
-            URL = "Direccion de Adiel";
-        }
-        else if(Documentos.getFragmento()==2){
-            URL = "http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_consulta_documentos.php";
-        }
-
-
-        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                response = response.replace("][",",");
-                    if(response.length()>0){
-                        try{
-                            JSONArray doc = new JSONArray(response);
-                            Log.i("sizejson",""+doc.length());
-
-                            ArrayList<Documentos> documentos = new ArrayList<Documentos>();
-
-                            for(int i = 0;i<doc.length(); i+=13){
-                                try{
-                                    documentos.add(new Documentos(
-                                            doc.getInt(i+1),
-                                            doc.getInt(i+7),
-                                            doc.getInt(i+12),
-                                            doc.getString(i+2),
-                                            doc.getString(i+3),
-                                            doc.getString(i+4),
-                                            doc.getString(i+5),
-                                            doc.getString(i+6),
-                                            doc.getString(i+8),
-                                            doc.getString(i+10),
-                                            doc.getString(i+11),
-                                            doc.getString(i+9)));
-                                }catch (JSONException e){
-                                    e.printStackTrace();
-                                }
-
-                            }
-                            cargarTabla(documentos);
-
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                        }
-                    }
-                }
-
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        queue.add(stringRequest);
-
-    }*/
+    
 
     public void buscarLibro(final String busqueda, int accion){
 
@@ -208,7 +147,7 @@ public class BuscarDocumento extends Fragment {
                 }
                 break;
 
-            case 2:
+            case 2: //Buscar documentos
                 if(Documentos.getFragmento()==1){
                     URL = "Direccion de Adiel";
                 }
