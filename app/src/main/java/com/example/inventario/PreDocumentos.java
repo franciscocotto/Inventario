@@ -134,7 +134,6 @@ public class PreDocumentos extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toast.makeText(getActivity().getApplicationContext(), "Hola", Toast.LENGTH_SHORT).show();
     }
 
     private void cargarDatos(String URL, final int accion, final String id){
@@ -154,11 +153,11 @@ public class PreDocumentos extends Fragment {
                         switch (accion){
 
                             case 1: //Carga campos del documento
-                                ArrayList<InventarioDocumentos> listB = new ArrayList<InventarioDocumentos>();
+                                ArrayList<InventarioDocumentos> documentos = new ArrayList<InventarioDocumentos>();
                                 for (int i = 0; i < bdoc.length(); i+=4) {
                                     try {
 
-                                        listB.add(new InventarioDocumentos(
+                                        documentos.add(new InventarioDocumentos(
                                                 bdoc.getInt(0),
                                                 bdoc.getInt(1),
                                                 bdoc.getString(2),
@@ -168,7 +167,7 @@ public class PreDocumentos extends Fragment {
                                     }
 
                                 }
-                                cargarCampos(listB);
+                                cargarCampos(documentos);
                                 break;
 
                             case 2:

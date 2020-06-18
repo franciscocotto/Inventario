@@ -133,6 +133,7 @@ public class BuscarDocumento extends Fragment {
     }
 
     public void obtenerLibros(){
+
         String URL = "http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_consulta_documentos.php";
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
@@ -187,6 +188,7 @@ public class BuscarDocumento extends Fragment {
     }
 
     public void buscarLibro(){
+
         final String URLB = "http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_buscar_documentos.php";
 
             lista.setAdapter(null);

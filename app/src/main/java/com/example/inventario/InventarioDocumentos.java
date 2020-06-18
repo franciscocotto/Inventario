@@ -7,7 +7,10 @@ public class InventarioDocumentos extends Documentos {
     public InventarioDocumentos(){}
 
     public InventarioDocumentos(int id_documento, int id_estado, String titulo, String isbn){
-
+        this.id_documento = id_documento;
+        this.id_estado = id_estado;
+        this.titulo = titulo;
+        this.isbn = isbn;
     }
 
 }
