@@ -168,26 +168,12 @@
                         android:layout_height="wrap_content"
                         android:text="Prestamo Ciclo"
                         android:textSize="16sp" />
-                    <RadioGroup
+
+                    <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:id="@+id/cbCiclo"/>
 
-                        <RadioButton
-                            android:id="@+id/rbCSi"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Si"
-                            android:textSize="16sp"
-                            android:layout_marginRight="15sp"/>
-
-                        <RadioButton
-                            android:id="@+id/rbCNo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="No"
-                            android:textSize="16sp"/>
-                    </RadioGroup>
                 </LinearLayout>
 
                 <LinearLayout
@@ -201,27 +187,12 @@
                         android:layout_height="wrap_content"
                         android:text="Asignacion definitiva"
                         android:textSize="16sp"/>
-                    <RadioGroup
+
+                    <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:id="@+id/cbDefinitiva"/>                </LinearLayout>
 
-                        <RadioButton
-                            android:id="@+id/rbDSi"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Si"
-                            android:textSize="16sp"
-                            android:layout_marginRight="15sp"/>
-
-                        <RadioButton
-                            android:id="@+id/rbDno"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="No"
-                            android:textSize="16sp"/>
-                    </RadioGroup>
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout

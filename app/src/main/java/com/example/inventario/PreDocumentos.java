@@ -15,9 +15,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,14 +41,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/*  Autor:   Luis Salvador Barrera Garcia
+
+    Carnet:  BG17016
+
+    Descripcion:
+    Este fragment se encarga de solicitar los datos al usuario para realizar un prestamo o asignacion de
+    documento a un docente previamente registrado en la base de datos.
+*/
 
 public class PreDocumentos extends Fragment {
 
     public PreDocumentos() {
 
     }
+    InventarioDocumentos invDocumentos = new InventarioDocumentos();
 
-    ArrayList<Documentos> documentos = new ArrayList<Documentos>();
+    //Definicion de componentes a utilizar
+    ArrayList<InventarioDocumentos> documentos = new ArrayList<InventarioDocumentos>();
     ArrayList<Docentes> docentes = new ArrayList<Docentes>();
     ArrayList<Escuelas> escuelas = new ArrayList<Escuelas>();
     ArrayList<Areas> areas = new ArrayList<Areas>();
@@ -58,6 +71,7 @@ public class PreDocumentos extends Fragment {
 
     String isbnEn = null;
     String estado = null;
+
     EditText etFechaPrestamo, etFechaDevolucion;
     ProgressBar progressBar;
     ProgressDialog pDialog;
@@ -66,12 +80,16 @@ public class PreDocumentos extends Fragment {
     Button btnAccion;
     TextView lblAccion;
     Spinner spEscuelas, spAreas, spMotivos;
+    CheckBox cbAsignado, cbCiclo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pre_documentos, container, false);
 
+        //Inicializacion de los componentes a utilizar
+
+        //Edit text y TextView
         edTitulo = (EditText)view.findViewById(R.id.edTitulo);
         edIsbn = (EditText)view.findViewById(R.id.edIsbn);
         edEstado = (EditText)view.findViewById(R.id.edEstado);
@@ -79,25 +97,35 @@ public class PreDocumentos extends Fragment {
         etFechaPrestamo = (EditText) view.findViewById(R.id.etFechaPrestamo);
         etFechaDevolucion = (EditText)view.findViewById(R.id.etFechaDevolucion);
         lblAccion = (TextView)view.findViewById(R.id.lblAccion);
+
+        //Botones
         btnAccion = (Button)view.findViewById(R.id.btnAccion);
 
+        //Spinners
         spEscuelas = (Spinner)view.findViewById(R.id.spEscuela);
         spAreas = (Spinner)view.findViewById(R.id.spArea);
         spMotivos = (Spinner)view.findViewById(R.id.spMotivo);
 
+        //CheckBox
+        cbAsignado = (CheckBox)view.findViewById(R.id.cbDefinitiva);
+        cbCiclo = (CheckBox)view.findViewById(R.id.cbCiclo);
 
+        //Obtenemos el isbn del libro seleccionado en el fragment BuscarDocumentos
         isbnEn = Documentos.getIsbnS();
 
         pDialog = new ProgressDialog(getContext());
         pDialog.setMessage("Cargando Datos");
         pDialog.setCancelable(false);
         pDialog.show();
+
+        //Consumo de los Web Serces mediante Volley
         cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_prestamo_documentos.php", 1, isbnEn);
         cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_cargar_docentes.php", 2, " ");
         cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_spinners_prestamo.php", 4, "escuelas");
         cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_spinners_prestamo.php", 5, "areas");
         cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_spinners_prestamo.php", 6, "motivos");
 
+        //Calentdario para fecha prestamo
         etFechaPrestamo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,6 +137,7 @@ public class PreDocumentos extends Fragment {
             }
         });
 
+        //Calendario para fecha devolucion
         etFechaDevolucion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,6 +149,33 @@ public class PreDocumentos extends Fragment {
             }
         });
 
+        cbAsignado.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(cbAsignado.isChecked() == true){
+                    cbCiclo.setChecked(false);
+                    cbCiclo.setEnabled(false);
+                }
+                else{
+                    cbCiclo.setEnabled(true);
+                }
+            }
+        });
+
+        cbCiclo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(cbCiclo.isChecked()==true){
+                    cbAsignado.setChecked(false);
+                    cbAsignado.setEnabled(false);
+                }
+                else{
+                    cbAsignado.setEnabled(true);
+                }
+            }
+        });
+
+        //Boton de accion
         btnAccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,10 +187,6 @@ public class PreDocumentos extends Fragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
 
     private void cargarDatos(String URL, final int accion, final String id){
 
@@ -160,8 +212,9 @@ public class PreDocumentos extends Fragment {
                                         documentos.add(new InventarioDocumentos(
                                                 bdoc.getInt(0),
                                                 bdoc.getInt(1),
-                                                bdoc.getString(2),
-                                                bdoc.getString(3)));
+                                                bdoc.getInt(2),
+                                                bdoc.getString(3),
+                                                bdoc.getString(4)));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -346,6 +399,17 @@ public class PreDocumentos extends Fragment {
             spAreas.setEnabled(false);
             btnAccion.setEnabled(false);
         }
+    }
+
+    public void ejecutarAccion(){
+        invDocumentos.setId_documento(documentos.get(0).getId_documento());
+        invDocumentos.setId_bien(documentos.get(0).getId_bien());
+        invDocumentos.setId_area(documentos.get(0).getId_area());
+        invDocumentos.setId_docente(documentos.get(0).getId_docente());
+        invDocumentos.setId_motivo(documentos.get(0).getId_motivo());
+        invDocumentos.setTodo_ciclo(documentos.get(0).getTodo_ciclo());
+        invDocumentos.setEs_definitivo(documentos.get(0).getEs_definitivo());
+
     }
 
     private void showDatePickerDialog(final int id) {

@@ -134,7 +134,14 @@ public class BuscarDocumento extends Fragment {
 
     public void obtenerLibros(){
 
-        String URL = "http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_consulta_documentos.php";
+        String URL = null;
+        if(Documentos.getFragmento()==1){
+            URL = "Direccion de Adiel";
+        }
+        else if(Documentos.getFragmento()==2){
+            URL = "http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_consulta_documentos.php";
+        }
+
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
@@ -189,7 +196,14 @@ public class BuscarDocumento extends Fragment {
 
     public void buscarLibro(){
 
-        final String URLB = "http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_buscar_documentos.php";
+        String URLB = null;
+        if(Documentos.getFragmento()==1){
+            URLB = "Direccion de Adiel";
+        }
+        else if(Documentos.getFragmento()==2){
+            URLB = "http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_consulta_documentos.php";
+        }
+
 
             lista.setAdapter(null);
 
