@@ -614,7 +614,6 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
                 posicion = i;
             }
         }
-        spinner.notify();
         //Devuelve un valor entero (si encontro una coincidencia devuelve la
         // posición 0 o N, de lo contrario devuelve 0 = posición inicial)
         return posicion;
