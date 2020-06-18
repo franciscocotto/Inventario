@@ -68,9 +68,9 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
     /**
      * webservices
      * */
-    private String URL_GUARDAR ="https://inventario-pdm115.000webhostapp.com/ws_ca06025/PostEquipo.php";
-    private String URL_CATEGORIES = "https://inventario-pdm115.000webhostapp.com/ws_ca06025/getcategoriasEquipos.php";
-    private String URL_MARCAS = "https://inventario-pdm115.000webhostapp.com/ws_ca06025/getMarcas.php";
+    private String URL_GUARDAR ="http://www.ingenieriadesistemasinformaticos.com/ws_ca06025/PostEquipo.php";
+    private String URL_CATEGORIES = "http://www.ingenieriadesistemasinformaticos.com/ws_ca06025/getcategoriasEquipos.php";
+    private String URL_MARCAS = "http://www.ingenieriadesistemasinformaticos.com/ws_ca06025/getMarcas.php";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
