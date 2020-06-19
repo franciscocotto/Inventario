@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Agregar"
+            android:text="@string/agregar"
             android:textStyle="bold" />
 
         <ImageButton
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Consultar"
+            android:text="@string/Consultar"
             android:textStyle="bold" />
 
         <ImageButton
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Prestamos"
+            android:text="@string/Prestamos"
             android:textStyle="bold" />
 
 

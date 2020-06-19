@@ -1,5 +1,6 @@
 package com.example.inventario.ui.home;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ public class HomeFragment extends Fragment {
         ImageButton equip = (ImageButton) view.findViewById(R.id.btn_equi);
         //open fragment documentos
         document.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceType")
             @Override
             public void onClick(View v) {
 
@@ -38,7 +40,7 @@ public class HomeFragment extends Fragment {
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
                 fr.replace(R.id.nav_host_fragment, new DocumentosFragment());
                 fr.commit();
-                ((Home) getActivity()).getSupportActionBar().setTitle("Documentos");
+              //  ((Home) getActivity()).getSupportActionBar().setTitle(R.id.menu_documentos);
 
             }
         });
@@ -51,7 +53,7 @@ public class HomeFragment extends Fragment {
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
                 fr.replace(R.id.nav_host_fragment, new EquiposFragment());
                 fr.commit();
-                ((Home) getActivity()).getSupportActionBar().setTitle("Equipos");
+               // ((Home) getActivity()).getSupportActionBar().setTitle("Equipos");
 
             }
         });

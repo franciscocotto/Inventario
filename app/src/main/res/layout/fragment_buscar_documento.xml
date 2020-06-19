@@ -90,7 +90,7 @@
                 android:id="@+id/btnRegresarBusqueda"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Regresar"
+                android:text="@string/regresar"
                 android:background="@drawable/gradient_1"
                 android:layout_marginTop="20dp"
                 android:textColor="@android:color/white"/>
