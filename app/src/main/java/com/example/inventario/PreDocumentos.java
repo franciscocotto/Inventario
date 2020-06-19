@@ -193,13 +193,17 @@ public class PreDocumentos extends Fragment {
         btnAccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            String mensaje;
+
+                String mensaje;
 
                 if(estado.equals("DISPONIBLE")){
                     mensaje = "¿Esta seguro que desea realizar el prestamo?";
-                    EnviarForm(mensaje, 1);
+                    EnviarForm(mensaje, "1");
                 }
-
+                else if(estado.equals("PRESTADO")){
+                    mensaje = "¿Esta seguro que desea devolver el documento";
+                    EnviarForm(mensaje, "2");
+                }
             }
 
 
@@ -222,15 +226,21 @@ public class PreDocumentos extends Fragment {
      *Alerta para guardado de datos
      * */
 
-    public void EnviarForm(){
+    public void EnviarForm(String mensaje, final String accion){
         AlertDialog.Builder myBuild = new AlertDialog.Builder(getContext());
         myBuild.setTitle("Mensaje");
-        myBuild.setMessage("¿Está Seguro que desea Asignar el Documento?");
+        myBuild.setMessage(mensaje);
         myBuild.setIcon(R.drawable.ic_error_outline_black_24dp);
         myBuild.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                accionPrestar();
+                if(accion.equals("1")){
+                    accionPrestar();
+                }
+                else if(accion.equals("2")){
+                    accionDevolver();
+                }
+
             }
         });
         myBuild.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -561,7 +571,7 @@ public class PreDocumentos extends Fragment {
                 break;
 
             case "ASIGNADO":
-                lblAccion.setText("ACCION: DEVOLUCION DE DOCUMENTO");
+                lblAccion.setText("DOCUMENTO ASIGNADO");
                 componentesDesabilitados();
                 btnAccion.setText("ASIGNADO PERMANENTEMENTE");
                 btnAccion.setEnabled(false);
@@ -634,6 +644,7 @@ public class PreDocumentos extends Fragment {
                     if(cbAsignado.isChecked()==true){
                         invDocumentos.setEs_definitivo(1);
                         invDocumentos.setTodo_ciclo(0);
+                        invDocumentos.setId_estado(3);
                         invDocumentos.setFecha_hasta("0000-00-00");
                     }
                     else if(cbCiclo.isChecked()==true){
@@ -646,15 +657,19 @@ public class PreDocumentos extends Fragment {
                         invDocumentos.setTodo_ciclo(0);
                     }
 
+                    if(cbAsignado.isChecked()==false){
+                        invDocumentos.setId_estado(2);
+                    }
+
                     invDocumentos.setId_escuela(escuelas.get(spEscuelas.getSelectedItemPosition()-1).getId_escuela());
                     invDocumentos.setFecha_desde(etFechaPrestamo.getText().toString());
                     invDocumentos.setFecha_hasta(etFechaDevolucion.getText().toString());
                     invDocumentos.setObservacion(edObservacions.getText().toString());
-                    invDocumentos.setId_estado(2);
+
                     Context contexto = getActivity().getApplicationContext();
                     invDocumentos.prestar(contexto);
 
-                    if(InventarioDocumentos.resultado==1){
+                    if(InventarioDocumentos.resultado==true){
                         BuscarDocumento buscarDocumento = new BuscarDocumento();
 
                         FragmentTransaction fr = getFragmentManager().beginTransaction();
@@ -669,7 +684,27 @@ public class PreDocumentos extends Fragment {
     public void accionDevolver(){
         invDocumentos.setId_documento(documentos.get(0).getId_documento());
         invDocumentos.setId_bien(documentos.get(0).getId_bien());
+        invDocumentos.setId_area(0);
+        invDocumentos.setId_docente(0);
+        invDocumentos.setId_motivo(0);
+        invDocumentos.setTodo_ciclo(0);
+        invDocumentos.setEs_definitivo(0);
+        invDocumentos.setId_escuela(0);
+        invDocumentos.setFecha_desde(etFechaPrestamo.getText().toString());
+        invDocumentos.setFecha_hasta(etFechaDevolucion.getText().toString());
+        invDocumentos.setObservacion("");
+        invDocumentos.setId_estado(1);
 
+        Context contexto = getActivity().getApplicationContext();
+        invDocumentos.prestar(contexto);
+
+        if(InventarioDocumentos.resultado==true) {
+            BuscarDocumento buscarDocumento = new BuscarDocumento();
+
+            FragmentTransaction fr = getFragmentManager().beginTransaction();
+            fr.replace(R.id.nav_host_fragment, new BuscarDocumento());
+            fr.commit();
+        }
     }
 
     private void showDatePickerDialog(final int id) {

@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class InventarioDocumentos extends Documentos {
 
-    public static int resultado;
+    public static boolean resultado=true;
 
     private int id_prestamo, id_bien, id_area, id_docente, id_motivo, todo_ciclo, es_definitivo, id_escuela;
     private String fecha_desde, fecha_hasta, observacion;
@@ -153,9 +153,10 @@ public class InventarioDocumentos extends Documentos {
                     //if no error in response
                     if (!obj.getBoolean("error")) {
                         Toast.makeText(context, obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        InventarioDocumentos.resultado=false;
                     } else {
                         Toast.makeText(context, obj.getString("message"), Toast.LENGTH_SHORT).show();
-                        InventarioDocumentos.resultado=1;
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
