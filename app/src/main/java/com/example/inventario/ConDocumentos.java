@@ -6,10 +6,12 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -64,7 +66,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
     //Declaramos las variables para cada elemento que vamos a obtener desde nuestro fragment_con_documentos
     private EditText edautor, edtema, edtitulo,edsubtitulo, edpalabras_clave, ededitorial, edisbn, eddescripcion;
     private int id_idi, id_cat;
-    Button btnEliminar;
+    Button btnEliminar, btnRegresar;
     //Declaramos variables para el envío de datos al webService
     HttpClient cliente;
     HttpPost post;
@@ -109,6 +111,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
         etPlannedDate = (EditText) view.findViewById(R.id.etDate);
         edisbn.setEnabled(false);
         btnEliminar = (Button) view.findViewById(R.id.btnEliminar);
+        btnRegresar = (Button) view.findViewById(R.id.btnRegresar);
 
         //Initializing the ArrayList
         categoriesList = new ArrayList<Categorias>();
@@ -206,7 +209,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
             }
         });
         //este método se encarga de cargar los datos de acuerdo al ISBN buscado
-        cargarDocumentoConsultado();
+
 
         //Método que recibe la acción OnClick luego se llama al método de confirmación
         view.findViewById(R.id.btnEliminar).setOnClickListener(new View.OnClickListener() {
@@ -216,9 +219,24 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
             }
         });
 
+
+        view.findViewById(R.id.btnRegresar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegresarBusqueda();
+            }
+        });
         return view;
     }
 
+    //Metodo para regresar a pantalla Busqueda de Documentos
+    public  void RegresarBusqueda(){
+        Documentos.setFragmento(1);
+        BuscarDocumento conDocumentos = new BuscarDocumento();
+        FragmentTransaction fr = getFragmentManager().beginTransaction();
+        fr.replace(R.id.nav_host_fragment, new BuscarDocumento());
+        fr.commit();
+    }
 
     //Método que notifica al usuario si esta seguro de confirmar eliminar
     public void ConfirmarEliminarDoc(){
@@ -249,8 +267,9 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
            @Override
            public void onResponse(String response) {
-               Toast.makeText(getActivity().getApplicationContext(), "Documento eliminado satisfactoriamente", Toast.LENGTH_LONG).show();
+               Toast.makeText(getActivity().getApplicationContext(), "Documento Eliminado Satisfactoriamente", Toast.LENGTH_LONG).show();
                LimpiarElementos();
+               RegresarBusqueda();
            }
        }, new Response.ErrorListener() {
            @Override
@@ -357,8 +376,9 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
                 Toast.makeText(contexto,"Titulo y/o ISBN ya estan registrados", Toast.LENGTH_SHORT).show();
             }
             else{
-                Toast.makeText(contexto,"Datos de documento guardados exitosamente", Toast.LENGTH_SHORT).show();
+                Toast.makeText(contexto,"Datos de documento Actualizados exitosamente", Toast.LENGTH_SHORT).show();
                 LimpiarElementos();
+                RegresarBusqueda();
             }
 
         }
@@ -468,7 +488,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
             super.onPostExecute(result);
             if (pDialog.isShowing())
                 pDialog.dismiss();
-            populateSpinnerCategoria();
+            cargarDocumentoConsultado();
         }
     }
 
@@ -579,6 +599,7 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
 
     /*Seteamos los valores obtenidos del ArrayList lleno obtenido del método obtenerDatosConsulta, lo recorremos y lo asignamos a la propiedad Text de cada EditText*/
     public void cargarCampos(ArrayList list){
+
         for (int i=0; i<list.size();i++){
             ArrayList<Documentos_Consulta> docu = new ArrayList<Documentos_Consulta>();
             docu = list;
@@ -591,18 +612,27 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
             eddescripcion.setText(docu.get(i).getDescripcion().toString());
             etPlannedDate.setText(docu.get(i).getFecha_ingreso().toString());
             edisbn.setText(docu.get(i).getIsbn().toString());
-            spinnerCat.setSelection(obtenerPosicionItem(spinnerCat, docu.get(i).getId_categoria().toString()));
+
+            List<String> lables = new ArrayList<String>();
+            for (int j = 0; j < categoriesList.size(); j++) {
+                lables.add(categoriesList.get(j).getCategoria());
+            }
+            // Creating adapter for spinner
+            ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
+                    android.R.layout.simple_spinner_item, lables);
+            // attaching data adapter to spinner
+            spinnerCat.setAdapter(spinnerAdapter);
+            spinnerAdapter.notifyDataSetChanged();
+            spinnerCat.setSelection(spinnerAdapter.getPosition(docu.get(i).getId_categoria().toString()));
             spinnerIdio.setSelection(obtenerPosicionItem(spinnerIdio, docu.get(i).getId_idioma().toString()));
 
-           // pendientes categorias
         }
-       // adapter= new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, titulos);
-       // lista.setAdapter(adapter);
-       // updateListViewHeight(lista);
     }
 
+
     //Método para obtener la posición de un ítem del spinner
-    public static int obtenerPosicionItem(Spinner spinner, String obtenido) {
+    public int obtenerPosicionItem(Spinner spinner, String obtenido) {
+
         //Creamos la variable posicion y lo inicializamos en 0
         int posicion = 0;
 
@@ -619,13 +649,9 @@ public class ConDocumentos extends Fragment implements AdapterView.OnItemSelecte
         return posicion;
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-       /* Toast.makeText(
-                getActivity().getApplicationContext(),
-                "Categoria " + parent.getItemAtPosition(position).toString() ,
-                Toast.LENGTH_LONG).show();*/
 
+        @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
