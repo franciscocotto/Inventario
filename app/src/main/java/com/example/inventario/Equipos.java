@@ -1,7 +1,9 @@
 package com.example.inventario;
 
 public class Equipos {
-    private int  id_categoria, id_marca, id_estado, cantidad_inicial;
+    static int fragmento;
+    static String num_inv;
+    private int  id_equipo, id_categoria, id_marca, id_estado, cantidad_inicial;
     private Float precio;
     private String num_inventario, modelo, serie, fecha_compra, descripcion, fecha_ingreso;
 
@@ -20,6 +22,14 @@ public class Equipos {
         this.fecha_compra = fecha_compra;
         this.descripcion = descripcion;
         this.fecha_ingreso = fecha_ingreso;
+    }
+
+    public Equipos(int id_equipo, String num_inventario, String modelo, String serie, String descripcion){
+        this.id_equipo = id_equipo;
+        this.num_inventario = num_inventario;
+        this.modelo = modelo;
+        this.serie = serie;
+        this.descripcion = descripcion;
     }
 
     public int getId_categoria() {
@@ -108,5 +118,21 @@ public class Equipos {
 
     public void setFecha_ingreso(String fecha_ingreso) {
         this.fecha_ingreso = fecha_ingreso;
+    }
+
+    public static int getFragmento() {
+        return fragmento;
+    }
+
+    public static void setFragmento(int fragmento) {
+        Equipos.fragmento = fragmento;
+    }
+
+    public static String getNum_inv() {
+        return num_inv;
+    }
+
+    public static void setNum_inv(String num_inv) {
+        Equipos.num_inv = num_inv;
     }
 }

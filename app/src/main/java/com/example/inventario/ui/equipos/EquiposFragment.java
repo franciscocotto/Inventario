@@ -7,18 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.example.inventario.AddDocumentos;
 import com.example.inventario.AddEquipos;
-import com.example.inventario.ConDocumentos;
-import com.example.inventario.ConEquipos;
-import com.example.inventario.PreDocumentos;
-import com.example.inventario.PreEquipos;
+import com.example.inventario.BuscarEquipos;
+import com.example.inventario.Equipos;
+
 import com.example.inventario.R;
 
 public class EquiposFragment extends Fragment {
@@ -50,9 +45,10 @@ public class EquiposFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                ConEquipos conEquipos = new ConEquipos();
+                Equipos.setFragmento(1);
+                BuscarEquipos buscarEquipos = new BuscarEquipos();
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.nav_host_fragment, new ConEquipos());
+                fr.replace(R.id.nav_host_fragment, new BuscarEquipos());
                 fr.commit();
                 /*startActivity(new Intent(getContext(), YourClass.class));*/
             }
@@ -61,9 +57,10 @@ public class EquiposFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                PreEquipos preEquipos = new PreEquipos();
+                Equipos.setFragmento(2);
+                BuscarEquipos buscarEquipos = new BuscarEquipos();
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.nav_host_fragment, new PreEquipos());
+                fr.replace(R.id.nav_host_fragment, new BuscarEquipos());
                 fr.commit();
                 /*startActivity(new Intent(getContext(), YourClass.class));*/
             }
