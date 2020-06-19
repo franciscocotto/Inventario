@@ -14,6 +14,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,7 +25,9 @@ import java.util.Map;
 
 public class InventarioDocumentos extends Documentos {
 
-    private int id_prestamo, id_bien, id_area, id_docente, id_motivo, todo_ciclo, es_definitivo, id_escuela, resultado;
+    public static int resultado;
+
+    private int id_prestamo, id_bien, id_area, id_docente, id_motivo, todo_ciclo, es_definitivo, id_escuela;
     private String fecha_desde, fecha_hasta, observacion;
 
     public InventarioDocumentos(){}
@@ -93,6 +96,7 @@ public class InventarioDocumentos extends Documentos {
         this.observacion = observacion;
     }
 
+
     //Getters
     public int getId_bien() {
         return id_bien;
@@ -134,9 +138,7 @@ public class InventarioDocumentos extends Documentos {
         return observacion;
     }
 
-    public int getResultado() {
-        return resultado;
-    }
+
 
     public void prestar(final Context context){
         String URL = "http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_prestar_documento.php";
@@ -147,17 +149,13 @@ public class InventarioDocumentos extends Documentos {
             @Override
             public void onResponse(String response) {
                 try {
-                    //converting response to json object
-                    //JSONArray obj = new JSONArray(response);
                      JSONObject obj = new JSONObject(response);
                     //if no error in response
                     if (!obj.getBoolean("error")) {
-
                         Toast.makeText(context, obj.getString("message"), Toast.LENGTH_SHORT).show();
-
                     } else {
-
                         Toast.makeText(context, obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        InventarioDocumentos.resultado=1;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

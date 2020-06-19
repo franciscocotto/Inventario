@@ -39,7 +39,10 @@ import com.example.inventario.dialog.DatePickerFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -190,7 +193,17 @@ public class PreDocumentos extends Fragment {
         btnAccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+<<<<<<< Updated upstream
                 EnviarForm();
+=======
+                String mensaje;
+
+                if(estado.equals("DISPONIBLE")){
+                    mensaje = "¿Esta seguro que desea realizar el prestamo?";
+                    EnviarForm(mensaje, 1);
+                }
+
+>>>>>>> Stashed changes
             }
 
 
@@ -235,6 +248,32 @@ public class PreDocumentos extends Fragment {
     }
 
 
+
+    public void EnviarForm(String mensaje, final int accion){
+        AlertDialog.Builder myBuild = new AlertDialog.Builder(getContext());
+        myBuild.setTitle("Mensaje");
+        myBuild.setMessage(mensaje);
+        myBuild.setIcon(R.drawable.ic_error_outline_black_24dp);
+        myBuild.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(accion==1){
+                    accionPrestar();
+                }
+                else if(accion==2){
+                    accionDevolver();
+                }
+            }
+        });
+        myBuild.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog dialog = myBuild.create();
+        dialog.show();
+    }
 
 
     private void cargarDatos(String URL, final int accion, final String id){
@@ -505,48 +544,54 @@ public class PreDocumentos extends Fragment {
     //Determina la accion del formulario
     public void generarAccion(String estado){
 
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+        this.estado = estado;
         edEstado.setText(estado);
         switch (estado){
             case "DISPONIBLE":
                 lblAccion.setText("ACCION: REALIZAR PRESTAMO");
+                btnAccion.setText("PRESTAR DOCUMENTO");
+
+                etFechaPrestamo.setText(date);
 
                 break;
             case "PRESTADO":
                 lblAccion.setText("ACCION: DEVOLUCION DE DOCUMENTO");
-                acDocentes.setEnabled(false);
-                cbCiclo.setEnabled(false);
-                cbAsignado.setEnabled(false);
-                etFechaPrestamo.setEnabled(false);
-                etFechaDevolucion.setEnabled(false);
-                edObservacions.setEnabled(false);
-                spEscuelas.setEnabled(false);
-                spMotivos.setEnabled(false);
-                spAreas.setEnabled(false);
+                componentesDesabilitados();
+                btnAccion.setText("DEVOLVER DOCUMENTO");
                 cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_devolver_documento.php", 7, String.valueOf(documentos.get(0).getId_bien()));
-
+                etFechaDevolucion.setText(date);
                 break;
 
             case "ASIGNADO":
                 lblAccion.setText("ACCION: DEVOLUCION DE DOCUMENTO");
-                acDocentes.setEnabled(false);
-                cbCiclo.setEnabled(false);
-                cbAsignado.setEnabled(false);
-                etFechaPrestamo.setEnabled(false);
-                etFechaDevolucion.setEnabled(false);
-                edObservacions.setEnabled(false);
-                spEscuelas.setEnabled(false);
-                spMotivos.setEnabled(false);
-                spAreas.setEnabled(false);
-
-                invDocumentos.getEs_definitivo();
+                componentesDesabilitados();
+                btnAccion.setText("ASIGNADO PERMANENTEMENTE");
+                btnAccion.setEnabled(false);
                 break;
+
+            case "EXTRAVIADO":
+                lblAccion.setText("DOCUMENTO EXTRAVIADO");
+                btnAccion.setText("ACCION NO DISPONIBLE");
+                btnAccion.setEnabled(false);
         }
 
     }
 
+    public void componentesDesabilitados(){
+        acDocentes.setEnabled(false);
+        cbCiclo.setEnabled(false);
+        cbAsignado.setEnabled(false);
+        etFechaPrestamo.setEnabled(false);
+        etFechaDevolucion.setEnabled(false);
+        edObservacions.setEnabled(false);
+        spEscuelas.setEnabled(false);
+        spMotivos.setEnabled(false);
+        spAreas.setEnabled(false);
+    }
+
     public void accionPrestar(){
-
-
         //Validaciones de los campos
         if(acDocentes.getText().toString().isEmpty() ||
                 spEscuelas.getSelectedItemPosition()==0 ||
@@ -612,19 +657,22 @@ public class PreDocumentos extends Fragment {
                     invDocumentos.setId_estado(2);
                     Context contexto = getActivity().getApplicationContext();
                     invDocumentos.prestar(contexto);
-                    if(invDocumentos.getResultado()==1){
 
+                    if(InventarioDocumentos.resultado==1){
+                        BuscarDocumento buscarDocumento = new BuscarDocumento();
+
+                        FragmentTransaction fr = getFragmentManager().beginTransaction();
+                        fr.replace(R.id.nav_host_fragment, new BuscarDocumento());
+                        fr.commit();
                     }
                 }
             }
-
-
         }
+    }
 
-
-
-
-
+    public void accionDevolver(){
+        invDocumentos.setId_documento(documentos.get(0).getId_documento());
+        invDocumentos.setId_bien(documentos.get(0).getId_bien());
 
     }
 
