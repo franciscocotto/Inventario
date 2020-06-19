@@ -230,14 +230,6 @@
                     android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
-            <Button
-                android:id="@+id/btnRegresar"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Regresar"
-                android:background="@drawable/gradient_1"
-                android:layout_marginTop="20dp"
-                android:textColor="@android:color/white"/>
 
             <Button
             android:id="@+id/btnModificar"
@@ -245,7 +237,7 @@
             android:layout_height="wrap_content"
             android:text="Modificar Documento"
             android:background="@drawable/gradient_1"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:textColor="@android:color/white"/>
 
             <Button
@@ -253,6 +245,14 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Eliminar Documento"
+                android:background="@drawable/gradient_1"
+                android:layout_marginTop="10dp"
+                android:textColor="@android:color/white"/>
+            <Button
+                android:id="@+id/btnRegresar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Regresar"
                 android:background="@drawable/gradient_1"
                 android:layout_marginTop="10dp"
                 android:textColor="@android:color/white"/>

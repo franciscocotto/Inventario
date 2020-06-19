@@ -33,6 +33,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.inventario.ui.documentos.DocumentosFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +52,7 @@ public class BuscarDocumento extends Fragment {
     ProgressBar progressBar;
     ProgressDialog pDialog;
     EditText etBuscar;
-    Button btnBuscar;
+    Button btnBuscar, btnRegresar;
     //TableLayout tlLista;
     ListView lista;
     ArrayAdapter adapter = null;
@@ -72,6 +73,7 @@ public class BuscarDocumento extends Fragment {
         btnBuscar = (Button)view.findViewById(R.id.btnBuscar);
         lista = (ListView)view.findViewById(R.id.lvLibros);
         progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
+        btnRegresar = (Button) view.findViewById(R.id.btnRegresarBusqueda);
 
         pDialog = new ProgressDialog(getContext());
         pDialog.setMessage("Cargando Datos");
@@ -127,7 +129,12 @@ public class BuscarDocumento extends Fragment {
 
             }
         });
-
+       btnRegresar.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               RegresarBusqueda();
+           }
+       });
         return view;
 
     }
@@ -284,6 +291,13 @@ public class BuscarDocumento extends Fragment {
         });
         AlertDialog dialog = myBuild.create();
         dialog.show();
+    }
+    public  void RegresarBusqueda(){
+        DocumentosFragment DocumentosFragment = new DocumentosFragment();
+        FragmentTransaction fr = getFragmentManager().beginTransaction();
+        fr.replace(R.id.nav_host_fragment, new DocumentosFragment());
+        fr.commit();
+
     }
 
 }

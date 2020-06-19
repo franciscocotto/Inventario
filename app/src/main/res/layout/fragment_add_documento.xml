@@ -239,6 +239,14 @@
                 android:background="@drawable/gradient_1"
                 android:layout_marginTop="40dp"
                 android:textColor="@android:color/white"/>
+            <Button
+                android:id="@+id/btnMenu"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Regresar"
+                android:background="@drawable/gradient_1"
+                android:layout_marginTop="20dp"
+                android:textColor="@android:color/white"/>
 
         </LinearLayout>
 

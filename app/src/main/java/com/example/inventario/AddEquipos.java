@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -24,6 +26,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.inventario.dialog.DatePickerFragment;
+import com.example.inventario.ui.documentos.DocumentosFragment;
+import com.example.inventario.ui.equipos.EquiposFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +62,7 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
     HttpClient cliente;
     HttpPost post;
     List<NameValuePair> lista;
-
+    Button btnRegresar;
     private EditText etPlannedDate, etCompraDate;
     private Spinner spinnerCat, spinnerMar;
     private ArrayList<Categorias> categoriesList;
@@ -94,6 +98,7 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
         eddescripcion = (EditText) view.findViewById(R.id.eddescripcion);
         etCompraDate = (EditText) view.findViewById(R.id.etDateCompra);
         etPlannedDate = (EditText) view.findViewById(R.id.etDate);
+        btnRegresar = (Button) view.findViewById(R.id.btnMenu);
 
         //Initializing the ArrayList
         categoriesList = new ArrayList<Categorias>();
@@ -189,8 +194,28 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
             }
         });
 
+        btnRegresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegresarBusqueda();
+            }
+        });
+
         return view;
     }
+
+    /**
+     *Regresar al Menu
+     * */
+
+    //Metodo para regresar a pantalla de Documentos
+    public  void RegresarBusqueda(){
+        EquiposFragment equiposFragment = new EquiposFragment();
+        FragmentTransaction fr = getFragmentManager().beginTransaction();
+        fr.replace(R.id.nav_host_fragment, new EquiposFragment());
+        fr.commit();
+    }
+
     /**
      *Alerta para guardado de datos
      * */
