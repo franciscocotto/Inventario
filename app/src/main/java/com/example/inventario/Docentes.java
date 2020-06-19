@@ -20,6 +20,7 @@ public class Docentes {
         return primerNombre+" "+segundoNombre+" "+primerApellido+" "+segundoApellido;
     }
 
+
     public int getId_docente() {
         return id_docente;
     }
@@ -59,4 +60,5 @@ public class Docentes {
     public void setSegundoApellido(String segundoApellido) {
         this.segundoApellido = segundoApellido;
     }
+
 }

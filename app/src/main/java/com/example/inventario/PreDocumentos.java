@@ -295,7 +295,7 @@ public class PreDocumentos extends Fragment {
 
                             case 7:
                                 ArrayList<InventarioDocumentos> prestamo = new ArrayList<InventarioDocumentos>();
-                                for (int i = 0;i<bdoc.length();i+=8){
+                                for (int i = 0;i<bdoc.length();i+=10){
                                     try {
                                         prestamo.add(new InventarioDocumentos(
                                                 bdoc.getInt(i),
@@ -303,9 +303,11 @@ public class PreDocumentos extends Fragment {
                                                 bdoc.getInt(i+2),
                                                 bdoc.getInt(i+3),
                                                 bdoc.getInt(i+4),
-                                                bdoc.getString(i+5),
-                                                bdoc.getString(i+6),
-                                                bdoc.getString(i+7)));
+                                                bdoc.getInt(i+5),
+                                                bdoc.getInt(i+6),
+                                                bdoc.getString(i+7),
+                                                bdoc.getString(i+8),
+                                                bdoc.getString(i+9)));
 
                                     }catch (JSONException e){
                                         e.printStackTrace();
@@ -357,7 +359,12 @@ public class PreDocumentos extends Fragment {
 
         inv = list;
 
-        acDocentes.setText(docentes.get(inv.get(0).getId_docente()).getNombreCompleto());
+        for (int i = 0;i<docentes.size();i++){
+            if(inv.get(0).getId_docente()==docentes.get(i).getId_docente()){
+                acDocentes.setText(docentes.get(i).getNombreCompleto());
+            }
+        }
+
         if(inv.get(0).getTodo_ciclo()==1){
             cbCiclo.setChecked(true);
             cbAsignado.setChecked(false);
@@ -378,9 +385,21 @@ public class PreDocumentos extends Fragment {
         String[] area = new String[1];
         String[] motivo = new String[1];
 
-        escuela[0] = escuelas.get(inv.get(0).getId_escuela()).getEscuela();
-        area[0] = areas.get(inv.get(0).getId_area()).getArea();
-        motivo[0] = motivos.get(inv.get(0).getId_motivo()).getMotivos();
+        for(int i=0; i<escuelas.size();i++){
+            if(inv.get(0).getId_escuela()==escuelas.get(i).getId_escuela()){
+                escuela[0]=escuelas.get(i).getEscuela();
+            }
+        }
+        for(int i=0; i<areas.size();i++){
+            if(inv.get(0).getId_area()==areas.get(i).getId_area()){
+                area[0]=areas.get(i).getArea();
+            }
+        }
+        for(int i=0; i<motivos.size();i++){
+            if(inv.get(0).getId_motivo()==motivos.get(i).getId_motivos()){
+                motivo[0]=motivos.get(i).getMotivos();
+            }
+        }
 
         ArrayAdapter escu = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, escuela);
         ArrayAdapter are = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, area);
@@ -533,10 +552,12 @@ public class PreDocumentos extends Fragment {
                     if(cbAsignado.isChecked()==true){
                         invDocumentos.setEs_definitivo(1);
                         invDocumentos.setTodo_ciclo(0);
+                        invDocumentos.setFecha_hasta("0000-00-00");
                     }
                     else if(cbCiclo.isChecked()==true){
                         invDocumentos.setEs_definitivo(0);
                         invDocumentos.setTodo_ciclo(1);
+                        invDocumentos.setFecha_hasta("0000-00-00");
                     }
                     else {
                         invDocumentos.setEs_definitivo(0);

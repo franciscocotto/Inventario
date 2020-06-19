@@ -33,9 +33,11 @@ public class InventarioDocumentos extends Documentos {
         this.isbn = isbn;
     }
 
-    public InventarioDocumentos(int id_prestamo, int id_docente, int todo_ciclo, int es_definitivo, int id_escuela, String fecha_desde, String fecha_hasta, String observacion){
+    public InventarioDocumentos(int id_prestamo, int id_area, int id_docente, int id_motivo, int todo_ciclo, int es_definitivo, int id_escuela, String fecha_desde, String fecha_hasta, String observacion){
         this.id_prestamo = id_prestamo;
+        this.id_area = id_area;
         this.id_docente = id_docente;
+        this.id_motivo = id_motivo;
         this.todo_ciclo = todo_ciclo;
         this.es_definitivo = es_definitivo;
         this.id_escuela = id_escuela;
