@@ -54,20 +54,19 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="170sp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView8"
+                        android:id="@+id/textView10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Titulo"
-                        android:textSize="16sp" />
-
+                        android:text="ISBN"
+                        android:textSize="16sp"/>
                     <EditText
-                        android:id="@+id/edTitulo"
-                        android:layout_width="200sp"
+                        android:id="@+id/edIsbn"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:enabled="false"
@@ -75,6 +74,7 @@
                         android:inputType="textPersonName"
                         android:textSize="16sp"
                         android:text="" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -99,6 +99,7 @@
                         android:inputType="textPersonName"
                         android:background="@drawable/style_borde_text"
                         android:textSize="16sp"
+                        android:gravity="center_horizontal"
                         android:text="" />
 
                 </LinearLayout>
@@ -112,13 +113,14 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView10"
+                    android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ISBN"
-                    android:textSize="16sp"/>
+                    android:text="Titulo"
+                    android:textSize="16sp" />
+
                 <EditText
-                    android:id="@+id/edIsbn"
+                    android:id="@+id/edTitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -146,9 +148,8 @@
                 <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/acDocentes">
+                    android:id="@+id/acDocentes"/>
 
-                </AutoCompleteTextView>
 
             </LinearLayout>
             <LinearLayout
@@ -203,24 +204,25 @@
                 <LinearLayout
                     android:layout_width="175sp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginRight="20sp">
+                    android:layout_marginRight="20sp"
+                    android:orientation="vertical">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/input_layout_fecha"
                         android:layout_width="160sp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp">
+
                         <EditText
                             android:id="@+id/etFechaPrestamo"
-                            android:hint="Fecha de prestamo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="date"
-                            android:focusable="false"
                             android:clickable="true"
+                            android:focusable="false"
+                            android:hint="Fecha de prestamo"
+                            android:inputType="date"
                             android:maxLines="1"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -228,16 +230,17 @@
                         android:layout_width="160sp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp">
+
                         <EditText
                             android:id="@+id/etFechaDevolucion"
-                            android:hint="Fecha de devolucion"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="date"
-                            android:focusable="false"
                             android:clickable="true"
+                            android:focusable="false"
+                            android:hint="Fecha de devolucion"
+                            android:inputType="date"
                             android:maxLines="1"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 

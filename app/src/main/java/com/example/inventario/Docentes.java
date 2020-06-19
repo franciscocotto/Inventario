@@ -16,6 +16,10 @@ public class Docentes {
         this.segundoApellido = segundoApellido;
     }
 
+    public String getNombreCompleto(){
+        return primerNombre+" "+segundoNombre+" "+primerApellido+" "+segundoApellido;
+    }
+
     public int getId_docente() {
         return id_docente;
     }

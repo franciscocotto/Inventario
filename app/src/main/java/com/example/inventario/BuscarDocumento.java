@@ -131,7 +131,7 @@ public class BuscarDocumento extends Fragment {
         return view;
 
     }
-    
+
 
     public void buscarLibro(final String busqueda, int accion){
 

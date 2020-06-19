@@ -2,10 +2,9 @@ package com.example.inventario;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -75,7 +74,7 @@ public class PreDocumentos extends Fragment {
     EditText etFechaPrestamo, etFechaDevolucion;
     ProgressBar progressBar;
     ProgressDialog pDialog;
-    EditText edEstado, edTitulo, edTema, edIsbn;
+    EditText edEstado, edTitulo, edIsbn, edObservacions;
     AutoCompleteTextView acDocentes;
     Button btnAccion;
     TextView lblAccion;
@@ -87,6 +86,8 @@ public class PreDocumentos extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pre_documentos, container, false);
 
+
+
         //Inicializacion de los componentes a utilizar
 
         //Edit text y TextView
@@ -96,6 +97,7 @@ public class PreDocumentos extends Fragment {
         acDocentes = (AutoCompleteTextView)view.findViewById(R.id.acDocentes);
         etFechaPrestamo = (EditText) view.findViewById(R.id.etFechaPrestamo);
         etFechaDevolucion = (EditText)view.findViewById(R.id.etFechaDevolucion);
+        edObservacions = (EditText)view.findViewById(R.id.edObservaciones);
         lblAccion = (TextView)view.findViewById(R.id.lblAccion);
 
         //Botones
@@ -155,9 +157,12 @@ public class PreDocumentos extends Fragment {
                 if(cbAsignado.isChecked() == true){
                     cbCiclo.setChecked(false);
                     cbCiclo.setEnabled(false);
+                    etFechaDevolucion.setEnabled(false);
+                    etFechaDevolucion.setError(null);
                 }
                 else{
                     cbCiclo.setEnabled(true);
+                    etFechaDevolucion.setEnabled(true);
                 }
             }
         });
@@ -168,9 +173,12 @@ public class PreDocumentos extends Fragment {
                 if(cbCiclo.isChecked()==true){
                     cbAsignado.setChecked(false);
                     cbAsignado.setEnabled(false);
+                    etFechaDevolucion.setEnabled(false);
+                    etFechaDevolucion.setError(null);
                 }
                 else{
                     cbAsignado.setEnabled(true);
+                    etFechaDevolucion.setEnabled(true);
                 }
             }
         });
@@ -179,7 +187,7 @@ public class PreDocumentos extends Fragment {
         btnAccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                accionPrestar();
             }
 
 
@@ -284,6 +292,27 @@ public class PreDocumentos extends Fragment {
                                 }
                                 cargarSpinner(motivos, accion);
                                 break;
+
+                            case 7:
+                                ArrayList<InventarioDocumentos> prestamo = new ArrayList<InventarioDocumentos>();
+                                for (int i = 0;i<bdoc.length();i+=8){
+                                    try {
+                                        prestamo.add(new InventarioDocumentos(
+                                                bdoc.getInt(i),
+                                                bdoc.getInt(i+1),
+                                                bdoc.getInt(i+2),
+                                                bdoc.getInt(i+3),
+                                                bdoc.getInt(i+4),
+                                                bdoc.getString(i+5),
+                                                bdoc.getString(i+6),
+                                                bdoc.getString(i+7)));
+
+                                    }catch (JSONException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                                cargarCamposDevolucion(prestamo);
+                                break;
                         }
 
                     } catch (JSONException e) {
@@ -322,14 +351,54 @@ public class PreDocumentos extends Fragment {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
+
+    public void cargarCamposDevolucion(ArrayList list){
+        ArrayList<InventarioDocumentos> inv = new ArrayList<InventarioDocumentos>();
+
+        inv = list;
+
+        acDocentes.setText(docentes.get(inv.get(0).getId_docente()).getNombreCompleto());
+        if(inv.get(0).getTodo_ciclo()==1){
+            cbCiclo.setChecked(true);
+            cbAsignado.setChecked(false);
+        }
+        else if(inv.get(0).getEs_definitivo()==1){
+            cbCiclo.setChecked(false);
+            cbAsignado.setChecked(true);
+        }
+        else {
+            cbCiclo.setChecked(false);
+            cbAsignado.setChecked(false);
+        }
+        etFechaPrestamo.setText(inv.get(0).getFecha_desde());
+        etFechaDevolucion.setText(inv.get(0).getFecha_hasta());
+        edObservacions.setText(inv.get(0).getObservacion());
+
+        String[] escuela = new String[1];
+        String[] area = new String[1];
+        String[] motivo = new String[1];
+
+        escuela[0] = escuelas.get(inv.get(0).getId_escuela()).getEscuela();
+        area[0] = areas.get(inv.get(0).getId_area()).getArea();
+        motivo[0] = motivos.get(inv.get(0).getId_motivo()).getMotivos();
+
+        ArrayAdapter escu = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, escuela);
+        ArrayAdapter are = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, area);
+        ArrayAdapter moti = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, motivo);
+
+        spEscuelas.setAdapter(escu);
+        spAreas.setAdapter(are);
+        spMotivos.setAdapter(moti);
+
+    }
+
     //Carga los nombres de los docentes obtenidos
     public void cargarDocentes(ArrayList list){
         this.docentes = list;
         docentesV = new String[docentes.size()];
 
         for (int i = 0; i<docentes.size();i++){
-            docentesV[i] = docentes.get(i).getPrimerNombre()+" "+docentes.get(i).getSegundoNombre()+" "+
-                docentes.get(i).getPrimerApellido()+" "+docentes.get(i).getSegundoApellido();
+            docentesV[i] = docentes.get(i).getNombreCompleto();
         }
         ArrayAdapter adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, docentesV);
         acDocentes.setAdapter(adapter);
@@ -375,40 +444,125 @@ public class PreDocumentos extends Fragment {
     }
     //Determina la accion del formulario
     public void generarAccion(String estado){
-        edEstado.setText(estado);
-        if(estado.equals("DISPONIBLE")){
-            lblAccion.setText("ACCION: REALIZAR PRESTAMO");
-        }
-        else if(estado.equals("PRESTADO")){
-            lblAccion.setText("ACCION: DEVOLUCION DE DOCUMENTO");
-        }
-        else if(estado.equals("EXTRAVIADO")){
-            lblAccion.setText("ACCIONES NO DISPONIBLES");
-            acDocentes.setEnabled(false);
-            spEscuelas.setEnabled(false);
-            spMotivos.setEnabled(false);
-            spAreas.setEnabled(false);
-            btnAccion.setEnabled(false);
 
+        edEstado.setText(estado);
+        switch (estado){
+            case "DISPONIBLE":
+                lblAccion.setText("ACCION: REALIZAR PRESTAMO");
+
+                break;
+            case "PRESTADO":
+                lblAccion.setText("ACCION: DEVOLUCION DE DOCUMENTO");
+                acDocentes.setEnabled(false);
+                cbCiclo.setEnabled(false);
+                cbAsignado.setEnabled(false);
+                etFechaPrestamo.setEnabled(false);
+                etFechaDevolucion.setEnabled(false);
+                edObservacions.setEnabled(false);
+                spEscuelas.setEnabled(false);
+                spMotivos.setEnabled(false);
+                spAreas.setEnabled(false);
+                cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_devolver_documento.php", 7, String.valueOf(documentos.get(0).getId_bien()));
+
+                break;
+
+            case "ASIGNADO":
+                lblAccion.setText("ACCION: DEVOLUCION DE DOCUMENTO");
+                acDocentes.setEnabled(false);
+                cbCiclo.setEnabled(false);
+                cbAsignado.setEnabled(false);
+                etFechaPrestamo.setEnabled(false);
+                etFechaDevolucion.setEnabled(false);
+                edObservacions.setEnabled(false);
+                spEscuelas.setEnabled(false);
+                spMotivos.setEnabled(false);
+                spAreas.setEnabled(false);
+
+                invDocumentos.getEs_definitivo();
+                break;
         }
-        else if(estado.equals("ASIGNADO")){
-            lblAccion.setText("ACCIONES NO DISPONIBLES");
-            acDocentes.setEnabled(false);
-            spEscuelas.setEnabled(false);
-            spMotivos.setEnabled(false);
-            spAreas.setEnabled(false);
-            btnAccion.setEnabled(false);
-        }
+
     }
 
-    public void ejecutarAccion(){
-        invDocumentos.setId_documento(documentos.get(0).getId_documento());
-        invDocumentos.setId_bien(documentos.get(0).getId_bien());
-        invDocumentos.setId_area(documentos.get(0).getId_area());
-        invDocumentos.setId_docente(documentos.get(0).getId_docente());
-        invDocumentos.setId_motivo(documentos.get(0).getId_motivo());
-        invDocumentos.setTodo_ciclo(documentos.get(0).getTodo_ciclo());
-        invDocumentos.setEs_definitivo(documentos.get(0).getEs_definitivo());
+    public void accionPrestar(){
+
+
+        //Validaciones de los campos
+        if(acDocentes.getText().toString().isEmpty() ||
+                spEscuelas.getSelectedItemPosition()==0 ||
+                spAreas.getSelectedItemPosition()==0 ||
+                spMotivos.getSelectedItemPosition()==0){
+
+            if(acDocentes.getText().toString().isEmpty()){
+                acDocentes.setError("No ingreso ningun docente");
+            }
+            if(spEscuelas.getSelectedItemPosition()==0){
+                Toast.makeText(getActivity().getApplicationContext(), "Debe seleccionar una escuela", Toast.LENGTH_SHORT).show();
+            }
+            if(spAreas.getSelectedItemPosition()==0){
+                Toast.makeText(getActivity().getApplicationContext(), "Debe seleccionar una area", Toast.LENGTH_SHORT).show();
+            }
+            if(spMotivos.getSelectedItemPosition()==0){
+                Toast.makeText(getActivity().getApplicationContext(), "Debe seleccionar un motivo", Toast.LENGTH_SHORT).show();
+            }
+        }
+        if(cbCiclo.isChecked()==false && cbAsignado.isChecked()==false && etFechaDevolucion.getText().toString().isEmpty()){
+            etFechaDevolucion.setError("Debe seleccionar una fecha de devolucion");
+        }
+        else {
+            if(!acDocentes.getText().toString().isEmpty()){
+                boolean docente = false;
+                for(int i=0;i<docentesV.length;i++){
+                    if(docentesV[i].equals(acDocentes.getText().toString())){
+                        docente = true;
+                        invDocumentos.setId_docente(docentes.get(i).getId_docente());
+                    }
+                }
+                if(docente==false){
+                    acDocentes.setError("Docente no registrado");
+                }
+                else {
+                    etFechaDevolucion.setError(null);
+
+                    invDocumentos.setId_documento(documentos.get(0).getId_documento());
+                    invDocumentos.setId_bien(documentos.get(0).getId_bien());
+
+                    invDocumentos.setId_area(areas.get(spAreas.getSelectedItemPosition()-1).getId_area());
+                    invDocumentos.setId_motivo(motivos.get(spMotivos.getSelectedItemPosition()-1).getId_motivos());
+
+                    if(cbAsignado.isChecked()==true){
+                        invDocumentos.setEs_definitivo(1);
+                        invDocumentos.setTodo_ciclo(0);
+                    }
+                    else if(cbCiclo.isChecked()==true){
+                        invDocumentos.setEs_definitivo(0);
+                        invDocumentos.setTodo_ciclo(1);
+                    }
+                    else {
+                        invDocumentos.setEs_definitivo(0);
+                        invDocumentos.setTodo_ciclo(0);
+                    }
+
+                    invDocumentos.setId_escuela(escuelas.get(spEscuelas.getSelectedItemPosition()-1).getId_escuela());
+                    invDocumentos.setFecha_desde(etFechaPrestamo.getText().toString());
+                    invDocumentos.setFecha_hasta(etFechaDevolucion.getText().toString());
+                    invDocumentos.setObservacion(edObservacions.getText().toString());
+                    invDocumentos.setId_estado(2);
+                    Context contexto = getActivity().getApplicationContext();
+                    invDocumentos.prestar(contexto);
+                    if(invDocumentos.getResultado()==1){
+
+                    }
+                }
+            }
+
+
+        }
+
+
+
+
+
 
     }
 
