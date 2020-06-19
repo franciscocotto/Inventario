@@ -3,14 +3,16 @@ package com.example.inventario;
 public class Equipos {
     static int fragmento;
     static String num_inv;
-    protected int  id_equipo, id_categoria, id_marca, id_estado, cantidad_inicial;
-    protected Float precio;
-    protected String num_inventario, modelo, serie, fecha_compra, descripcion, fecha_ingreso;
+    private int  id_equipo, id_categoria, id_marca, id_estado, cantidad_inicial;
+    private Double precio;
+    private String num_inventario, modelo, serie, fecha_compra, descripcion, fecha_ingreso;
+    private static String numInventario;
+    protected static Integer fragmento;
 
     public Equipos() {
     }
 
-    public Equipos(int id_categoria, int id_marca, int id_estado, int cantidad_inicial, Float precio, String num_inventario, String modelo, String serie, String fecha_compra, String descripcion, String fecha_ingreso) {
+    public Equipos(int id_categoria, int id_marca, int id_estado, int cantidad_inicial, Double precio, String num_inventario, String modelo, String serie, String fecha_compra, String descripcion, String fecha_ingreso) {
         this.id_categoria = id_categoria;
         this.id_marca = id_marca;
         this.id_estado = id_estado;
@@ -64,11 +66,11 @@ public class Equipos {
         this.cantidad_inicial = cantidad_inicial;
     }
 
-    public Float getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Float precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
@@ -136,11 +138,11 @@ public class Equipos {
         Equipos.num_inv = num_inv;
     }
 
-    public int getId_equipo() {
-        return id_equipo;
+        public static String getNumInventario() {
+        return numInventario;
     }
 
-    public void setId_equipo(int id_equipo) {
-        this.id_equipo = id_equipo;
+    public static void setNumInventario(String numInventario) {
+        Equipos.numInventario = numInventario;
     }
 }

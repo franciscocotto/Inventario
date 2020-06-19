@@ -42,9 +42,11 @@
     <string name="hint_emi">EMI ₹</string>
     <string name="hint_interest_total">" Interés total del préstamo"</string>
     <string name="buscar_documentos">Buscar Documentos</string>
+    <string name="hint_interest_total">Total Interest for Loan ₹</string>
+    <string name="buscar_equipos">Buscar Equipos</string>
     <string name="ingrese_el_nombre_o_el_id_del_documento">Ingrese el nombre o el ID del documento</string>
-    <string name="buscar_documento">Buscar Documento</string>
-    <string name="ingrese_el_nombre_o_el_isbn_del_documento">Ingrese el nombre o el ISBN del documento</string>
+    <string name="buscar_equipo">Buscar Equipo</string>
+    <string name="ingrese_inventario_modelo_des">Ingrese el modelo inventario o descripcion del equipo</string>
     <string name="nuevo_documento">Nuevo Documento</string>
     <string name="prestar_documento">Prestar Documento</string>
     <string name="agregardoc">Agregar Documento</string>

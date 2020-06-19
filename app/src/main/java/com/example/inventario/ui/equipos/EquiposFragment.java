@@ -11,8 +11,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.inventario.AddEquipos;
-import com.example.inventario.BuscarEquipo;
+
+import com.example.inventario.BuscarEquipos;
 import com.example.inventario.Equipos;
+
+import com.example.inventario.BuscarDocumento;
+import com.example.inventario.ConDocumentos;
+import com.example.inventario.ConEquipos;
+import com.example.inventario.Documentos;
+import com.example.inventario.Equipos;
+import com.example.inventario.PreDocumentos;
+import com.example.inventario.PreEquipos;
 
 import com.example.inventario.R;
 
@@ -44,14 +53,11 @@ public class EquiposFragment extends Fragment {
         consult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Equipos.setFragmento(1);
-
-                BuscarEquipo buscarEquipos = new BuscarEquipo();
+                ConEquipos conEquipos = new ConEquipos();
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
                 fr.replace(R.id.nav_host_fragment, new BuscarEquipo());
                 fr.commit();
-                /*startActivity(new Intent(getContext(), YourClass.class));*/
             }
         });
         prestamo.setOnClickListener(new View.OnClickListener() {
