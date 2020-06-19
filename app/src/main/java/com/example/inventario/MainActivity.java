@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         final String username = etName.getText().toString().trim();
         final String password = etPassword.getText().toString().trim();
 
-        String url = "http://www.ingenieriadesistemasinformaticos.com/ws_ca06025/login.php";
+        String url = "https://invetariopdm115.000webhostapp.com/ws_ca06025/login.php";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {

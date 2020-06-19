@@ -141,7 +141,7 @@ public class InventarioDocumentos extends Documentos {
 
 
     public void prestar(final Context context){
-        String URL = "http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_prestar_documento.php";
+        String URL = "https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_prestar_documento.php";
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,

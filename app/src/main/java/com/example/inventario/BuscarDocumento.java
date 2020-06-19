@@ -147,19 +147,19 @@ public class BuscarDocumento extends Fragment {
         switch (accion){
             case 1: //Consulta de docuemntos
                 if(Documentos.getFragmento()==1){
-                    URL = "http://www.ingenieriadesistemasinformaticos.com/ws_vc17009/ws_CargarDocumentosActivos.php";
+                    URL = "https://invetariopdm115.000webhostapp.com/ws_vc17009/ws_CargarDocumentosActivos.php";
                 }
                 else if(Documentos.getFragmento()==2){
-                    URL = "http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_consulta_documentos.php";
+                    URL = "https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_consulta_documentos.php";
                 }
                 break;
 
             case 2: //Buscar documentos
                 if(Documentos.getFragmento()==1){
-                    URL = "http://www.ingenieriadesistemasinformaticos.com/ws_vc17009/ws_CargarDatosDocBuscado.php";
+                    URL = "https://invetariopdm115.000webhostapp.com/ws_vc17009/ws_CargarDatosDocBuscado.php";
                 }
                 else if(Documentos.getFragmento()==2){
-                    URL = "http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_buscar_documentos.php";
+                    URL = "https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_buscar_documentos.php";
                 }
                 break;
         }

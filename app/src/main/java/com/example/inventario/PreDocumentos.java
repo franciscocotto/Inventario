@@ -127,11 +127,11 @@ public class PreDocumentos extends Fragment {
         pDialog.show();
 
         //Consumo de los Web Serces mediante Volley
-        cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_prestamo_documentos.php", 1, isbnEn);
-        cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_cargar_docentes.php", 2, " ");
-        cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_spinners_prestamo.php", 4, "escuelas");
-        cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_spinners_prestamo.php", 5, "areas");
-        cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_spinners_prestamo.php", 6, "motivos");
+        cargarDatos("https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_prestamo_documentos.php", 1, isbnEn);
+        cargarDatos("https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_cargar_docentes.php", 2, " ");
+        cargarDatos("https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_spinners_prestamo.php", 4, "escuelas");
+        cargarDatos("https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_spinners_prestamo.php", 5, "areas");
+        cargarDatos("https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_spinners_prestamo.php", 6, "motivos");
 
         //Calentdario para fecha prestamo
         etFechaPrestamo.setOnClickListener(new View.OnClickListener() {
@@ -193,17 +193,13 @@ public class PreDocumentos extends Fragment {
         btnAccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-<<<<<<< Updated upstream
-                EnviarForm();
-=======
-                String mensaje;
+            String mensaje;
 
                 if(estado.equals("DISPONIBLE")){
                     mensaje = "¿Esta seguro que desea realizar el prestamo?";
                     EnviarForm(mensaje, 1);
                 }
 
->>>>>>> Stashed changes
             }
 
 
@@ -428,7 +424,7 @@ public class PreDocumentos extends Fragment {
 
         estado = String.valueOf(documentos.get(0).getId_estado());
 
-        cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_estado_documento.php", 3, estado);
+        cargarDatos("https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_estado_documento.php", 3, estado);
 
         if (pDialog.isShowing())
             pDialog.dismiss();
@@ -560,7 +556,7 @@ public class PreDocumentos extends Fragment {
                 lblAccion.setText("ACCION: DEVOLUCION DE DOCUMENTO");
                 componentesDesabilitados();
                 btnAccion.setText("DEVOLVER DOCUMENTO");
-                cargarDatos("http://www.ingenieriadesistemasinformaticos.com/ws_bg17016/ws_devolver_documento.php", 7, String.valueOf(documentos.get(0).getId_bien()));
+                cargarDatos("https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_devolver_documento.php", 7, String.valueOf(documentos.get(0).getId_bien()));
                 etFechaDevolucion.setText(date);
                 break;
 
