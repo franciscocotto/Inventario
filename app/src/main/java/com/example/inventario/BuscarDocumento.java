@@ -102,6 +102,8 @@ public class BuscarDocumento extends Fragment {
             }
         });
 
+
+
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -129,6 +131,7 @@ public class BuscarDocumento extends Fragment {
 
             }
         });
+
        btnRegresar.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -164,9 +167,67 @@ public class BuscarDocumento extends Fragment {
                 break;
         }
 
+        if(Documentos.getFragmento()==1){
+            lista.setAdapter(null);
 
+            RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+            StringRequest stringRequest = new StringRequest(Request.Method.DEPRECATED_GET_OR_POST, URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    response = response.replace("][", ",");
+                    if (response.length() > 0) {
+                        try {
+                            JSONArray bdoc = new JSONArray(response);
+                            Log.i("sizejson", "" + bdoc.length());
 
+                            ArrayList<Documentos_Consulta> listB = new ArrayList<Documentos_Consulta>();
+                            for (int i = 0; i < bdoc.length(); i += 13) {
+                                try {
 
+                                    listB.add(new Documentos_Consulta(
+                                            bdoc.getString(i + 1),
+                                            bdoc.getString(i + 7),
+                                            bdoc.getInt(i + 12),
+                                            bdoc.getString(i + 2),
+                                            bdoc.getString(i + 3),
+                                            bdoc.getString(i + 4),
+                                            bdoc.getString(i + 5),
+                                            bdoc.getString(i + 6),
+                                            bdoc.getString(i + 8),
+                                            bdoc.getString(i + 10),
+                                            bdoc.getString(i + 11),
+                                            bdoc.getString(i + 9)));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                            cargarTabla(listB);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+
+                    Map<String, String> parametros = new HashMap<String, String>();
+                    parametros.put("campo", busqueda);
+                    return parametros;
+                }
+            };
+            requestQueue.add(stringRequest);
+        }
+
+       else if(Documentos.getFragmento()==2)  {
             lista.setAdapter(null);
 
             RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
@@ -224,25 +285,44 @@ public class BuscarDocumento extends Fragment {
                 }
             };
             requestQueue.add(stringRequest);
-
+        }
     }
 
-    public void cargarTabla(ArrayList list){
 
-        titulos = new String[list.size()];
-        isbn = new String[list.size()];
-        ArrayList<Documentos> docu = new ArrayList<Documentos>();
-        docu = list;
-        for (int i=0; i<list.size();i++){
-            titulos[i] = docu.get(i).getTitulo().toString();
-            isbn[i] = docu.get(i).getIsbn().toString();
+    public void cargarTabla(ArrayList list){
+        if(Documentos.getFragmento()==1){
+            titulos = new String[list.size()];
+            isbn = new String[list.size()];
+            ArrayList<Documentos_Consulta> docu = new ArrayList<Documentos_Consulta>();
+            docu = list;
+            for (int i=0; i<list.size();i++){
+                titulos[i] = docu.get(i).getTitulo().toString();
+                isbn[i] = docu.get(i).getIsbn().toString();
+            }
+
+            adapter= new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, titulos);
+            lista.setAdapter(adapter);
+            updateListViewHeight(lista);
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+        }
+       else if(Documentos.getFragmento()==2){
+            titulos = new String[list.size()];
+            isbn = new String[list.size()];
+            ArrayList<Documentos> docu = new ArrayList<Documentos>();
+            docu = list;
+            for (int i=0; i<list.size();i++){
+                titulos[i] = docu.get(i).getTitulo().toString();
+                isbn[i] = docu.get(i).getIsbn().toString();
+            }
+
+            adapter= new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, titulos);
+            lista.setAdapter(adapter);
+            updateListViewHeight(lista);
+            if (pDialog.isShowing())
+                pDialog.dismiss();
         }
 
-        adapter= new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, titulos);
-        lista.setAdapter(adapter);
-        updateListViewHeight(lista);
-        if (pDialog.isShowing())
-            pDialog.dismiss();
 
     }
 
