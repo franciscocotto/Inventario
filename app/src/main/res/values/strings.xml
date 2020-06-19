@@ -55,25 +55,17 @@
     <string name="regresar">Regresar</string>
     <string name="selectidioma">Seleccionar Idioma</string>
     <string name="selectcategoria">Seleccionar Categoria</string>
-    <string name="selectmotivo">Seleccionar motivo</string>
-
+    <string name="selectmotivo">Seleccionar Motivo</string>
+    <string name="marca">Seleccionar Marca</string>
     <string name="selectescuela">Seleccionar Escuela</string>
     <string name="selectdocente">Seleccionar Docentes</string>
     <string name="prestamociclo">Prestamo Ciclo</string>
     <string name="definitiva">Asignacion Definitiva</string>
     <string name="fechaprestamo">Fecha de Prestamo</string>
-    <string name="fechadevolucion">Fecha de Devolucion</string>
+    <string name="fechadevolucion">Fecha de Devolución</string>
     <string name="observaciones">  Observaciones</string>
     <string name="areas">Seleccionar Area</string>
     <string name="accion">Realizar Acción</string>
-
-
-
-
-
-
-
-
-
+    <string name="agregarequi">Agregar Equipo</string>
 
 </resources>

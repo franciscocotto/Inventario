@@ -51,4 +51,18 @@
     <string name="selectcategoria">Select Category</string>
     <string name="modificardoc">Modify Document</string>
     <string name="eliminardoc">Delete Document</string>
+    <string name="accion">Take Action</string>
+    <string name="areas">Select Area</string>
+    <string name="observaciones">Observations</string>
+    <string name="fechadevolucion">Return Date</string>
+    <string name="fechaprestamo">Loan Date</string>
+    <string name="definitiva">Definitive Assignment</string>
+    <string name="prestamociclo">Cycle Loan</string>
+    <string name="selectdocente">Select Teachers</string>
+    <string name="selectescuela">Select School</string>
+    <string name="selectmotivo">Select Reason</string>
+    <string name="estado">State</string>
+    <string name="prestamodoc">Document loan</string>
+    <string name="marca">Select Brand</string>
+    <string name="agregarequi">Add Equipment</string>
 </resources>

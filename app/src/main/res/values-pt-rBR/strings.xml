@@ -51,4 +51,18 @@
     <string name="agregardoc">Adicionar documento</string>
     <string name="modificardoc">Modificar Documento</string>
     <string name="eliminardoc">Eliminar Documento</string>
+    <string name="prestamodoc">Documento de empréstimo</string>
+    <string name="estado">Estado</string>
+    <string name="selectmotivo">Selecionar motivo</string>
+    <string name="selectescuela">Selecionar escola</string>
+    <string name="selectdocente">Selecionar professores</string>
+    <string name="prestamociclo">Empréstimo de ciclo</string>
+    <string name="definitiva">Atribuição definitiva</string>
+    <string name="fechaprestamo">Data do Empréstimo</string>
+    <string name="fechadevolucion">Data de retorno</string>
+    <string name="observaciones">Observações</string>
+    <string name="areas">Selecionar Área</string>
+    <string name="accion">Tome uma atitude</string>
+    <string name="marca">Selecionar Marca</string>
+    <string name="agregarequi">Adicionar equipe</string>
 </resources>
