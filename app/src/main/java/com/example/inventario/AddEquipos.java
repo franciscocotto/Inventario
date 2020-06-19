@@ -223,7 +223,7 @@ public class AddEquipos extends Fragment implements AdapterView.OnItemSelectedLi
     public void EnviarForm(){
         AlertDialog.Builder myBuild = new AlertDialog.Builder(getContext());
         myBuild.setTitle("Mensaje");
-        myBuild.setMessage("¿Esta Seguro que desea Guardar el Equipo?");
+        myBuild.setMessage("¿Está Seguro que desea Guardar el Equipo?");
         myBuild.setIcon(R.drawable.ic_error_outline_black_24dp);
         myBuild.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override

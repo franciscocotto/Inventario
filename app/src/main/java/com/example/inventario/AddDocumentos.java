@@ -229,7 +229,7 @@ public class AddDocumentos extends Fragment implements AdapterView.OnItemSelecte
     public void EnviarForm(){
         AlertDialog.Builder myBuild = new AlertDialog.Builder(getContext());
         myBuild.setTitle("Mensaje");
-        myBuild.setMessage("¿Esta Seguro que desea Guardar el Documento?");
+        myBuild.setMessage("¿Está Seguro que desea Guardar el Documento?");
         myBuild.setIcon(R.drawable.ic_error_outline_black_24dp);
         myBuild.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
