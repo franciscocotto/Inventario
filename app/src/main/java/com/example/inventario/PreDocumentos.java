@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -76,7 +77,7 @@ public class PreDocumentos extends Fragment {
     ProgressDialog pDialog;
     EditText edEstado, edTitulo, edIsbn, edObservacions;
     AutoCompleteTextView acDocentes;
-    Button btnAccion;
+    Button btnAccion, btnRegresar;
     TextView lblAccion;
     Spinner spEscuelas, spAreas, spMotivos;
     CheckBox cbAsignado, cbCiclo;
@@ -99,7 +100,7 @@ public class PreDocumentos extends Fragment {
         etFechaDevolucion = (EditText)view.findViewById(R.id.etFechaDevolucion);
         edObservacions = (EditText)view.findViewById(R.id.edObservaciones);
         lblAccion = (TextView)view.findViewById(R.id.lblAccion);
-
+        btnRegresar = (Button)view.findViewById(R.id.btnBack);
         //Botones
         btnAccion = (Button)view.findViewById(R.id.btnAccion);
 
@@ -191,6 +192,18 @@ public class PreDocumentos extends Fragment {
             }
 
 
+        });
+
+
+        btnRegresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Documentos.setFragmento(2);
+                BuscarDocumento conDocumentos = new BuscarDocumento();
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.nav_host_fragment, new BuscarDocumento());
+                fr.commit();
+            }
         });
         return view;
     }
