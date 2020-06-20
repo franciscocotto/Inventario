@@ -97,26 +97,26 @@ public class PreEquipos extends Fragment {
         //Inicializacion de los componentes a utilizar
 
         //Edit text y TextView
-        edModelo = (EditText)view.findViewById(R.id.edModelo);
-        edNumInventario = (EditText)view.findViewById(R.id.edNumInv);
+        edModelo = (EditText)view.findViewById(R.id.edModelo2);
+        edNumInventario = (EditText)view.findViewById(R.id.edNumInv2);
         edEstado = (EditText)view.findViewById(R.id.edEstado);
-        acDocentes = (AutoCompleteTextView)view.findViewById(R.id.acDocentes);
-        etFechaPrestamo = (EditText) view.findViewById(R.id.etFechaPrestamo);
-        etFechaDevolucion = (EditText)view.findViewById(R.id.etFechaDevolucion);
-        edObservacions = (EditText)view.findViewById(R.id.edObservaciones);
-        lblAccion = (TextView)view.findViewById(R.id.lblAccion);
-        btnRegresar = (Button)view.findViewById(R.id.btnBack);
+        acDocentes = (AutoCompleteTextView)view.findViewById(R.id.acDocentes2);
+        etFechaPrestamo = (EditText) view.findViewById(R.id.etFechaPrestamo2);
+        etFechaDevolucion = (EditText)view.findViewById(R.id.etFechaDevolucion2);
+        edObservacions = (EditText)view.findViewById(R.id.edObservaciones2);
+        lblAccion = (TextView)view.findViewById(R.id.lblAccion2);
+        btnRegresar = (Button)view.findViewById(R.id.btnBack2);
         //Botones
-        btnAccion = (Button)view.findViewById(R.id.btnAccion);
+        btnAccion = (Button)view.findViewById(R.id.btnAccion2);
 
         //Spinners
-        spEscuelas = (Spinner)view.findViewById(R.id.spEscuela);
-        spAreas = (Spinner)view.findViewById(R.id.spArea);
-        spMotivos = (Spinner)view.findViewById(R.id.spMotivo);
+        spEscuelas = (Spinner)view.findViewById(R.id.spEscuela2);
+        spAreas = (Spinner)view.findViewById(R.id.spArea2);
+        spMotivos = (Spinner)view.findViewById(R.id.spMotivo2);
 
         //CheckBox
-        cbAsignado = (CheckBox)view.findViewById(R.id.cbDefinitiva);
-        cbCiclo = (CheckBox)view.findViewById(R.id.cbCiclo);
+        cbAsignado = (CheckBox)view.findViewById(R.id.cbDefinitiva2);
+        cbCiclo = (CheckBox)view.findViewById(R.id.cbCiclo2);
 
         //Obtenemos el numero de inventario del equipo seleccionado en el fragment BuscarEquipo
         numInventario = Equipos.getNum_inv();

@@ -35,7 +35,7 @@
                 android:layout_marginBottom="10dp"/>
 
             <TextView
-                android:id="@+id/lblAccion"
+                android:id="@+id/lblAccion2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
@@ -65,7 +65,7 @@
                         android:text="@string/estado"
                         android:textSize="16sp"/>
                     <EditText
-                        android:id="@+id/edEstado"
+                        android:id="@+id/edEstado2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -99,7 +99,7 @@
                         android:text="Numero de inventario"
                         android:textSize="16sp"/>
                     <EditText
-                        android:id="@+id/edNumInv"
+                        android:id="@+id/edNumInv2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -127,7 +127,7 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:id="@+id/edModelo"
+                    android:id="@+id/edModelo2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -155,7 +155,7 @@
                 <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/acDocentes"/>
+                    android:id="@+id/acDocentes2"/>
 
 
             </LinearLayout>
@@ -180,7 +180,7 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/cbCiclo"/>
+                        android:id="@+id/cbCiclo2"/>
 
                 </LinearLayout>
 
@@ -199,7 +199,7 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/cbDefinitiva"/>
+                        android:id="@+id/cbDefinitiva2"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -216,7 +216,7 @@
 
                     <EditText
                         android:textColor="#757575"
-                        android:id="@+id/etFechaPrestamo"
+                        android:id="@+id/etFechaPrestamo2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
@@ -240,7 +240,7 @@
                     android:layout_marginTop="15dp">
 
                     <EditText
-                        android:id="@+id/etFechaDevolucion"
+                        android:id="@+id/etFechaDevolucion2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
@@ -271,7 +271,7 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:id="@+id/edObservaciones"
+                    android:id="@+id/edObservaciones2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ems="10"
@@ -297,7 +297,7 @@
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/spEscuela"
+                    android:id="@+id/spEscuela2"
 
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"
@@ -317,7 +317,7 @@
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/spArea"
+                    android:id="@+id/spArea2"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true" />
@@ -337,7 +337,7 @@
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/spMotivo"
+                    android:id="@+id/spMotivo2"
 
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"
@@ -346,7 +346,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btnAccion"
+                android:id="@+id/btnAccion2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/accion"
@@ -354,7 +354,7 @@
                 android:layout_marginTop="40dp"
                 android:textColor="@android:color/white"/>
             <Button
-                android:id="@+id/btnBack"
+                android:id="@+id/btnBack2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/regresar"
