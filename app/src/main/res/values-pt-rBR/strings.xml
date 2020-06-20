@@ -65,4 +65,7 @@
     <string name="accion">Tome uma atitude</string>
     <string name="marca">Selecionar Marca</string>
     <string name="agregarequi">Adicionar equipe</string>
+    <string name="buscar_equipos">Buscar Equipos</string>
+    <string name="buscar_equipo">Buscar Equipos</string>
+    <string name="ingrese_inventario_modelo_des">Ingrese el modelo inventario o descripcion del equipo</string>
 </resources>

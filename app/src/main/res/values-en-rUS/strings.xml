@@ -65,4 +65,7 @@
     <string name="prestamodoc">Document loan</string>
     <string name="marca">Select Brand</string>
     <string name="agregarequi">Add Equipment</string>
+    <string name="buscar_equipos">Search Hardware</string>
+    <string name="buscar_equipo">Search Hardware</string>
+    <string name="ingrese_inventario_modelo_des">"Add model "</string>
 </resources>

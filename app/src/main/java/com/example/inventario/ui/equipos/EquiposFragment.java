@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.inventario.AddEquipos;
 
-import com.example.inventario.BuscarEquipos;
+import com.example.inventario.BuscarEquipo;
 import com.example.inventario.Equipos;
 
 import com.example.inventario.BuscarDocumento;
