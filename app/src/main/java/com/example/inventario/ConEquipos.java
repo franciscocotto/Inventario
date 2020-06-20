@@ -135,7 +135,7 @@ public class ConEquipos extends Fragment {
         switch (accion){
             case 1: //Consulta de docuemntos
                 if(Equipos.getFragmento()==1){
-                    URL = "http://www.ingenieriadesistemasinformaticos.com/ws_vc17009/ws_CargarEquiposActivos.php";
+                    URL = "https://invetariopdm115.000webhostapp.com/ws_vc17009/ws_CargarEquiposActivos.php";
                 }
                 else if(Documentos.getFragmento()==2){
                     URL = "";
@@ -144,7 +144,7 @@ public class ConEquipos extends Fragment {
 
             case 2: //Buscar documentos
                 if(Equipos.getFragmento()==1){
-                    URL = "http://www.ingenieriadesistemasinformaticos.com/ws_vc17009/ws_CargarDatosEquBuscado.php";
+                    URL = "https://invetariopdm115.000webhostapp.com/ws_vc17009/ws_CargarDatosEquBuscado.php";
                 }
                 else if(Documentos.getFragmento()==2){
                     URL = "";
