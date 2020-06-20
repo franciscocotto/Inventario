@@ -99,7 +99,7 @@ public class PreEquipos extends Fragment {
         //Edit text y TextView
         edModelo = (EditText)view.findViewById(R.id.edModelo2);
         edNumInventario = (EditText)view.findViewById(R.id.edNumInv2);
-        edEstado = (EditText)view.findViewById(R.id.edEstado);
+        edEstado = (EditText)view.findViewById(R.id.edEstado2);
         acDocentes = (AutoCompleteTextView)view.findViewById(R.id.acDocentes2);
         etFechaPrestamo = (EditText) view.findViewById(R.id.etFechaPrestamo2);
         etFechaDevolucion = (EditText)view.findViewById(R.id.etFechaDevolucion2);
