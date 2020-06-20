@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.inventario.AddEquipos;
-import com.example.inventario.BuscarEquipos;
+import com.example.inventario.BuscarEquipo;
 import com.example.inventario.Equipos;
 
 import com.example.inventario.R;
@@ -46,9 +46,10 @@ public class EquiposFragment extends Fragment {
             public void onClick(View v) {
 
                 Equipos.setFragmento(1);
-                BuscarEquipos buscarEquipos = new BuscarEquipos();
+
+                BuscarEquipo buscarEquipos = new BuscarEquipo();
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.nav_host_fragment, new BuscarEquipos());
+                fr.replace(R.id.nav_host_fragment, new BuscarEquipo());
                 fr.commit();
                 /*startActivity(new Intent(getContext(), YourClass.class));*/
             }
@@ -58,9 +59,10 @@ public class EquiposFragment extends Fragment {
             public void onClick(View v) {
 
                 Equipos.setFragmento(2);
-                BuscarEquipos buscarEquipos = new BuscarEquipos();
+
+                BuscarEquipo buscarEquipos = new BuscarEquipo();
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.nav_host_fragment, new BuscarEquipos());
+                fr.replace(R.id.nav_host_fragment, new BuscarEquipo());
                 fr.commit();
                 /*startActivity(new Intent(getContext(), YourClass.class));*/
             }

@@ -3,9 +3,9 @@ package com.example.inventario;
 public class Equipos {
     static int fragmento;
     static String num_inv;
-    private int  id_equipo, id_categoria, id_marca, id_estado, cantidad_inicial;
-    private Float precio;
-    private String num_inventario, modelo, serie, fecha_compra, descripcion, fecha_ingreso;
+    protected int  id_equipo, id_categoria, id_marca, id_estado, cantidad_inicial;
+    protected Float precio;
+    protected String num_inventario, modelo, serie, fecha_compra, descripcion, fecha_ingreso;
 
     public Equipos() {
     }
@@ -134,5 +134,13 @@ public class Equipos {
 
     public static void setNum_inv(String num_inv) {
         Equipos.num_inv = num_inv;
+    }
+
+    public int getId_equipo() {
+        return id_equipo;
+    }
+
+    public void setId_equipo(int id_equipo) {
+        this.id_equipo = id_equipo;
     }
 }

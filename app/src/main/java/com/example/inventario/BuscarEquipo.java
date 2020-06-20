@@ -38,24 +38,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class BuscarEquipos extends Fragment {
+public class BuscarEquipo extends Fragment {
 
     ProgressBar progressBar;
     ProgressDialog pDialog;
     EditText etBuscar;
     Button btnBuscar, btnRegresar;
-    //TableLayout tlLista;
     ListView lista;
     ArrayAdapter adapter = null;
     String[] modelo = new String[0];
     String[] numero_inv = new String[0];
     String num_inv = null;
 
-    public BuscarEquipos() {
+    public BuscarEquipo() {
         // Required empty public constructor
     }
 
-    public View onCreate(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_buscar_equipos, container, false);
 
@@ -134,20 +133,20 @@ public class BuscarEquipos extends Fragment {
 
         switch (accion){
             case 1: //Consulta de docuemntos
-                if(Documentos.getFragmento()==1){
+                if(Equipos.getFragmento()==1){
                     URL = "https://invetariopdm115.000webhostapp.com/ws_vc17009/ws_CargarDocumentosActivos.php";
                 }
-                else if(Documentos.getFragmento()==2){
+                else if(Equipos.getFragmento()==2){
                     URL = "https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_consulta_equipos.php";
                 }
                 break;
 
             case 2: //Buscar documentos
-                if(Documentos.getFragmento()==1){
+                if(Equipos.getFragmento()==1){
                     URL = "https://invetariopdm115.000webhostapp.com/ws_vc17009/ws_CargarDatosDocBuscado.php";
                 }
-                else if(Documentos.getFragmento()==2){
-                    URL = "https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_buscar_documentos.php";
+                else if(Equipos.getFragmento()==2){
+                    URL = "https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_buscar_equipo.php";
                 }
                 break;
         }

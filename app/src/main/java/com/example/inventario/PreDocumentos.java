@@ -434,7 +434,7 @@ public class PreDocumentos extends Fragment {
 
         estado = String.valueOf(documentos.get(0).getId_estado());
 
-        cargarDatos("https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_estado_documento.php", 3, estado);
+        cargarDatos("https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_estado.php", 3, estado);
 
         if (pDialog.isShowing())
             pDialog.dismiss();
