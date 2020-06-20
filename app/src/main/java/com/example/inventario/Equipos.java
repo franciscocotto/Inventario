@@ -7,7 +7,6 @@ public class Equipos {
     private Double precio;
     private String num_inventario, modelo, serie, fecha_compra, descripcion, fecha_ingreso;
     private static String numInventario;
-    protected static Integer fragmento;
 
     public Equipos() {
     }
