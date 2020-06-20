@@ -380,10 +380,10 @@ public class PreEquipos extends Fragment {
                                 break;
 
                             case 7:
-                                ArrayList<InventarioDocumentos> prestamo = new ArrayList<InventarioDocumentos>();
+                                ArrayList<InventarioEquipos> prestamo = new ArrayList<InventarioEquipos>();
                                 for (int i = 0;i<bdoc.length();i+=10){
                                     try {
-                                        prestamo.add(new InventarioDocumentos(
+                                        prestamo.add(new InventarioEquipos(
                                                 bdoc.getInt(i),
                                                 bdoc.getInt(i+1),
                                                 bdoc.getInt(i+2),
