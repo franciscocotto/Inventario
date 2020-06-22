@@ -138,7 +138,7 @@ public class PreEquipos extends Fragment {
             @Override
             public void onClick(View view) {
                 switch (view.getId()) {
-                    case R.id.etFechaPrestamo:
+                    case R.id.etFechaPrestamo2:
                         showDatePickerDialog(1);
                         break;
                 }
@@ -150,7 +150,7 @@ public class PreEquipos extends Fragment {
             @Override
             public void onClick(View view) {
                 switch (view.getId()) {
-                    case R.id.etFechaDevolucion:
+                    case R.id.etFechaDevolucion2:
                         showDatePickerDialog(2);
                         break;
                 }
@@ -699,10 +699,10 @@ public class PreEquipos extends Fragment {
         invEquipos.prestar(contexto);
 
         if(InventarioDocumentos.resultado==true) {
-            BuscarDocumento buscarDocumento = new BuscarDocumento();
+            BuscarEquipo buscarEquipo = new BuscarEquipo();
 
             FragmentTransaction fr = getFragmentManager().beginTransaction();
-            fr.replace(R.id.nav_host_fragment, new BuscarDocumento());
+            fr.replace(R.id.nav_host_fragment, new BuscarEquipo());
             fr.commit();
         }
     }
