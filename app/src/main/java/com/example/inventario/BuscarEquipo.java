@@ -29,6 +29,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.inventario.ui.documentos.DocumentosFragment;
+import com.example.inventario.ui.equipos.EquiposFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -272,9 +273,9 @@ public class BuscarEquipo extends Fragment {
         dialog.show();
     }
     public  void RegresarBusqueda(){
-        DocumentosFragment DocumentosFragment = new DocumentosFragment();
+        EquiposFragment equiposFragment = new EquiposFragment();
         FragmentTransaction fr = getFragmentManager().beginTransaction();
-        fr.replace(R.id.nav_host_fragment, new DocumentosFragment());
+        fr.replace(R.id.nav_host_fragment, new EquiposFragment());
         fr.commit();
 
     }

@@ -165,6 +165,7 @@ public class PreEquipos extends Fragment {
                     cbCiclo.setEnabled(false);
                     etFechaDevolucion.setEnabled(false);
                     etFechaDevolucion.setError(null);
+                    etFechaDevolucion.setText("");
                 }
                 else{
                     cbCiclo.setEnabled(true);
@@ -181,6 +182,7 @@ public class PreEquipos extends Fragment {
                     cbAsignado.setEnabled(false);
                     etFechaDevolucion.setEnabled(false);
                     etFechaDevolucion.setError(null);
+                    etFechaDevolucion.setText("");
                 }
                 else{
                     cbAsignado.setEnabled(true);
