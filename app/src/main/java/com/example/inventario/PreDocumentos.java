@@ -619,68 +619,71 @@ public class PreDocumentos extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "Debe seleccionar un motivo", Toast.LENGTH_SHORT).show();
             }
         }
-        if(cbCiclo.isChecked()==false && cbAsignado.isChecked()==false && etFechaDevolucion.getText().toString().isEmpty()){
-            etFechaDevolucion.setError("Debe seleccionar una fecha de devolucion");
-        }
         else {
-            if(!acDocentes.getText().toString().isEmpty()){
-                boolean docente = false;
-                for(int i=0;i<docentesV.length;i++){
-                    if(docentesV[i].equals(acDocentes.getText().toString())){
-                        docente = true;
-                        invDocumentos.setId_docente(docentes.get(i).getId_docente());
+            if(cbCiclo.isChecked()==false && cbAsignado.isChecked()==false && etFechaDevolucion.getText().toString().isEmpty()){
+                etFechaDevolucion.setError("Debe seleccionar una fecha de devolucion");
+            }
+            else {
+                if(!acDocentes.getText().toString().isEmpty()){
+                    boolean docente = false;
+                    for(int i=0;i<docentesV.length;i++){
+                        if(docentesV[i].equals(acDocentes.getText().toString())){
+                            docente = true;
+                            invDocumentos.setId_docente(docentes.get(i).getId_docente());
+                        }
                     }
-                }
-                if(docente==false){
-                    acDocentes.setError("Docente no registrado");
-                }
-                else {
-                    etFechaDevolucion.setError(null);
-
-                    invDocumentos.setId_documento(documentos.get(0).getId_documento());
-                    invDocumentos.setId_bien(documentos.get(0).getId_bien());
-
-                    invDocumentos.setId_area(areas.get(spAreas.getSelectedItemPosition()-1).getId_area());
-                    invDocumentos.setId_motivo(motivos.get(spMotivos.getSelectedItemPosition()-1).getId_motivos());
-
-                    if(cbAsignado.isChecked()==true){
-                        invDocumentos.setEs_definitivo(1);
-                        invDocumentos.setTodo_ciclo(0);
-                        invDocumentos.setId_estado(3);
-                        invDocumentos.setFecha_hasta("0000-00-00");
-                    }
-                    else if(cbCiclo.isChecked()==true){
-                        invDocumentos.setEs_definitivo(0);
-                        invDocumentos.setTodo_ciclo(1);
-                        invDocumentos.setFecha_hasta("0000-00-00");
+                    if(docente==false){
+                        acDocentes.setError("Docente no registrado");
                     }
                     else {
-                        invDocumentos.setEs_definitivo(0);
-                        invDocumentos.setTodo_ciclo(0);
-                    }
+                        etFechaDevolucion.setError(null);
 
-                    if(cbAsignado.isChecked()==false){
-                        invDocumentos.setId_estado(2);
-                    }
+                        invDocumentos.setId_documento(documentos.get(0).getId_documento());
+                        invDocumentos.setId_bien(documentos.get(0).getId_bien());
 
-                    invDocumentos.setId_escuela(escuelas.get(spEscuelas.getSelectedItemPosition()-1).getId_escuela());
-                    invDocumentos.setFecha_desde(etFechaPrestamo.getText().toString());
-                    invDocumentos.setFecha_hasta(etFechaDevolucion.getText().toString());
-                    invDocumentos.setObservacion(edObservacions.getText().toString());
+                        invDocumentos.setId_area(areas.get(spAreas.getSelectedItemPosition()-1).getId_area());
+                        invDocumentos.setId_motivo(motivos.get(spMotivos.getSelectedItemPosition()-1).getId_motivos());
 
-                    Context contexto = getActivity().getApplicationContext();
-                    invDocumentos.prestar(contexto);
+                        if(cbAsignado.isChecked()==true){
+                            invDocumentos.setEs_definitivo(1);
+                            invDocumentos.setTodo_ciclo(0);
+                            invDocumentos.setId_estado(3);
+                            invDocumentos.setFecha_hasta("0000-00-00");
+                        }
+                        else if(cbCiclo.isChecked()==true){
+                            invDocumentos.setEs_definitivo(0);
+                            invDocumentos.setTodo_ciclo(1);
+                            invDocumentos.setFecha_hasta("0000-00-00");
+                        }
+                        else {
+                            invDocumentos.setEs_definitivo(0);
+                            invDocumentos.setTodo_ciclo(0);
+                        }
 
-                    if(InventarioDocumentos.resultado==true){
-                        BuscarDocumento buscarDocumento = new BuscarDocumento();
+                        if(cbAsignado.isChecked()==false){
+                            invDocumentos.setId_estado(2);
+                        }
 
-                        FragmentTransaction fr = getFragmentManager().beginTransaction();
-                        fr.replace(R.id.nav_host_fragment, new BuscarDocumento());
-                        fr.commit();
+                        invDocumentos.setId_escuela(escuelas.get(spEscuelas.getSelectedItemPosition()-1).getId_escuela());
+                        invDocumentos.setFecha_desde(etFechaPrestamo.getText().toString());
+                        invDocumentos.setFecha_hasta(etFechaDevolucion.getText().toString());
+                        invDocumentos.setObservacion(edObservacions.getText().toString());
+
+                        Context contexto = getActivity().getApplicationContext();
+                        invDocumentos.prestar(contexto);
+
+                        if(InventarioDocumentos.resultado==true){
+                            BuscarDocumento buscarDocumento = new BuscarDocumento();
+
+                            FragmentTransaction fr = getFragmentManager().beginTransaction();
+                            fr.replace(R.id.nav_host_fragment, new BuscarDocumento());
+                            fr.commit();
+                        }
                     }
                 }
             }
         }
+
     }
 
     public void accionDevolver(){

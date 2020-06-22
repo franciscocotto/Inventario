@@ -619,68 +619,71 @@ public class PreEquipos extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "Debe seleccionar un motivo", Toast.LENGTH_SHORT).show();
             }
         }
-        if(cbCiclo.isChecked()==false && cbAsignado.isChecked()==false && etFechaDevolucion.getText().toString().isEmpty()){
-            etFechaDevolucion.setError("Debe seleccionar una fecha de devolucion");
-        }
         else {
-            if(!acDocentes.getText().toString().isEmpty()){
-                boolean docente = false;
-                for(int i=0;i<docentesV.length;i++){
-                    if(docentesV[i].equals(acDocentes.getText().toString())){
-                        docente = true;
-                        invEquipos.setId_docente(docentes.get(i).getId_docente());
+            if(cbCiclo.isChecked()==false && cbAsignado.isChecked()==false && etFechaDevolucion.getText().toString().isEmpty()){
+                etFechaDevolucion.setError("Debe seleccionar una fecha de devolucion");
+            }
+            else {
+                if(!acDocentes.getText().toString().isEmpty()){
+                    boolean docente = false;
+                    for(int i=0;i<docentesV.length;i++){
+                        if(docentesV[i].equals(acDocentes.getText().toString())){
+                            docente = true;
+                            invEquipos.setId_docente(docentes.get(i).getId_docente());
+                        }
                     }
-                }
-                if(docente==false){
-                    acDocentes.setError("Docente no registrado");
-                }
-                else {
-                    etFechaDevolucion.setError(null);
-
-                    invEquipos.setId_equipo(equipos.get(0).getId_equipo());
-                    invEquipos.setId_bien(equipos.get(0).getId_bien());
-
-                    invEquipos.setId_area(areas.get(spAreas.getSelectedItemPosition()-1).getId_area());
-                    invEquipos.setId_motivo(motivos.get(spMotivos.getSelectedItemPosition()-1).getId_motivos());
-
-                    if(cbAsignado.isChecked()==true){
-                        invEquipos.setEs_definitivo(1);
-                        invEquipos.setTodo_ciclo(0);
-                        invEquipos.setId_estado(3);
-                        invEquipos.setFecha_hasta("0000-00-00");
-                    }
-                    else if(cbCiclo.isChecked()==true){
-                        invEquipos.setEs_definitivo(0);
-                        invEquipos.setTodo_ciclo(1);
-                        invEquipos.setFecha_hasta("0000-00-00");
+                    if(docente==false){
+                        acDocentes.setError("Docente no registrado");
                     }
                     else {
-                        invEquipos.setEs_definitivo(0);
-                        invEquipos.setTodo_ciclo(0);
-                    }
+                        etFechaDevolucion.setError(null);
 
-                    if(cbAsignado.isChecked()==false){
-                        invEquipos.setId_estado(2);
-                    }
+                        invEquipos.setId_equipo(equipos.get(0).getId_equipo());
+                        invEquipos.setId_bien(equipos.get(0).getId_bien());
 
-                    invEquipos.setId_escuela(escuelas.get(spEscuelas.getSelectedItemPosition()-1).getId_escuela());
-                    invEquipos.setFecha_desde(etFechaPrestamo.getText().toString());
-                    invEquipos.setFecha_hasta(etFechaDevolucion.getText().toString());
-                    invEquipos.setObservacion(edObservacions.getText().toString());
+                        invEquipos.setId_area(areas.get(spAreas.getSelectedItemPosition()-1).getId_area());
+                        invEquipos.setId_motivo(motivos.get(spMotivos.getSelectedItemPosition()-1).getId_motivos());
 
-                    Context contexto = getActivity().getApplicationContext();
-                    invEquipos.prestar(contexto);
+                        if(cbAsignado.isChecked()==true){
+                            invEquipos.setEs_definitivo(1);
+                            invEquipos.setTodo_ciclo(0);
+                            invEquipos.setId_estado(3);
+                            invEquipos.setFecha_hasta("0000-00-00");
+                        }
+                        else if(cbCiclo.isChecked()==true){
+                            invEquipos.setEs_definitivo(0);
+                            invEquipos.setTodo_ciclo(1);
+                            invEquipos.setFecha_hasta("0000-00-00");
+                        }
+                        else {
+                            invEquipos.setEs_definitivo(0);
+                            invEquipos.setTodo_ciclo(0);
+                        }
 
-                    if(InventarioDocumentos.resultado==true){
-                        BuscarEquipo buscarEquipo = new BuscarEquipo();
+                        if(cbAsignado.isChecked()==false){
+                            invEquipos.setId_estado(2);
+                        }
 
-                        FragmentTransaction fr = getFragmentManager().beginTransaction();
-                        fr.replace(R.id.nav_host_fragment, new BuscarEquipo());
-                        fr.commit();
+                        invEquipos.setId_escuela(escuelas.get(spEscuelas.getSelectedItemPosition()-1).getId_escuela());
+                        invEquipos.setFecha_desde(etFechaPrestamo.getText().toString());
+                        invEquipos.setFecha_hasta(etFechaDevolucion.getText().toString());
+                        invEquipos.setObservacion(edObservacions.getText().toString());
+
+                        Context contexto = getActivity().getApplicationContext();
+                        invEquipos.prestar(contexto);
+
+                        if(InventarioDocumentos.resultado==true){
+                            BuscarEquipo buscarEquipo = new BuscarEquipo();
+
+                            FragmentTransaction fr = getFragmentManager().beginTransaction();
+                            fr.replace(R.id.nav_host_fragment, new BuscarEquipo());
+                            fr.commit();
+                        }
                     }
                 }
             }
         }
+
     }
 
     public void accionDevolver(){
