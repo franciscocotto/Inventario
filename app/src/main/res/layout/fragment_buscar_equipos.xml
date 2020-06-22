@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/billabong"
-                android:text="Buscar Equipos"
+                android:text="@string/buscar_equipos"
                 android:textColor="#000"
                 android:textSize="36sp" />
             <EditText
@@ -35,7 +35,7 @@
                 android:layout_marginTop="10dp"
                 android:autofillHints=""
                 android:digits=" ,.-()·@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-                android:hint="Ingrese el nombre o el numero de inventario"
+                android:hint="@string/ingrese_inventario_modelo_des"
                 android:inputType="textMultiLine"
                 android:lines="5"
                 android:maxLength="180"
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/gradient_1"
-                android:text="Buscar equipo"
+                android:text="@string/buscar_equipo"
                 android:textColor="@android:color/white"
                 tools:ignore="MissingConstraints" />
 

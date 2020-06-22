@@ -224,9 +224,10 @@ public class ConEquipos extends Fragment implements AdapterView.OnItemSelectedLi
 
     //Metodo para regresar a pantalla de Documentos
     public  void RegresarBusqueda(){
-        EquiposFragment equiposFragment = new EquiposFragment();
+        Documentos.setFragmento(1);
+        BuscarEquipo buscarEquipo = new BuscarEquipo();
         FragmentTransaction fr = getFragmentManager().beginTransaction();
-        fr.replace(R.id.nav_host_fragment, new EquiposFragment());
+        fr.replace(R.id.nav_host_fragment, new BuscarEquipo());
         fr.commit();
     }
 
@@ -261,7 +262,7 @@ public class ConEquipos extends Fragment implements AdapterView.OnItemSelectedLi
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getActivity().getApplicationContext(), "Equipo Eliminado Satisfactoriamente", Toast.LENGTH_LONG).show();
-                //LimpiarElementos();
+                LimpiarElementos();
                 RegresarBusqueda();
             }
         }, new Response.ErrorListener() {
@@ -369,13 +370,8 @@ public class ConEquipos extends Fragment implements AdapterView.OnItemSelectedLi
             }
             else{
                 Toast.makeText(contexto,"Datos de Equipo actualizados exitosamente", Toast.LENGTH_SHORT).show();
-                edmodelo.setText("");
-                edserie.setText("");
-                edinventario.setText("");
-                edprecio.setText("");
-                etPlannedDate.setText("");
-                etCompraDate.setText("");
-                eddescripcion.setText("");
+                LimpiarElementos();
+                RegresarBusqueda();
             }
 
         }
@@ -383,6 +379,17 @@ public class ConEquipos extends Fragment implements AdapterView.OnItemSelectedLi
 
     }
 
+
+    //Método para limpiar después de cada acción realizada
+    public void LimpiarElementos(){
+        edmodelo.setText("");
+        edserie.setText("");
+        edinventario.setText("");
+        edprecio.setText("");
+        etPlannedDate.setText("");
+        etCompraDate.setText("");
+        eddescripcion.setText("");
+    }
     /*En el siguiente método nos conectamos al ws que realiza la consulta de los equipos
    y los obtenemos recorriendo el json que trae todos los datos y luego los alojamos en un ArrayList del tipo
    de la Clase Documentos que hará uso de todos sus atributos, para traer el solicitado hacemos uso de la variable contenida
@@ -399,21 +406,21 @@ public class ConEquipos extends Fragment implements AdapterView.OnItemSelectedLi
                         JSONArray equi = new JSONArray(response);
                         Log.i("sizejson", "" + equi.length());
 
-                        ArrayList<Equipos> listB = new ArrayList<Equipos>();
+                        ArrayList<Equipos_Consulta> listB = new ArrayList<Equipos_Consulta>();
                         for (int i = 0; i < equi.length(); i += 12) {
                             try {
-                                listB.add(new Equipos(
-                                        equi.getInt(i ),
-                                        equi.getInt(i+1),
-                                        equi.getInt(i+2),
+                                listB.add(new Equipos_Consulta(
+                                        equi.getString(i+1),
+                                        equi.getString(i+2),
                                         equi.getInt(i+3),
-                                        equi.getDouble(i+4),
-                                        equi.getString(i+5),
+                                        equi.getInt(i+4),
+                                        equi.getDouble(i+5),
                                         equi.getString(i+6),
                                         equi.getString(i+7),
                                         equi.getString(i+8),
                                         equi.getString(i+9),
-                                        equi.getString(i+10)));
+                                        equi.getString(i+10),
+                                        equi.getString(i+11)));
                             } catch (JSONException e) {
                                 //e.printStackTrace();
                                 Toast.makeText(getActivity().getApplicationContext(), "Campo de busqueda vacio" + e, Toast.LENGTH_LONG).show();
@@ -447,7 +454,7 @@ public class ConEquipos extends Fragment implements AdapterView.OnItemSelectedLi
     public void cargarCampos(ArrayList list){
 
         for (int i=0; i<list.size();i++){
-            ArrayList<Equipos> Equi = new ArrayList<Equipos>();
+            ArrayList<Equipos_Consulta> Equi = new ArrayList<Equipos_Consulta>();
             Equi = list;
             edmodelo.setText(Equi.get(i).getModelo().toString());
             edserie.setText(Equi.get(i).getSerie().toString());
@@ -466,10 +473,29 @@ public class ConEquipos extends Fragment implements AdapterView.OnItemSelectedLi
             // attaching data adapter to spinner
             spinnerCat.setAdapter(spinnerAdapter);
             spinnerAdapter.notifyDataSetChanged();
-         //   spinnerCat.setSelection(spinnerAdapter.getPosition(Equi.get(i).getId_categoria().toString()));
-           // spinnerIdio.setSelection(obtenerPosicionItem(spinnerIdio, docu.get(i).getId_idioma().toString()));
+            spinnerCat.setSelection(spinnerAdapter.getPosition(Equi.get(i).getId_categoria().toString()));
+            spinnerMar.setSelection(obtenerPosicionItem(spinnerMar, Equi.get(i).getId_marca().toString()));
 
         }
+    }
+
+    //Método para obtener la posición de un ítem del spinner
+    public int obtenerPosicionItem(Spinner spinner, String obtenido) {
+
+        //Creamos la variable posicion y lo inicializamos en 0
+        int posicion = 0;
+
+        //Recorre el spinner en busca del ítem que coincida con el parametro String obtenido
+        //que lo pasaremos posteriormente
+        for (int i = 0; i < spinner.getCount(); i++) {
+            //Almacena la posición del ítem que coincida con la búsqueda
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(obtenido)) {
+                posicion = i;
+            }
+        }
+        //Devuelve un valor entero (si encontro una coincidencia devuelve la
+        // posición 0 o N, de lo contrario devuelve 0 = posición inicial)
+        return posicion;
     }
 
 
@@ -611,7 +637,7 @@ public class ConEquipos extends Fragment implements AdapterView.OnItemSelectedLi
             super.onPostExecute(result);
             if (pDialog.isShowing())
                 pDialog.dismiss();
-            populateSpinnerCategoria();
+            cargarEquipoConsultado();
         }
 
     }
