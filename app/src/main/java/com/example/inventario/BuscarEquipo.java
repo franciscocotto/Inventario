@@ -135,7 +135,7 @@ public class BuscarEquipo extends Fragment {
         switch (accion){
             case 1: //Consulta de docuemntos
                 if(Equipos.getFragmento()==1){
-                    URL = "https://invetariopdm115.000webhostapp.com/ws_vc17009/ws_CargarEquiposActivos.php";
+                    URL = "https://invetariopdm115.000webhostapp.com/ws_vc17009/ws_cargarEquipos.php";
                 }
                 else if(Equipos.getFragmento()==2){
                     URL = "https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_consulta_equipos.php";
@@ -144,7 +144,7 @@ public class BuscarEquipo extends Fragment {
 
             case 2: //Buscar documentos
                 if(Equipos.getFragmento()==1){
-                    URL = "https://invetariopdm115.000webhostapp.com/ws_vc17009/ws_CargarDatosDocBuscado.php";
+                    URL = "https://invetariopdm115.000webhostapp.com/ws_vc17009/ws_CargarDatosEquBuscado.php";
                 }
                 else if(Equipos.getFragmento()==2){
                     URL = "https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_buscar_equipo.php";
