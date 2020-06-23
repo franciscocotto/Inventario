@@ -576,6 +576,7 @@ public class PreDocumentos extends Fragment {
                 lblAccion.setText("DOCUMENTO ASIGNADO");
                 componentesDesabilitados();
                 btnAccion.setText("ASIGNADO PERMANENTEMENTE");
+                cargarDatos("https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_devolver_documento.php", 7, String.valueOf(documentos.get(0).getId_bien()));
                 btnAccion.setEnabled(false);
                 break;
 

@@ -576,6 +576,7 @@ public class PreEquipos extends Fragment {
                 lblAccion.setText("EQUIPO ASIGNADO");
                 componentesDesabilitados();
                 btnAccion.setText("ASIGNADO PERMANENTEMENTE");
+                cargarDatos("https://invetariopdm115.000webhostapp.com/ws_bg17016/ws_devolver.php", 7, String.valueOf(equipos.get(0).getId_bien()));
                 btnAccion.setEnabled(false);
                 break;
 
