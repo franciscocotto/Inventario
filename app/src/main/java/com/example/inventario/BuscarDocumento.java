@@ -95,7 +95,7 @@ public class BuscarDocumento extends Fragment {
                     String busqueda = etBuscar.getText().toString();
                     buscarLibro(busqueda,2);
                     if(lista.getCount()== 0){
-                        Toast.makeText(getActivity().getApplicationContext(), "Sin resultados", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplicationContext(), "Busqueda Finalizada", Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -208,6 +208,11 @@ public class BuscarDocumento extends Fragment {
                             e.printStackTrace();
                         }
                     }
+                    else{
+                        Toast.makeText(getActivity().getApplicationContext(), "No se encontraron coincidencias", Toast.LENGTH_LONG).show();
+                        if (pDialog.isShowing())
+                            pDialog.dismiss();
+                    }
                 }
 
             }, new Response.ErrorListener() {
@@ -267,6 +272,11 @@ public class BuscarDocumento extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                    }
+                    else{
+                        Toast.makeText(getActivity().getApplicationContext(), "No se encontraron coincidencias", Toast.LENGTH_LONG).show();
+                        if (pDialog.isShowing())
+                            pDialog.dismiss();
                     }
                 }
 

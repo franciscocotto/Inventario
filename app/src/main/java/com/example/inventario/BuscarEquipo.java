@@ -85,7 +85,7 @@ public class BuscarEquipo extends Fragment {
                     String busqueda = etBuscar.getText().toString();
                     buscarEquipo(busqueda,2);
                     if(lista.getCount()== 0){
-                        Toast.makeText(getActivity().getApplicationContext(), "Sin resultados", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplicationContext(), "Busqueda Finalizada", Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -164,6 +164,8 @@ public class BuscarEquipo extends Fragment {
                         JSONArray equi = new JSONArray(response);
                         Log.i("sizejson", "" + equi.length());
 
+
+
                         ArrayList<Equipos> list = new ArrayList<Equipos>();
                         for (int i = 0; i < equi.length(); i += 5) {
                             try {
@@ -180,9 +182,15 @@ public class BuscarEquipo extends Fragment {
                         }
                         cargarTabla(list);
 
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }
+                else{
+                    Toast.makeText(getActivity().getApplicationContext(), "No se encontraron coincidencias", Toast.LENGTH_LONG).show();
+                    if (pDialog.isShowing())
+                        pDialog.dismiss();
                 }
             }
 
