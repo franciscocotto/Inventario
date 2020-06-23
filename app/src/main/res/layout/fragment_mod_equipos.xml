@@ -197,7 +197,7 @@
                 android:id="@+id/btnEquipo"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Modificar Equipo"
+                android:text="@string/modificarequi"
                 android:background="@drawable/gradient_1"
                 android:layout_marginTop="40dp"
                 android:textColor="@android:color/white"/>
@@ -206,7 +206,7 @@
                 android:id="@+id/btnEliminar"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/eliminardoc"
+                android:text="@string/eliminarequi"
                 android:background="@drawable/gradient_1"
                 android:layout_marginTop="10dp"
                 android:textColor="@android:color/white"/>

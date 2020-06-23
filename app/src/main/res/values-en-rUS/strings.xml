@@ -69,4 +69,5 @@
     <string name="buscar_equipo">Search Hardware</string>
     <string name="ingrese_inventario_modelo_des">"Add model "</string>
     <string name="modificarequi">Modify equipment</string>
+    <string name="eliminarequi">Delete Hardware</string>
 </resources>

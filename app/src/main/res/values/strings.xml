@@ -50,8 +50,9 @@
     <string name="prestar_documento">Prestar Documento</string>
     <string name="agregardoc">Agregar Documento</string>
     <string name="eliminardoc">Eliminar Documento</string>
+    <string name="eliminarequi">Eliminar Equipo</string>
     <string name="modificardoc">Modificar Documento</string>
-    <string name="modificarequi">Modificar Equipos</string>
+    <string name="modificarequi">Modificar Equipo</string>
     <string name="prestamodoc">Prestamo Documento</string>
     <string name="estado">Estado</string>
     <string name="regresar">Regresar</string>
